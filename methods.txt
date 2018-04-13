@@ -1,0 +1,22 @@
+Methods
+ 
+
+Animals
+ 
+This study used a previously generated BSX H2BeGFP mouse line (sakkou et al). This strain has a lineage H2BeGFP reporter replacing the first exon of the hypothalamic transcription factor BSX. Brains from 10-week old female BSXH2BeGFP/+ mice were used for tissue clearing and imaging. Experiments were conducted according to institutional guidelines of the Max Delbrueck Center for Molecular Medicine in the Helmholtz Association after approval from the Berlin State Office for Health and Social Affairs (LAGeSo) (Landesamt für Gesundheit und Soziales, Berlin, Germany).
+ 
+Clearing
+ 
+Tissue clearing was performed using the CLARITY protocol (chung et al). Mice were deeply anesthetized by intraperitoneal injection of 100 mg/kg Ketamine and 15 mg/kg Xylazine. Mice were exsanguinated by transcardial perfusion with 25 ml cold PBS followed by whole body perfusion with 25 ml cold monomer solution (4 % v/v acrylamide, 4 % w/v Paraformaldehyde (PFA), 0.25 % w/v VA-044 in PBS). The brains were collected and fixed in monomer solution for further 2 days. Next, the whole brains were placed in fresh monomer solution and oxygen was removed from the tubes by vacuum and flushing the tube with nitrogen gas for 15 minutes. The samples were then polymerized by placing the tubes in a 37 °C water bath under gentle shaking for 2 hours. Polymerized brains were placed in clearing solution (4% SDS in 200 mM Boric acid). Brains were incubated in clearing solution for 1 week at 37 °C with daily solution change. Then, the brains were actively cleared for 24 hours using the X-Clarity setup from Logos Bioscience for 24 hours with a current of 1 A at 37 °C. Cleared brains were washed twice overnight with 0.1 % v/v Triton X-100 in PBS and once with PBS. Before imaging, brains were placed overnight in FocusClear for refractive index matching.
+ 
+Imaging
+ 
+Cleared brains were acquired using the Zeiss lightsheet Z1 microscope. The samples were fixed using a cyanoacrylate-based glue on the sample adapter. Mounted samples were placed a FocusClear pre-filled imaging chamber. Images were acquired using the EC Plan-NEOFLUAR 5×/NA 0.16 objective together with the LSFM 5x/ NA 0.1 illumination objectives. The data was acquired using dual side illumination and from different angles. Images were collected with two 1920 X 1920 pixels sCMOS cameras and stored in the Zeiss CZI file format.
+ 
+Bead Embedding and deconvolution
+
+Estapor Fluorescent Microspheres (F-XC 030) were diluted 1:20000 in monomer solution containing bis-acrylamide (0,05 % v/v bis-acrylamide, 4 % v/v acrylamide, 4 % w/v Paraformaldehyde (PFA), 0.25 % w/v VA-044 in PBS). The monomer solution was polymerised under vacuum and constant shaking at 37 °C for 2 hours.  The formed hydrogel was incubated overnight in FocusClear and imaged using the Zeiss lightsheet Z1 microscope with the same experimental settings used to acquire the brain samples.
+
+Data processing
+ 
+Data was processed using the BigStitcher Fiji plugin. CZI files were imported and converted to the HD5 format. For each angle best illumination was selected. Tiles were aligned using the phase correlation method together with two-round global optimization. Interest point detection for each angle was performed. The fast descriptor-based rotation invariant algorithm was used to register the interest points of each angle. Reconstructed images were exported as TIFF files.
