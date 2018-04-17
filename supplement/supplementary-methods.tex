@@ -11,30 +11,31 @@ This is a dummy citation: \cite{dummy-cite}.
 
 \subsection{Illumination selection}
 
-
-
-We therefore implemented a simple \emph{illumination selection} functionality in BigStitcher. It starts by \emph{combining} all (selected) images by their \texttt{Illumination} attribute, i.e. it groups images that share all other attributes besides \texttt{Illumination}. In each of the resulting groups we select a best image. We do this by loading the pixel data for all images in the group at the lowest resolution level (in the case of non-multiresolution images, this corresponds to the original image) and calculating a \emph{quality metric}. We currently offer mean intensity and mean gradient magnitude \textbf{TODO: implement} as quality metrics. The image with the highest score is kept, while all other images are marked as \emph{missing} in the \texttt{SpimData}, which will lead to them being ignored in subsequent processing steps. 
+When imaging large samples with multiple illumination directions,  a lot of unnecessary images are acquired since typically only illumination from one direction provides optimal images. We therefore implemented a simple \emph{illumination selection} functionality in BigStitcher. It starts by \emph{combining} all (selected) images by their \texttt{Illumination} attribute, i.e. it groups images that share all other attributes besides \texttt{Illumination}. In each of the resulting groups we select a best image. We do this by loading the pixel data for all images in the group at the lowest resolution level (in the case of non-multiresolution images, this corresponds to the original image) and calculating a \emph{quality metric}. We currently offer mean intensity and mean gradient magnitude \textbf{TODO: implement} as quality metrics. The image with the highest score is kept, while all other images are marked as \emph{missing} in the \texttt{SpimData}, which will lead to them being ignored in subsequent processing steps. 
 
 \subsection{Pairwise shift calculation}
 
+In BigStitcher, we currently offer three ways of calculating shifts between a pair of images: the Fourier-based \emph{phase correlation} algorithm, the Gradient-descent-based \emph{Lucas-Kanade} algorithm, both intensity-based methods, as well as interest point-based alignment.
+
 \subsubsection{Phase correlation}
+
+Due to the periodic nature of the Fourier shift theorem, each peak in the PCM can actually correspond to $2^d$ possible shifts in $d$ dimensions. We therefore test each of these candidate shifts by calculating the cross-correlation between the images with $I2$ shifted according to the candidate shift (optionally with interpolation in the case of sub-pixel shifts). In the end, we keep the shift vector $t$ corresponding the highest cross correlation as the final result (applying downsampling correction, if necessary).
 
 \subsubsection{Lucas-Kanade}
 
-\subsubsection{Registration of grouped images}
+\subsubsection{Intensity-based Registration of grouped images}
 
 \subsubsection{Intensity-based registration of images with arbitrary pre-registrations}
 
-The two images $I1$ and $I2$ can have arbitrary pre-registrations, i.e. pixel coordinates $x_{px}$ are mapped to world coordinates $x_w$ via the affine transforms $x_{w,I1} = A _{I1}x_{px,I1} + b_{I1}$ and $x_{w,I2} = A _{I2}x_{px,I2} + b_{I2}$. Depending on the values of $ A _{I1}$ and $ A _{I2}$, we consider two cases: If they are equal, i.e. the pre-registrations differ only by a translation, we perform the shift calculation on the raw pixel data of the overlapping volume to get a shift vector $t$ for $I2$ in pixel coordinates. The transformation in world coordinates is then given by $R \bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr) R^{-1} $ with $R = \bigl(\begin{smallmatrix}  & A_{I2} & & b_{I2} \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$. If the pre-registrations differ in more than just translation, we create virtually transformed images of the smallest rectangular bounding box enclosing the overlapping volume and use them as input to the registration. As the virtual input images are already in world coordinates in this case, the resulting transformation matrix for $I2$ is simply $\bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1
- \end{smallmatrix}\bigr)$
-
-\subsubsection{Phase correlation}
+The two images $I_1$ and $I_2$ can have arbitrary pre-registrations, i.e. pixel coordinates $x_{px}$ are mapped to world coordinates $x_w$ via the affine transforms $x_{w,I_1} = A _{I_1}x_{px,I_1} + b_{I_1}$ and $x_{w,I_2} = A _{I_2}x_{px,I_2} + b_{I_2}$. Depending on the values of $ A _{I_1}$ and $ A _{I_2}$, we consider two cases: If they are equal, i.e. the pre-registrations differ only by a translation, we perform the shift calculation on the raw pixel data of the overlapping volume to get a shift vector $t$ for $I_2$ in pixel coordinates. The transformation in world coordinates is then given by $R \bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr) R^{-1} $ with $R = \bigl(\begin{smallmatrix}  & A_{I_2} & & b_{I_2} \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$. If the pre-registrations differ in more than just translation, we create virtually transformed images of the smallest rectangular bounding box enclosing the overlapping volume and use them as input to the registration. As the virtual input images are already in world coordinates in this case, the resulting transformation matrix for $I_2$ is simply $\bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$
 
 \subsubsection{Interest-point based}
 
-\subsubsection{Phase correlation}
+For each image, we apply the current (affine) registrations to the pixel-coordinate interest points and then determine \emph{candidate point matches} via descriptor matching. We then perform model-based outlier removal via the RANSAC algorithm, yielding a set of \emph{inlier point pairs}, $C_{inliers}$, and an optimal translation $t$ for $I_2$, minimizing $\sum_{(ip_1, ip_2) \in C_{inliers} }{|| ip_1 - ip_2 - t||^2}$
 
 \subsection{Global optimization}
+
+\subsection{MultiView Registration}
 
 
 
