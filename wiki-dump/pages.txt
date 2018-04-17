@@ -1,0 +1,25 @@
+BigStitcher
+BigStitcher Interest points
+BigStitcher Advanced stitching
+BigStitcher BDV
+BigStitcher BoundingBox
+BigStitcher Define new dataset
+BigStitcher Fuse
+BigStitcher Global optimization
+BigStitcher ICP refinement
+BigStitcher Interest point management
+BigStitcher Interest points
+BigStitcher MultiView Mode
+BigStitcher Open existing
+#BigStitcher PSF
+#BigStitcher Deconvolution
+BigStitcher Pairwise shift
+BigStitcher Preview Pairwise shift
+BigStitcher Registration
+BigStitcher ReorientSample
+BigStitcher Select illumination
+BigStitcher Stitching Mode
+BigStitcher manual translation
+BigStitcher AutoLoader
+BigStitcher StackLoader
+BigStitcher SpecialLoaders
