@@ -75,6 +75,8 @@
 \newcommand\tablespace{\vspace{2.5mm}}
 \newcommand\fig{supplementary figure }
 \newcommand\Fig{Supplementary figure }
+
+
 \title{BigStitcher: Efficient alignment of large multi-tile and multi-view image datasets}
 
 %>>>> The author is responsible for formatting the
@@ -133,7 +135,7 @@
 \textbf{Supplementary Figure \ref{fig:downsampling}} &  Downsampling with different SNR \tablespace \\
 \textbf{Supplementary Figure \ref{fig:stitching}} & Example stitching \tablespace \\
 \textbf{Supplementary Note \ref{sec:sup-methods}} & Supplementary methods \tablespace \\
-\textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher documaentation \tablespace \\
+\textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher user guide \tablespace \\
 \textbf{Supplementary Note \ref{sec:currentcode}} & Links to the current source codes \tablespace \\
 \end{tabular}}
 \caption{\emph{Note: Supplementary Videos 1--XXX are available for download on the journal homepage.}}
@@ -207,6 +209,9 @@
 \titleformat{\section}{\centering\normalfont\fontsize{11.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
 \section*{SUPPLEMENTARY TABLES}
 \titleformat{\section}{\normalfont\fontsize{11.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
+
+%========old table========
+\begin{comment}
 
 \hspace{20mm}
 
@@ -286,90 +291,14 @@ Fixed \emph{C. elegans} larvae in L1 stage expressing LMN-1::GFP and stained wit
 \end{table}
 \end{savenotes}
 
-\pagebreak
-
-\section{SUPPLEMENTARY METHODS}
-\label{sec:sup-methods}
-
-\subsection*{REMARKS}
-
-This is a dummy citation: \cite{dummy-cite}.
-
-This document closely follows the notation introduced in the paper of L. B. Lucy\cite{lucy1974} whenever possible.
-%In section \ref{sec:singleview} we re-state the formalization of the deconvolution problem as defined by Lucy and re-derive the iterative solution for the single view case as shown by Richardson\cite{richardson1972} and Lucy\cite{lucy1974}. In section \ref{sec:multiview} we derive the \emph{bayesian} extension to the multi-view case as used in\cite{KrzicPhD, PreibischPhD, Temerinac2012}. Section \ref{sec:conditional} discusses the implications of independence between views and in section \ref{sec:efficientmv} we show the derivation of the efficient \emph{bayesian} multi-view deconvolution that takes into account conditional probabilities for the first time. In section \ref{sec:optimizeconvergence} we introduce a faster alternative optimization scheme and section \ref{sec:benchmark} evaluates all methods and compares our new derivations considering conditional probabilities to previously existing methods.
-Note that for simplicity all derivations in this document only cover the one-dimensional case. Nevertheless, all equations are valid for any \emph{n}-dimensional case.
-
-%\subsection{Derivation of the iterative deconvolution scheme}
-\subsection{Derivation of the Bayesian-based single-view deconvolution: REMOVE AND REPLACE WITH OUT STUFF}
-\label{sec:singleview}
-
-This section re-derives the classical Bayesian-based Richardson\cite{richardson1972}-Lucy\cite{lucy1974} deconvolution for single images, other derivations presented in this document build up on it. The goal is to estimate the frequency distribution of an underlying signal $\psi(\xi)$ from a finite number of measurements $x^{1'}, x^{2'}, ..., x^{N'}$. The resulting observed distribution $\phi(x)$ is defined as
-\begin{equation}
-\label{eq:eq1}
-\phi(x) = \int_{\xi}{\psi(\xi)P(x|\xi)}d\xi
-\end{equation}
-where $P(x|\xi)$ is the probability of a measurement occuring at $x=x'$ when it is known that the event \mbox{$\xi=\xi'$} occured. In more practical image analysis terms equation \ref{eq:eq1} describes the one-dimensional convolution operation where $\phi(x)$ is the blurred image, $P(x|\xi)$ is the kernel and $\psi(\xi)$ is the undegraded (or deconvolved) image. All distributions are treated as probability distributions and fulfill the following constraints:
-\begin{equation}
-\label{eq:eq3}
-\int_{\xi}{\psi(\xi)}d\xi = \int_{x}{\phi(x)}dx = \int_{x}{P(x|\xi)}dx = 1 ~~~and~~~ \psi(\xi) > 0, ~\phi(x) \geq 0, ~P(x|\xi) \geq 0
-\end{equation}
-
-\noindent The basis for the derivation of the Bayesian-based deconvolution is the tautology
-\begin{equation}
-\label{eq:eq5}
-P(\xi=\xi' \wedge x=x') = P(x=x' \wedge \xi=\xi')
-\end{equation}
-It states that it is equally probable that the event $\xi'$ results in a measurement at $x'$ and that the measurement at $x'$ was caused by the event $\xi'$. Integrating equation \ref{eq:eq5} over the measured distribution yields the joint probability distribution
-\begin{equation}
-\int_x P(\xi \wedge x) dx = \int_x P(x \wedge \xi) dx
-\end{equation}
-which can be expressed using conditional probabilities
-\begin{equation}
-\int_x P(\xi) P(x|\xi) dx = \int_x P(x) P(\xi|x) dx
-\end{equation}
-and in correspondence to Lucy's notation looks like (equation \ref{eq:eq1})
-\begin{equation}
-\label{eq:eq7}
-\int_x \psi(\xi) P(x|\xi) dx = \int_x \phi(x) Q(\xi|x) dx
-\end{equation}
-where $P(\xi) \equiv \psi(\xi), P(x) \equiv \phi(x), P(\xi|x) \equiv Q(\xi|x)$. $Q(\xi|x)$ denotes what Lucy calls the 'inverse' conditional probability to $P(x|\xi)$. It defines the probability that an event at $\xi'$ occured, given a specific measurement at $x'$. As $\psi(\xi)$ does not depend on $x$, equation \ref{eq:eq7} can be rewritten as
-\begin{equation}
-\label{eq:eq9}
-\psi(\xi) \overbrace{\int_x P(x|\xi) dx}^{=1} = \int_x \phi(x) Q(\xi|x) dx
-\end{equation}
-hence (due to equation \ref{eq:eq3})
-\begin{equation}
-\label{eq:eq11}
-\psi(\xi) = \int_x \phi(x) Q(\xi|x) dx
-\end{equation}
-which corresponds to the inverse of the convolution in equation \ref{eq:eq1}. Although $Q(\xi|x)$ cannot be used to directly compute $\psi(\xi)$, \emph{Bayes' Theorem} and subsequently equation \ref{eq:eq1} can be used to reformulate it as
-\begin{equation}
-\label{eq:eq12}
-Q(\xi|x) = \frac{\psi(\xi) P(x|\xi)}{\phi(x)} =  \frac{\psi(\xi) P(x|\xi)}{\int_\xi \psi(\xi) P(x|\xi) d\xi}
-\end{equation}
-Replacing $Q(\xi|x)$ in equation \ref{eq:eq11} yields
-\begin{equation}
-\label{eq:eq13}
-\psi(\xi) = \int_x \phi(x) \frac{\psi(\xi) P(x|\xi)}{\int_\xi \psi(\xi) P(x|\xi) d\xi} dx
-          = \psi(\xi) \int_x  \frac{ \phi(x) }{\int_\xi \psi(\xi) P(x|\xi) d\xi} P(x|\xi) dx
-\end{equation}
-which exactly re-states the deconvolution scheme introduced by Lucy and Richardson. The fact that both sides of the equation contain the desired underlying (deconvolved) distribution $\psi(\xi)$ suggests an iterative scheme to converge towards the correct solution
-\begin{equation}
-\label{eq:eq15}
-\psi^{r+1}(\xi) = \psi^r(\xi) \int_x \frac{ \phi(x) }{\int_\xi \psi^r(\xi) P(x|\xi) d\xi} P(x|\xi) dx
-\end{equation}
-where $\psi^0(\xi)$ is simply a constant distribution with each value being the average intensity of the measured distribution $\phi(x)$.
-
-Equation \ref{eq:eq15} turns out to be a maximum-likelihood (ML) expection-maximization (EM) formulation\cite{Dempster77}, which works as follows. First, it computes for every pixel the convolution of the current guess of the deconvolved image $\psi^r(\xi)$ with the kernel (PSF) $P(x|\xi)$, i.e. $\phi^r(x) = \int_\xi \psi^r(\xi) P(x|\xi) d\xi$. In EM-terms $\phi^r(x)$ describes the \emph{expected value}.  The quotient between the input image $\phi(x)$ and the \emph{expected value} $\phi^r(x)$ yields the disparity for every pixel. These values are initially large but will become very small upon convergence. In an ideal scenario all values of $\phi^r(x)$ and $\phi(x)$ will be identical once the algorithm converged. This ratio is subsequently convolved with the point spread function $P(x|\xi)$ reflecting which pixels influence each other. In EM-terms this is called the \emph{maximization step}. This also preserves smoothness. These resulting values are then pixel-wise multiplied with the current guess of the deconvolved image $\psi^r(\xi)$, which we call an RL-update (Richardson-Lucy). It results in a new guess for the deconvolved image.
-
-Starting from an initial guess of an image with constant values, this scheme will converge towards the correct solution if the guess of the point spread function is correct and if the observed distribution is not degraded by noise, transformations, etc.
-\begin{comment}
-pixel-by-pixel the quotient between the input image $\phi(x)$ and the convolution of the current guess of the deconvolved image $\psi^r(\xi)$ with the kernel (aka PSF) $P(x|\xi)$, which yields a per pixel difference. These values are initially large but will become very small upon convergence. This quotient image is subsequently convolved with the point spread function $P(x|\xi)$ reflecting which pixels influence each other. This also preserves smoothness. These resulting values are then pixel-wise multiplied with the current guess of the deconvolved image $\psi^r(\xi)$, yielding a new guess of the deconvolved image. Starting from an initial guess of an image with constant values, this scheme will converge towards the correct solution if the guess of the point spread function is correct and if the observed distribution is not degraded by noise, transformations, etc.
 \end{comment}
+%========end old table========
 
 \pagebreak
 
-\section{BIGSTITCHER DOCUMENTATION}
+\input supplementary-methods.tex
+
+\section{BIGSTITCHER USER GUIDE}
 \label{sec:documentation}
 
 \input{user-guide/user-guide-main.tex}
