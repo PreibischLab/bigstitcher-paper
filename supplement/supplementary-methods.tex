@@ -5,7 +5,9 @@
 
 This is a dummy citation: \cite{dummy-cite}.
 
-\subsection{\texttt{SpimData} data structure}
+\subsection{\texttt{SpimData} data format}
+
+We internally represent our image data and metadata using an extended version of the \texttt{SpimData} data format from \cite{bigdataviewer}. Each image stack is defined by a (\texttt{ViewSetup}, \texttt{TimePoint})-combination. We extend the format by giving each \texttt{ViewSetup} the following \emph{attributes}: \texttt{Channel} to represent color channels, \texttt{Illumination} to represent illumination directions, \texttt{Angle} to represent multi-view acquisition angles and finally \texttt{Tile}, representing (local) x,y points in a multipoint acquisition.
 
 \subsection{Import of data}
 
@@ -34,6 +36,31 @@ The two images $I_1$ and $I_2$ can have arbitrary pre-registrations, i.e. pixel 
 For each image, we apply the current (affine) registrations to the pixel-coordinate interest points and then determine \emph{candidate point matches} via descriptor matching. We then perform model-based outlier removal via the RANSAC algorithm, yielding a set of \emph{inlier point pairs}, $C_{inliers}$, and an optimal translation $t$ for $I_2$, minimizing $\sum_{(ip_1, ip_2) \in C_{inliers} }{|| ip_1 - ip_2 - t||^2}$
 
 \subsection{Global optimization}
+
+Using the pairwise transformations $T_{p}$ ($T_{p,ij} x_{j} = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R_{meta}$ and the 8-point approximate bounding box of their overlapping region $BB_{ij}$, we now estimate globally optimal \emph{accumulative transforms} $R_{acc}$. A set of image groups $F \subseteq V$ may be \emph{fixed}, in which case the registration will be constrained to be identity: $\forall i \in F: R_{acc,i} = I$. In a first pass, we consider only \emph{strong links} $C_{strong} = \{(i,j) \in V \bigtimes V | T_{p, ij} \in T_p \}$ for which we calculated valid pairwise transformations and the registrations for the images linked by them $R_{strong} = \{r_i \in R_{acc} | ((i,j) \in C_{strong} \vee (j,i) \in C_{strong}) \wedge i \notin F\}$. We then mimimize
+
+\begin{equation}
+\label{eq:eq1}
+argmin_{R_{strong}} \sum_{(i,j) \in C_{strong}} \sum_{bb_{ij,k} \in BB_{ij}} || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} ||^2 
+\end{equation}
+
+If the average error of the images or the ratio of maximum to average error (with the error of an image $i$ being $e_i = \sum_{\{j: (i,j) \in C_{strong}\}}  \sum_{bb_{ij,k} \in BB_{ij}} || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} || / \sum_{\{j: (i,j) \in C_{strong}\}} |BB_{ij}| $) is still too large we can optionally iteratively remove disagreeing links from the graph and repeat the process. To do this, we find the worst link in $C_{strong}$ by maximizing
+
+\begin{equation}
+\label{eq:eq2}
+c_{worst} = argmax_{(i,j)} max_{bb_{ij,k} \in BB_{ij}}( (1-q_{ij})^2 \sqrt{d_{ijk}} log_{10}(max(deg(i), deg(j))) ) 
+\end{equation}
+
+with $d_{ijk}$ denoting the point match distance $d_{ijk} = || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} ||$, $deg(i)$ denoting the degree of an image $V_i$ in the link graph and $q_{ij}$ being a \emph{quality metric} $\in (0,1)$, e.g. 0-truncated cross correlation. We then remove the worst link from the strong links ($C_{strong} \leftarrow C_{strong} \setminus c_{worst}$) and repeat step \ref{eq:eq1}. The whole process is repeated until the errors fall below a user-defined threshold (in the worst case, links will be dropped until we end up with \emph{spanning trees} of the connected components in the link graph). \\
+
+In an optional second pass, we determine the connected components in the $(V, C_{strong} )$ graph and a mapping $N: \mathbb{N} \to \mathbb{N}$ from image (group) indices to  connected component indices as well as \emph{weak links} $C_{weak} = \{(i,j) \in V \bigtimes V | CC(i) \neq CC(j) \}$ between images in different components (optionally only for images that overlap according to $R_{meta}$). We then determine transformations $R_{cc}$ for each connected component not containing a fixed image by minimizing:
+
+\begin{equation}
+\label{eq:eq3}
+argmin_{R_{cc} \setminus \{ r_{cc,i} \in R_{cc} | CC_i \cap F \neq \emptyset \}} \sum_{(i,j) \in C_{weak}} \sum_{bb_{ij,k} \in BB_{ij}} || R_{cc,CC(i)} R_{acc,i} bb_{ij} - R_{cc,CC(j)} R_{acc,j} bb_{ij,k} ||^2 
+\end{equation}
+
+The final transformations $R_{acc}$ are updated with the relative transformations of the connected components: $R_{acc,i} \leftarrow R_{cc, CC(i)} R_{acc,i}$.
 
 \subsection{MultiView Registration}
 
