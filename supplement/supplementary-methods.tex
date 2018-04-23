@@ -1,0 +1,151 @@
+\section{SUPPLEMENTARY METHODS}
+\label{sec:sup-methods}
+
+\subsection*{REMARKS}
+
+This is a dummy citation: \cite{dummy-cite}.
+
+\subsection{\texttt{SpimData} data format}
+
+We internally represent our image data and metadata using an extended version of the \texttt{SpimData} data format from \cite{bigdataviewer}. Each image stack is defined by a (\texttt{ViewSetup}, \texttt{TimePoint})-combination. We extend the format by giving each \texttt{ViewSetup} the following \emph{attributes}: \texttt{Channel} to represent color channels, \texttt{Illumination} to represent illumination directions, \texttt{Angle} to represent multi-view acquisition angles and finally \texttt{Tile}, representing (local) x,y points in a multipoint acquisition.
+
+\subsection{Import of data}
+
+\subsection{Illumination selection}
+
+When imaging large samples with multiple illumination directions,  a lot of unnecessary images are acquired since typically only illumination from one direction provides optimal images. We therefore implemented a simple \emph{illumination selection} functionality in BigStitcher. It starts by \emph{combining} all (selected) images by their \texttt{Illumination} attribute, i.e. it groups images that share all other attributes besides \texttt{Illumination}. In each of the resulting groups we select a best image. We do this by loading the pixel data for all images in the group at the lowest resolution level (in the case of non-multiresolution images, this corresponds to the original image) and calculating a \emph{quality metric}. We currently offer mean intensity and mean gradient magnitude \textbf{TODO: implement} as quality metrics. The image with the highest score is kept, while all other images are marked as \emph{missing} in the \texttt{SpimData}, which will lead to them being ignored in subsequent processing steps. 
+
+\subsection{Pairwise shift calculation}
+
+In BigStitcher, we currently offer three ways of calculating shifts between a pair of images: the Fourier-based \emph{phase correlation} algorithm, the Gradient-descent-based \emph{Lucas-Kanade} algorithm, both intensity-based methods, as well as interest point-based alignment.
+
+\subsubsection{Phase correlation}
+
+Due to the periodic nature of the Fourier shift theorem, each peak in the PCM can actually correspond to $2^d$ possible shifts in $d$ dimensions. We therefore test each of these candidate shifts by calculating the cross-correlation between the images with $I2$ shifted according to the candidate shift (optionally with interpolation in the case of sub-pixel shifts). In the end, we keep the shift vector $t$ corresponding the highest cross correlation as the final result (applying downsampling correction, if necessary).
+
+\subsubsection{Lucas-Kanade}
+
+\subsubsection{Intensity-based Registration of grouped images}
+
+\subsubsection{Intensity-based registration of images with arbitrary pre-registrations}
+
+The two images $I_1$ and $I_2$ can have arbitrary pre-registrations, i.e. pixel coordinates $x_{px}$ are mapped to world coordinates $x_w$ via the affine transforms $x_{w,I_1} = A _{I_1}x_{px,I_1} + b_{I_1}$ and $x_{w,I_2} = A _{I_2}x_{px,I_2} + b_{I_2}$. Depending on the values of $ A _{I_1}$ and $ A _{I_2}$, we consider two cases: If they are equal, i.e. the pre-registrations differ only by a translation, we perform the shift calculation on the raw pixel data of the overlapping volume to get a shift vector $t$ for $I_2$ in pixel coordinates. The transformation in world coordinates is then given by $R \bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr) R^{-1} $ with $R = \bigl(\begin{smallmatrix}  & A_{I_2} & & b_{I_2} \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$. If the pre-registrations differ in more than just translation, we create virtually transformed images of the smallest rectangular bounding box enclosing the overlapping volume and use them as input to the registration. As the virtual input images are already in world coordinates in this case, the resulting transformation matrix for $I_2$ is simply $\bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$
+
+\subsubsection{Interest-point based}
+
+For each image, we apply the current (affine) registrations to the pixel-coordinate interest points and then determine \emph{candidate point matches} via descriptor matching. We then perform model-based outlier removal via the RANSAC algorithm, yielding a set of \emph{inlier point pairs}, $C_{inliers}$, and an optimal translation $t$ for $I_2$, minimizing $\sum_{(ip_1, ip_2) \in C_{inliers} }{|| ip_1 - ip_2 - t||^2}$
+
+\subsection{Global optimization}
+
+Using the pairwise transformations $T_{p}$ ($T_{p,ij} x_{j} = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R_{meta}$ and the 8-point approximate bounding box of their overlapping region $BB_{ij}$, we now estimate globally optimal \emph{accumulative transforms} $R_{acc}$. A set of image groups $F \subseteq V$ may be \emph{fixed}, in which case the registration will be constrained to be identity: $\forall i \in F: R_{acc,i} = I$. In a first pass, we consider only \emph{strong links} $C_{strong} = \{(i,j) \in V \bigtimes V | T_{p, ij} \in T_p \}$ for which we calculated valid pairwise transformations and the registrations for the images linked by them $R_{strong} = \{r_i \in R_{acc} | ((i,j) \in C_{strong} \vee (j,i) \in C_{strong}) \wedge i \notin F\}$. We then mimimize
+
+\begin{equation}
+\label{eq:eq1}
+argmin_{R_{strong}} \sum_{(i,j) \in C_{strong}} \sum_{bb_{ij,k} \in BB_{ij}} || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} ||^2 
+\end{equation}
+
+If the average error of the images or the ratio of maximum to average error (with the error of an image $i$ being $e_i = \sum_{\{j: (i,j) \in C_{strong}\}}  \sum_{bb_{ij,k} \in BB_{ij}} || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} || / \sum_{\{j: (i,j) \in C_{strong}\}} |BB_{ij}| $) is still too large we can optionally iteratively remove disagreeing links from the graph and repeat the process. To do this, we find the worst link in $C_{strong}$ by maximizing
+
+\begin{equation}
+\label{eq:eq2}
+c_{worst} = argmax_{(i,j)} max_{bb_{ij,k} \in BB_{ij}}( (1-q_{ij})^2 \sqrt{d_{ijk}} log_{10}(max(deg(i), deg(j))) ) 
+\end{equation}
+
+with $d_{ijk}$ denoting the point match distance $d_{ijk} = || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} ||$, $deg(i)$ denoting the degree of an image $V_i$ in the link graph and $q_{ij}$ being a \emph{quality metric} $\in (0,1)$, e.g. 0-truncated cross correlation. We then remove the worst link from the strong links ($C_{strong} \leftarrow C_{strong} \setminus c_{worst}$) and repeat step \ref{eq:eq1}. The whole process is repeated until the errors fall below a user-defined threshold (in the worst case, links will be dropped until we end up with \emph{spanning trees} of the connected components in the link graph). \\
+
+In an optional second pass, we determine the connected components in the $(V, C_{strong} )$ graph and a mapping $N: \mathbb{N} \to \mathbb{N}$ from image (group) indices to  connected component indices as well as \emph{weak links} $C_{weak} = \{(i,j) \in V \bigtimes V | CC(i) \neq CC(j) \}$ between images in different components (optionally only for images that overlap according to $R_{meta}$). We then determine transformations $R_{cc}$ for each connected component not containing a fixed image by minimizing:
+
+\begin{equation}
+\label{eq:eq3}
+argmin_{R_{cc} \setminus \{ r_{cc,i} \in R_{cc} | CC_i \cap F \neq \emptyset \}} \sum_{(i,j) \in C_{weak}} \sum_{bb_{ij,k} \in BB_{ij}} || R_{cc,CC(i)} R_{acc,i} bb_{ij} - R_{cc,CC(j)} R_{acc,j} bb_{ij,k} ||^2 
+\end{equation}
+
+The final transformations $R_{acc}$ are updated with the relative transformations of the connected components: $R_{acc,i} \leftarrow R_{cc, CC(i)} R_{acc,i}$.
+
+\subsection{MultiView Registration}
+
+
+
+
+
+\pagebreak
+
+%================ old text, left as a comment in case we need some commands from it ====================
+
+\begin{comment}
+
+This document closely follows the notation introduced in the paper of L. B. Lucy\cite{lucy1974} whenever possible.
+%In section \ref{sec:singleview} we re-state the formalization of the deconvolution problem as defined by Lucy and re-derive the iterative solution for the single view case as shown by Richardson\cite{richardson1972} and Lucy\cite{lucy1974}. In section \ref{sec:multiview} we derive the \emph{bayesian} extension to the multi-view case as used in\cite{KrzicPhD, PreibischPhD, Temerinac2012}. Section \ref{sec:conditional} discusses the implications of independence between views and in section \ref{sec:efficientmv} we show the derivation of the efficient \emph{bayesian} multi-view deconvolution that takes into account conditional probabilities for the first time. In section \ref{sec:optimizeconvergence} we introduce a faster alternative optimization scheme and section \ref{sec:benchmark} evaluates all methods and compares our new derivations considering conditional probabilities to previously existing methods.
+Note that for simplicity all derivations in this document only cover the one-dimensional case. Nevertheless, all equations are valid for any \emph{n}-dimensional case.
+
+%\subsection{Derivation of the iterative deconvolution scheme}
+\subsection{Derivation of the Bayesian-based single-view deconvolution: REMOVE AND REPLACE WITH OUT STUFF}
+\label{sec:singleview}
+
+This section re-derives the classical Bayesian-based Richardson\cite{richardson1972}-Lucy\cite{lucy1974} deconvolution for single images, other derivations presented in this document build up on it. The goal is to estimate the frequency distribution of an underlying signal $\psi(\xi)$ from a finite number of measurements $x^{1'}, x^{2'}, ..., x^{N'}$. The resulting observed distribution $\phi(x)$ is defined as
+\begin{equation}
+\label{eq:eq1}
+\phi(x) = \int_{\xi}{\psi(\xi)P(x|\xi)}d\xi
+\end{equation}
+where $P(x|\xi)$ is the probability of a measurement occuring at $x=x'$ when it is known that the event \mbox{$\xi=\xi'$} occured. In more practical image analysis terms equation \ref{eq:eq1} describes the one-dimensional convolution operation where $\phi(x)$ is the blurred image, $P(x|\xi)$ is the kernel and $\psi(\xi)$ is the undegraded (or deconvolved) image. All distributions are treated as probability distributions and fulfill the following constraints:
+\begin{equation}
+\label{eq:eq3}
+\int_{\xi}{\psi(\xi)}d\xi = \int_{x}{\phi(x)}dx = \int_{x}{P(x|\xi)}dx = 1 ~~~and~~~ \psi(\xi) > 0, ~\phi(x) \geq 0, ~P(x|\xi) \geq 0
+\end{equation}
+
+\noindent The basis for the derivation of the Bayesian-based deconvolution is the tautology
+\begin{equation}
+\label{eq:eq5}
+P(\xi=\xi' \wedge x=x') = P(x=x' \wedge \xi=\xi')
+\end{equation}
+It states that it is equally probable that the event $\xi'$ results in a measurement at $x'$ and that the measurement at $x'$ was caused by the event $\xi'$. Integrating equation \ref{eq:eq5} over the measured distribution yields the joint probability distribution
+\begin{equation}
+\int_x P(\xi \wedge x) dx = \int_x P(x \wedge \xi) dx
+\end{equation}
+which can be expressed using conditional probabilities
+\begin{equation}
+\int_x P(\xi) P(x|\xi) dx = \int_x P(x) P(\xi|x) dx
+\end{equation}
+and in correspondence to Lucy's notation looks like (equation \ref{eq:eq1})
+\begin{equation}
+\label{eq:eq7}
+\int_x \psi(\xi) P(x|\xi) dx = \int_x \phi(x) Q(\xi|x) dx
+\end{equation}
+where $P(\xi) \equiv \psi(\xi), P(x) \equiv \phi(x), P(\xi|x) \equiv Q(\xi|x)$. $Q(\xi|x)$ denotes what Lucy calls the 'inverse' conditional probability to $P(x|\xi)$. It defines the probability that an event at $\xi'$ occured, given a specific measurement at $x'$. As $\psi(\xi)$ does not depend on $x$, equation \ref{eq:eq7} can be rewritten as
+\begin{equation}
+\label{eq:eq9}
+\psi(\xi) \overbrace{\int_x P(x|\xi) dx}^{=1} = \int_x \phi(x) Q(\xi|x) dx
+\end{equation}
+hence (due to equation \ref{eq:eq3})
+\begin{equation}
+\label{eq:eq11}
+\psi(\xi) = \int_x \phi(x) Q(\xi|x) dx
+\end{equation}
+which corresponds to the inverse of the convolution in equation \ref{eq:eq1}. Although $Q(\xi|x)$ cannot be used to directly compute $\psi(\xi)$, \emph{Bayes' Theorem} and subsequently equation \ref{eq:eq1} can be used to reformulate it as
+\begin{equation}
+\label{eq:eq12}
+Q(\xi|x) = \frac{\psi(\xi) P(x|\xi)}{\phi(x)} =  \frac{\psi(\xi) P(x|\xi)}{\int_\xi \psi(\xi) P(x|\xi) d\xi}
+\end{equation}
+Replacing $Q(\xi|x)$ in equation \ref{eq:eq11} yields
+\begin{equation}
+\label{eq:eq13}
+\psi(\xi) = \int_x \phi(x) \frac{\psi(\xi) P(x|\xi)}{\int_\xi \psi(\xi) P(x|\xi) d\xi} dx
+          = \psi(\xi) \int_x  \frac{ \phi(x) }{\int_\xi \psi(\xi) P(x|\xi) d\xi} P(x|\xi) dx
+\end{equation}
+which exactly re-states the deconvolution scheme introduced by Lucy and Richardson. The fact that both sides of the equation contain the desired underlying (deconvolved) distribution $\psi(\xi)$ suggests an iterative scheme to converge towards the correct solution
+\begin{equation}
+\label{eq:eq15}
+\psi^{r+1}(\xi) = \psi^r(\xi) \int_x \frac{ \phi(x) }{\int_\xi \psi^r(\xi) P(x|\xi) d\xi} P(x|\xi) dx
+\end{equation}
+where $\psi^0(\xi)$ is simply a constant distribution with each value being the average intensity of the measured distribution $\phi(x)$.
+
+Equation \ref{eq:eq15} turns out to be a maximum-likelihood (ML) expection-maximization (EM) formulation\cite{Dempster77}, which works as follows. First, it computes for every pixel the convolution of the current guess of the deconvolved image $\psi^r(\xi)$ with the kernel (PSF) $P(x|\xi)$, i.e. $\phi^r(x) = \int_\xi \psi^r(\xi) P(x|\xi) d\xi$. In EM-terms $\phi^r(x)$ describes the \emph{expected value}.  The quotient between the input image $\phi(x)$ and the \emph{expected value} $\phi^r(x)$ yields the disparity for every pixel. These values are initially large but will become very small upon convergence. In an ideal scenario all values of $\phi^r(x)$ and $\phi(x)$ will be identical once the algorithm converged. This ratio is subsequently convolved with the point spread function $P(x|\xi)$ reflecting which pixels influence each other. In EM-terms this is called the \emph{maximization step}. This also preserves smoothness. These resulting values are then pixel-wise multiplied with the current guess of the deconvolved image $\psi^r(\xi)$, which we call an RL-update (Richardson-Lucy). It results in a new guess for the deconvolved image.
+
+Starting from an initial guess of an image with constant values, this scheme will converge towards the correct solution if the guess of the point spread function is correct and if the observed distribution is not degraded by noise, transformations, etc.
+
+pixel-by-pixel the quotient between the input image $\phi(x)$ and the convolution of the current guess of the deconvolved image $\psi^r(\xi)$ with the kernel (aka PSF) $P(x|\xi)$, which yields a per pixel difference. These values are initially large but will become very small upon convergence. This quotient image is subsequently convolved with the point spread function $P(x|\xi)$ reflecting which pixels influence each other. This also preserves smoothness. These resulting values are then pixel-wise multiplied with the current guess of the deconvolved image $\psi^r(\xi)$, yielding a new guess of the deconvolved image. Starting from an initial guess of an image with constant values, this scheme will converge towards the correct solution if the guess of the point spread function is correct and if the observed distribution is not degraded by noise, transformations, etc.
+
+
+\pagebreak
+
+\end{comment}
