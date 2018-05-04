@@ -37,21 +37,44 @@ For each image, we apply the current (affine) registrations to the pixel-coordin
 
 \subsection{Global optimization}
 
-Using the pairwise transformations $T_{p}$ ($T_{p,ij} x_{j} = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R_{meta}$ and the 8-point approximate bounding box of their overlapping region $BB_{ij}$, we now estimate globally optimal \emph{accumulative transforms} $R_{acc}$. A set of image groups $F \subseteq V$ may be \emph{fixed}, in which case the registration will be constrained to be identity: $\forall i \in F: R_{acc,i} = I$. In a first pass, we consider only \emph{strong links} $C_{strong} = \{(i,j) \in V \bigtimes V | T_{p, ij} \in T_p \}$ for which we calculated valid pairwise transformations and the registrations for the images linked by them $R_{strong} = \{r_i \in R_{acc} | ((i,j) \in C_{strong} \vee (j,i) \in C_{strong}) \wedge i \notin F\}$. We then mimimize
+\subsubsection{Estimation of globally optimal transformations}
+
+The pairwise registration step results in \emph{links} between the image (groups) $V$, either in the form of pairwise transformations $T^{p}$  (such that coordinates $x$ from two images $V_i$ and $V_j$ can be transformed according to $T^p_{ij} (x_{j}) = x_i$) or \emph{point correspondences} $PM$ from which such transformations can be estimated.
+The pairwise registrations thus form a \emph{link graph} $(V, C)$ with edges $C = \{(i,j) \in V \times V | T^p_{ij} \in T^p \}$ between image pairs for which we could determine pairwise transformations. Simply traversing a spanning tree of the link graph and propagating the pairwise transformations can lead to the compounding of pairwise registration errors, even if the traversal is done along a \emph{minimal} spanning tree determined according to some quality metric $q_{ij}$, e.g. cross-correlation, of the pairwise registrations.
+
+We thus make use of an algorithm for globally optimal registration by iterative minimization of square displacement of point correspondences\cite{saalfeld2010rigid} for reaching a reasonable consensus in this case. This point match-based framework allows for flexible groping and fixing of images, is applicable to, among others, time series-, chromatic channel- or view-registration and can easily be adapted to incorporate the pairwise transformations from e.g. phase correlation. The algorithm is agnostic of the transformation model (e.g. translation, affine transform,...), with the only requirement being that the model parameters can be estimated by a least-squares fit from point correspondences.
+
+We determine the globally optimal registrations $R$ given the image (groups) $V$, pairwise links $C$, pairwise $n$-dimensional point matches $PM$ with $PM_{ij} \subset \mathbb{R}^n \times  \mathbb{R}^n$ and a set of fixed views $F \subseteq V$ by minimizing:
 
 \begin{equation}
 \label{eq:eq1}
-argmin_{R_{strong}} \sum_{(i,j) \in C_{strong}} \sum_{bb_{ij,k} \in BB_{ij}} || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} ||^2 
+\argmin_{R \setminus \{R_i | V_i \in F\}} \sum_{(i,j) \in C} \bigg( \sum_{(x_{k}, y_{k}) \in PM_{ij}} || R_{i}( x_{k}) - R_{j}( y_{k}) ||^2 \bigg)
+\end{equation}
+
+Note that for all fixed views, the registration will be constrained to be the indentity transformation $I$: $\forall V_i \in F: R_{i} = I$.
+
+
+\subsubsection{Globally optimization given pairwise transfomations}
+
+\subsubsection{Globally optimization with iterative link dropping}
+
+\subsubsection{Globally optimization with iterative link dropping}
+
+Using the pairwise transformations $T^{p}$ ($T^p_{ij} (x_{j}) = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R_{meta}$ and the 8-point approximate bounding box of their overlapping region $BB_{ij}$, we now estimate globally optimal \emph{accumulative transforms} $R_{acc}$. A set of image groups $F \subseteq V$ may be \emph{fixed}, in which case the registration will be constrained to be identity: $\forall i \in F: R_{acc,i} = I$. In a first pass, we consider only \emph{strong links} $C_{strong} = \{(i,j) \in V \bigtimes V | T_{p, ij} \in T_p \}$ for which we calculated valid pairwise transformations and the registrations for the images linked by them $R_{strong} = \{r_i \in R_{acc} | ((i,j) \in C_{strong} \vee (j,i) \in C_{strong}) \wedge i \notin F\}$. We then mimimize
+
+\begin{equation}
+\label{eq:eq1}
+\argmin_{R_{strong}} \sum_{(i,j) \in C_{strong}} \bigg( \sum_{(x_{k}, y_{k}) \in PM_{ij}} || R^{acc}_{i}( x_{k}) - R^{acc}_{j}( y_{k}) ||^2 \bigg)
 \end{equation}
 
 If the average error of the images or the ratio of maximum to average error (with the error of an image $i$ being $e_i = \sum_{\{j: (i,j) \in C_{strong}\}}  \sum_{bb_{ij,k} \in BB_{ij}} || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} || / \sum_{\{j: (i,j) \in C_{strong}\}} |BB_{ij}| $) is still too large we can optionally iteratively remove disagreeing links from the graph and repeat the process. To do this, we find the worst link in $C_{strong}$ by maximizing
 
 \begin{equation}
 \label{eq:eq2}
-c_{worst} = argmax_{(i,j)} max_{bb_{ij,k} \in BB_{ij}}( (1-q_{ij})^2 \sqrt{d_{ijk}} log_{10}(max(deg(i), deg(j))) ) 
+c_{worst} = \argmax_{(i,j)} \max_{bb_{ij,k} \in BB_{ij}}\bigg( (1-q_{ij})^2 \sqrt{d_{ijk}} \log_{10}\Big(\max\big(deg(i), \deg(j)\big)\Big)\bigg) 
 \end{equation}
 
-with $d_{ijk}$ denoting the point match distance $d_{ijk} = || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} ||$, $deg(i)$ denoting the degree of an image $V_i$ in the link graph and $q_{ij}$ being a \emph{quality metric} $\in (0,1)$, e.g. 0-truncated cross correlation. We then remove the worst link from the strong links ($C_{strong} \leftarrow C_{strong} \setminus c_{worst}$) and repeat step \ref{eq:eq1}. The whole process is repeated until the errors fall below a user-defined threshold (in the worst case, links will be dropped until we end up with \emph{spanning trees} of the connected components in the link graph). \\
+with $d_{ijk}$ denoting the point match distance $d_{ijk} = || R_{acc,i} bb_{ij} - R_{acc,j} T_{p,ij}^{-1} bb_{ij,k} ||$, $\deg(i)$ denoting the degree (number of neighbors) of an image $V_i$ in the link graph and $q_{ij}$ being a \emph{quality metric} $\in (0,1)$, e.g. 0-truncated cross correlation. We then remove the worst link from the strong links ($C_{strong} \leftarrow C_{strong} \setminus c_{worst}$) and repeat step \ref{eq:eq1}. The whole process is repeated until the errors fall below a user-defined threshold (in the worst case, links will be dropped until we end up with \emph{spanning trees} of the connected components in the link graph). \\
 
 In an optional second pass, we determine the connected components in the $(V, C_{strong} )$ graph and a mapping $N: \mathbb{N} \to \mathbb{N}$ from image (group) indices to  connected component indices as well as \emph{weak links} $C_{weak} = \{(i,j) \in V \bigtimes V | CC(i) \neq CC(j) \}$ between images in different components (optionally only for images that overlap according to $R_{meta}$). We then determine transformations $R_{cc}$ for each connected component not containing a fixed image by minimizing:
 
