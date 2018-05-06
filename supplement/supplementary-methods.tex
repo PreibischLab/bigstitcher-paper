@@ -5,6 +5,10 @@
 
 We internally represent our image data and metadata using an extended version of the \texttt{SpimData} data format of BigDataViewer\cite{pietzsch2015bigdataviewer}. Each image stack is defined by a (\texttt{ViewSetup}, \texttt{TimePoint})-combination. We extend the format by giving each \texttt{ViewSetup} the following \emph{attributes}: \texttt{Channel} to represent color channels, \texttt{Illumination} to represent illumination directions, \texttt{Angle} to represent multi-view acquisition angles and finally \texttt{Tile}, representing (local) x,y points in a multipoint acquisition.
 
+In addition to those attributes, we store detected interest points, bounding boxes (named sub-volumes in which we can \emph{fuse} or deconvolve images), point spread functions for deconvolution and pairwise registrations (that have yet to be used in global optimization) for each(\texttt{ViewSetup}, \texttt{TimePoint}) \emph{view}. For each image stack, we also store its \emph{registration} (i.e. the transformation from pixel to world coordinates) as a list of affine transform matrices. The registration steps described below will typically prepend another transformation matrix to this list. Finally, the \texttt{SpimData} is associated with an \texttt{ImgLoader} object that can make image pixel data available as an ImgLib2 \texttt{RandomAccessibleInterval} given a  (\texttt{ViewSetup}, \texttt{TimePoint}) \emph{view id}.
+
+The \texttt{SpimData} data structure can be saved as an XML \emph{project file}, allowing users to manually edit it with any text editor. We automatically save previous versions of the project file to provide the user with the ability to un-do registration steps.
+
 \subsection{Import of data}
 
 \subsection{Illumination selection}
@@ -20,9 +24,9 @@ Flat-field correction is the process of correcting for image artifacts due to un
 C_{x} = \frac{(R_{x} - D_{x'}) * \overline{(B-D)} }{(B_{x'}- D_{x'})}
 \end{equation}
 
-The correction images can either have the same dimensionality as the raw images, in which case $x' = x$, or have lower dimensionality (e.g. when using 2D correction images on a 3D image stack), in which case $x' = (x_1 \hdots x_n)$ with $n$ being the dimensionality of the correction images. If a dark image is not provided by the user, we assume it to have constant intensity of 0 (no background offset). Likewise, if now bright image is provided, we assume it to have constant intensity of 1 (uniform illumination and detection efficiency). 
+The correction images can either have the same dimensionality as the raw images, in which case $x' = x$, or have lower dimensionality (e.g. when using 2D correction images on a 3D image stack), in which case $x' = (x_1 \hdots x_n)$ with $n$ being the dimensionality of the correction images. If a dark image is not provided by the user, we assume it to have constant intensity of 0 (corresponding to no background offset). Likewise, if no bright image is provided, we assume it to have constant intensity of 1 (uniform illumination and detection efficiency). 
 
-We implemented the flat-field correction as a wrapper around an \texttt{ImageLoader}, calculating corrected pixel intensity values on-the-fly (with optional caching) every time an image is loaded. That way, the corrected images are available for all other processing steps such as intensity-based registration, interest point detection or image fusion, but it is still possible to actviate or de-activate the correction or change bright or dark images after the initial flat-field correction. A separate (bright, dark)-correction image pair can be set for every image in the dataset by modifying the XML project file, while in the GUI we offer user-friendly assignment of correction images to every (channel, illumination direction)-pair.
+We implemented the flat-field correction as a wrapper around an \texttt{ImgLoader}, calculating corrected pixel intensity values on-the-fly (with optional caching) every time an image is loaded. That way, the corrected images are available for all other processing steps such as intensity-based registration, interest point detection or image fusion, but it is still possible to actviate or de-activate the correction or change bright or dark images after the initial flat-field correction. A separate (bright, dark)-correction image pair can be set for every image in the dataset by modifying the XML project file, while in the GUI we offer user-friendly assignment of correction images to every (channel, illumination direction)-pair.
 
 \subsection{Pairwise shift calculation}
 
@@ -33,6 +37,8 @@ In BigStitcher, we currently offer three ways of calculating shifts between a pa
 Due to the periodic nature of the Fourier shift theorem, each peak in the PCM can actually correspond to $2^d$ possible shifts in $d$ dimensions. We therefore test each of these candidate shifts by calculating the cross-correlation between the images with $I2$ shifted according to the candidate shift (optionally with interpolation in the case of sub-pixel shifts). In the end, we keep the shift vector $t$ corresponding the highest cross correlation as the final result (applying downsampling correction, if necessary).
 
 \subsubsection{Lucas-Kanade}
+
+In addition to the default phase correlation-based pairwise shift calculation, we offer registration via an ImgLib2 implementation of the \emph{inverse compositional} formulation of the gradient descent-based Lucas-Kande optical flow algorithm \cite{baker2004lucas}. While the algorithm is applicable to a variety of transformation models, we currently stick to estimating a translation vector $t$. If the pairwise registration converges, we calculate the cross correlation of the overlapping portions of the images as a quality metric for the pairwise registration. 
 
 \subsubsection{Intensity-based Registration of grouped images}
 
