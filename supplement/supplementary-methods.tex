@@ -11,6 +11,8 @@ The \texttt{SpimData} data structure can be saved as an XML \emph{project file},
 
 \subsection{Import of data}
 
+BigStitcher imposes little constraints on the format and naming of raw data files. Using the Bioformats \cite{bioformats} library, we support a large variety of image file formats, from "conventional" TIFF stacks to vendor-specific formats. The assignment of attributes to the image stacks in the raw data can be done automatically or with minimal interaction from the users. We offer the possibility to immediately compute multi-resolution pyramids from the images and saving them as chunks to HDF5 files. Furthermore, making use of imglib2-cache, we support virtual loading of image planes from the raw files with chaching of already loaded planes.
+
 \subsection{Illumination selection}
 
 When imaging large samples with multiple illumination directions,  a lot of unnecessary images are acquired since typically, only illumination from one direction provides optimal images. We therefore implemented a simple \emph{illumination selection} functionality in BigStitcher. It starts by \emph{combining} all (selected) images by their \texttt{Illumination} attribute, i.e. it groups images that share all other attributes besides \texttt{Illumination}. In each of the resulting groups we select a best image. We do this by loading the pixel data for all images in the group at the lowest resolution level (in the case of non-multiresolution images, this corresponds to the original image) and calculating a \emph{quality metric}. We currently offer mean intensity and mean gradient magnitude as quality metrics. The image with the highest score is kept, while all other images are marked as \emph{missing} in the \texttt{SpimData}, which will lead to them being ignored in subsequent processing steps. 
@@ -34,6 +36,8 @@ In BigStitcher, we currently offer three ways of calculating shifts between a pa
 
 \subsubsection{Phase correlation}
 
+By default, we calculate pairwise translational shifts using an ImgLib2 re-implementation of the Fourier-based \emph{phase correlation} algorithm \cite{preibisch2009globally}. In noiseless images, the method produces a phase correlation matrix $Q$ containing a single $\delta$-impulse at the location corresponding to the shift between the two images. Real images might contain multiple peaks, so we localize the $n$ highest peaks in $Q$. By detecting peaks with subpixel accuracy using a quadratic fit \cite{lowe2004distinctive}. Aside from allowing subpixel-accurate registration, we can also use this to counteract the effects of downsampling, allowing us to perform registration of similar quality to full-resolution with significant performance gains.
+
 Due to the periodic nature of the Fourier shift theorem, each peak in the PCM can actually correspond to $2^d$ possible shifts in $d$ dimensions. We therefore test each of these candidate shifts by calculating the cross-correlation between the images with $I2$ shifted according to the candidate shift (optionally with interpolation in the case of sub-pixel shifts). In the end, we keep the shift vector $t$ corresponding the highest cross correlation as the final result (applying downsampling correction, if necessary).
 
 \subsubsection{Lucas-Kanade}
@@ -42,15 +46,25 @@ In addition to the default phase correlation-based pairwise shift calculation, w
 
 \subsubsection{Intensity-based Registration of grouped images}
 
-\subsubsection{Intensity-based registration of images with arbitrary pre-registrations}
+In many use cases, one might want to align not single images but groups of images, e.g. all channels of a tile, in the pairwise registration step. For this, we implemented a flexible framework for the registration of grouped images.
+
+Each attribute of the images can be set to be an \emph{axis of application}, an \emph{axis of comparison} or an \emph{axis of grouping}. The registration will proceed by first splitting the images by the application attributes, i.e. grouping all images that have the same value for these attributes. In each each group, the images are then split by the comparison attributes and finally, the remaining image groups (that differ only in the grouping attributes) are combined into one image stack by either averaging all images for each grouping attribute or picking the image with a specific instance of the attribute.   
+
+In a typical application, the stitching of tiled datasets, we would, for example, start by \emph{applying} the registration to all (\texttt{Angle}, \texttt{TimePoint})-combinations individually, \emph{comparing} by \texttt{Tiles} and finally \emph{grouping} by \texttt{Illumination} and \texttt{Channel} for each tile, e.g. by averaging illumination directions and picking a specific channel.
+
+\subsubsection{Intensity-based registration of images with pre-registrations}
 
 The two images $I_1$ and $I_2$ can have arbitrary pre-registrations, i.e. pixel coordinates $x_{px}$ are mapped to world coordinates $x_w$ via the affine transforms $x_{w,I_1} = A _{I_1}x_{px,I_1} + b_{I_1}$ and $x_{w,I_2} = A _{I_2}x_{px,I_2} + b_{I_2}$. Depending on the values of $ A _{I_1}$ and $ A _{I_2}$, we consider two cases: If they are equal, i.e. the pre-registrations differ only by a translation, we perform the shift calculation on the raw pixel data of the overlapping volume to get a shift vector $t$ for $I_2$ in pixel coordinates. The transformation in world coordinates is then given by $R \bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr) R^{-1} $ with $R = \bigl(\begin{smallmatrix}  & A_{I_2} & & b_{I_2} \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$. If the pre-registrations differ in more than just translation, we create virtually transformed images of the smallest rectangular bounding box enclosing the overlapping volume and use them as input to the registration. As the virtual input images are already in world coordinates in this case, the resulting transformation matrix for $I_2$ is simply $\bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$
 
 \subsubsection{Interest-point based}
+\label{sssec:ip-registration}
+
+For interest-point based pairwise registration, we detect local extrema in either Difference-of-Gaussian or Difference-of-mean filtered images, optionally followed by subpixel refinement of the detections via a quadratic fit. If we are registering a pair of image \emph{groups}, the interest points of each image in the group are pooled, with optional replacement of point clusters within a user-defined radius by their center.
 
 For each image, we apply the current (affine) registrations to the pixel-coordinate interest points and then determine \emph{candidate point matches} via descriptor matching. We then perform model-based outlier removal via the RANSAC algorithm, yielding a set of \emph{inlier point pairs}, $C_{inliers}$, and an optimal translation $t$ for $I_2$, minimizing $\sum_{(ip_1, ip_2) \in C_{inliers} }{|| ip_1 - ip_2 - t||^2}$
 
 \subsection{Global optimization}
+\label{ssec:globalopt}
 
 \subsubsection{Estimation of globally optimal transformations}
 
@@ -70,7 +84,9 @@ Note that for all fixed views, the registration will be constrained to be the in
 
 \subsubsection{Global optimization given pairwise transfomations}
 
-Using the pairwise transformations $T^{p}$ ($T^p_{ij} (x_{j}) = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R_{meta}$ and the 8-point approximate bounding box of their overlapping region $BB_{ij}$, we now estimate globally optimal \emph{accumulative transforms} $R_{acc}$. A set of image groups $F \subseteq V$ may be \emph{fixed}, in which case the registration will be constrained to be identity: $\forall i \in F: R_{acc,i} = I$. In a first pass, we consider only \emph{strong links} $C_{strong} = \{(i,j) \in V \bigtimes V | T_{p, ij} \in T_p \}$ for which we calculated valid pairwise transformations and the registrations for the images linked by them $R_{strong} = \{r_i \in R_{acc} | ((i,j) \in C_{strong} \vee (j,i) \in C_{strong}) \wedge i \notin F\}$
+The intensity-based pairwise shift calculations do not directly give us the point correspondences we need for the global optimization step, instead the results are pairwise transformations $T^{p}$ in the form of affine transform matrices. We can, however, easily construct point correspondences by taking a set of points and transforming them with the \emph{inverse} transform (the only requirement being that the $n$-dimensional points do not all lie in a subspace of lower dimensionality of $\mathbb{R}^n$).  
+
+Using the 3-dimensional pairwise transformations $T^{p}$ ($T^p_{ij} (x_{j}) = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R^{meta}$, we use the 8-point approximate bounding box of their overlapping region $BB_{ij}$ to construct the point correspondences: $PM_{ij} = \{ \big(bb_k, (T^p_{ij})^{-1}(bb_k) \big) | bb_k \in BB_{ij}\}$. We can then determine the gobally optimal registrations $R$ by performing the minimization described above (\ref{eq:globalopt-eq1}).  
 
 \subsubsection{Global optimization with iterative link dropping}
 
@@ -103,8 +119,30 @@ For this, we offer a \emph{two-round} version of the global optimization. In the
 
 Note that we use the corners $bb_k$ of the bounding box $BB_{ij}$ of the overlapping volume of two images $V_i$ and $V_j$ as the point correspondences. The overlap is determined accoring to the metadata transformations $R^{meta}$ and we essentially try to "un-do" the registrations of the first round as well as possible (while keeping the registrations \emph{within} the connected components). The final transformations $R$ are the concatenation of the registrations within the connected components with the relative transformations of the connected components: $R_{i} \leftarrow R^{cc}_{CC(i)} R^{strong}_{i}$.
 
-
 \subsection{MultiView Registration}
+
+For MultiView registration, e.g. registration of angles or time series stablilization, we first detect interest points in the individual images as described above (\ref{sssec:ip-registration}). Images may be grouped (and are by default if we are, e.g. registering tiled acquisitions from multiple angles for which we already aligned the tiles via an intensity-based method) according to their attributes, by pooling their interest points and optionally merging clusters. For registering time-series data, we offer four strategies. First, we can treat time points individually, registering only images within a time point. We can also perform interest point matching between different time points, either comparing all-to-all, all to a user-defined \emph{reference} time point or all time points within a defined range to each other.
+
+Pairwise point correspondences can either be established by descriptor matching followed by RANSAC outlier removal, a modified version of the iterative closest point (ICP) algorithm or by simply matching the center of mass of the point clouds of both images (note that in this case the registration will be constrained to be a translation). Using the link graph $(V,C)$ and pairwise point correspondences $P_{ij}$ established thus, we calculate the final registration by performing global optimization as described above (\ref{ssec:globalopt}), optionally with iterative link removal and a second round to preserve metadata.
+
+\subsection{Image Fusion}
+
+We \emph{fuse} multiple images by performing a weighted average of the raw images $I^{raw}$ transformed by their registrations $R$. Each raw image $I^{raw}_i$ has a set weight images $W_i$. For example, we allow the user to weigh the images with a cosine-shaped fade-out, deemphasizing the artifact-prone border regions of the individual images, as well as by the approximate local entropy, to emphasize images with sharper structures in overlapping regions. Since the raw images will be evaluated at non-integer coordinates, we offer the choice between nearest-neighbour and linear interpolation. Downsampling can easily be achieved by prepending a scaling transformation to each of the registrations $R$. The intensity of the fused volume at a coordinate $x$ is given by:
+
+\begin{equation}
+\label{eq:fusion-eq1}
+I^{fused}(x) ={ \frac{  \sum_{ I^{raw}_i \in I^{raw}} \Big(I^{raw}_i\big(R_i^{-1}(x)\big) * \prod_{w_j \in W_i}{w_j\big(R_i^{-1}(x)\big)\Big)}}{ \sum_{I^{raw}_i \in I^{raw}}\Big( \prod_{w_j \in W_i}{w_j\big(R_i^{-1}(x)\big)\Big)}}}
+\end{equation}
+
+In practice, we evalute $I^{fused}$ only at integer coordinates of a user-defined \emph{bounding box}. We implemented the image fusion to perform all calculations virtually on-the-fly, with caching of previously computed planes using imglib2-cache. This allows the quick inspection of fusion results as well as creation and planewise saving of images that might exceed the RAM available to the user.
+
+\subsection{MultiView Deconvolution}
+
+In addition to image fusion, we offer deconvolution of the fused volume using a MultiView formulation of the iterative Richardson-Lucy deconvolution algorithm with Tikhonov regularization and various optimizations. The points spread functions necessary for deconvolution can be extracted from interest points detected in the images (e.g. when subdiffraction fluorescent beads were incorporated with the sample) or supplied as TIFF-stacks by the user. We offer GPU acceleration of the deconvolution on CUDA-capable Nvidia GPUs.
+
+\subsection{Headless operation}
+
+In addition to the graphical user interface (GUI), we offer ImageJ \texttt{Plugin}s for most of the individual steps, such as data import, illumination selection, pairwise shift calculation, link filtering, global optimization and image fusion/deconvolution. The results will not be displayed interactively but saved to the XML project file or output files immediately. The individual steps can be recorded as ImageJ \emph{macros} and easily combined into a script for headless batch processing. 
 
 
 
