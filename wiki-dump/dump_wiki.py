@@ -3,6 +3,9 @@ import os
 import json
 from collections import Mapping
 import re
+import pypandoc
+import argparse
+from itertools import islice
 
 
 def merge_dict_inplace(src, dst, overwrite_dst=True):
@@ -78,21 +81,28 @@ def query(base_url, request):
             break
         lastContinue = result['continue']
 
+def window(seq, length=10):
+    idx = -length
+    while True:
+        idx += length
+        yield seq[idx:idx+length] if idx+length <= len(seq) else seq[idx:]
 
 def query_img_info(base_url, files, add_file=False):
     res = {}
-    request = {
-        'titles': '|'.join(map(lambda f: 'File:'+f, files) if add_file else files),
-        'prop': 'imageinfo',
-        'iiprop': 'url'
-    }
-    for r in query(base_url, request):
-        merge_dict_inplace(r, res)
+    for files_i in window(files):
+        if not files_i:
+            break
+        request = {
+            'titles': '|'.join(map(lambda f: 'File:'+f, files_i) if add_file else files_i),
+            'prop': 'imageinfo',
+            'iiprop': 'url'
+        }
+        for r in query(base_url, request):
+            merge_dict_inplace(r, res)
     return res
 
 
 if __name__ == '__main__':
-
     outdir = 'dump'
     with open('pages.txt', 'r') as fd:
         pages_to_read = [l.strip() for l in fd.readlines() if l.strip()!='' and not l.strip().startswith('#')]
@@ -105,11 +115,25 @@ if __name__ == '__main__':
     res1 = query_wiki("http://imagej.net", pages_to_read)
     print(json.dumps(res1, indent=1))
 
-    imgs = []
-    for _, v in res1['pages'].items():
+    cat_content = ''
 
+    imgs = []
+    for t in pages_to_read:
+    #for _, v in res1['pages'].items():
+
+        v = next((p for _, p in res1['pages'].items() if p['title'] == t))
         title = v['title'] + '.mediawiki'
-        content = v['revisions'][0]['*']
+
+        try:
+            content = v['revisions'][0]['*']
+        except KeyError as e:
+            print(e)
+            print('Error reading {}'.format(title))
+
+        # add title
+        content = '={}=\n'.format(v['title']) + content
+
+        cat_content += '\n' + content
 
         with open(os.path.join(outdir, title), 'w') as fd:
             fd.write(content)
@@ -117,6 +141,7 @@ if __name__ == '__main__':
         for img in v['images']:
             imgs.append(img['title'])
 
+    imgs = [i.replace(' ', '_') for i in imgs]
     res2 = query_img_info("http://imagej.net", imgs)
     print(json.dumps(res2, indent=1))
 
@@ -131,3 +156,9 @@ if __name__ == '__main__':
             fd.write(r.content)
 
         print('{} at {}'.format(title, url))
+
+    print(imgs)
+
+    tex = pypandoc.convert_text(cat_content, to='latex', format='mediawiki')
+    with open(os.path.join(outdir, 'user-guide.tex'), 'w') as fd:
+        fd.write(tex)
