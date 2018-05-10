@@ -117,6 +117,11 @@
 %\DeclareMathOperator*{\min}{min}
 %\DeclareMathOperator{\deg}{deg}
 
+
+
+
+
+
 \begin{document}
 
 \maketitle
@@ -138,13 +143,18 @@
 \textbf{\textcolor{red}{Supplementary File}} & \textbf{\textcolor{red}{Title}}\\ \\
 \hline
 \\
-\textbf{Supplementary Figure \ref{fig:ds-stats-01}} & Downsampling error statistics \tablespace \\
-\textbf{Supplementary Figure \ref{fig:ds-stats-02}} & Per-axis downsampling error statistics \tablespace \\
-\textbf{Supplementary Figure \ref{fig:downsampling}} &  Downsampling with different SNR \tablespace \\
-\textbf{Supplementary Figure \ref{fig:stitching}} & Example stitching \tablespace \\
-\textbf{Supplementary Note \ref{sec:sup-methods}} & Supplementary methods \tablespace \\
-\textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher user guide \tablespace \\
-\textbf{Supplementary Note \ref{sec:currentcode}} & Links to the current source codes \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-rf}} & Downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-illu-select}} & Per-axis downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-manual-align1}} &  Downsampling with different SNR \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-flatfield}} & Example stitching \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-stitching}} & Downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling}} & Downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-1}} & Downsampling error statistics 1 \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-2}} & Downsampling error statistics 2 \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-link-explorer}} & Downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-globalopt}} & Downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-icp}} & Downsampling error statistics \tablespace \\
+
 \end{tabular}}
 \caption{\emph{Note: Supplementary Videos 1--XXX are available for download on the journal homepage.}}
 \end{table}
@@ -155,62 +165,152 @@
 \section*{SUPPLEMENTARY FIGURES}
 \titleformat{\section}{\normalfont\fontsize{11.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
 
-\hspace{20mm}
 
-\subsection*{SUPPLEMENTARY FIGURE 1: Downsampling error statistics}
-
+\subsection*{SUPPLEMENTARY FIGURE 1: Fluorescence in cleared sample??}
 \vspace{1mm}
-
 \begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-downsampling-statistics-1.png}
+\includegraphics[width=\textwidth]{fig-rf.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Illustration of conditional probabilities describing the dependencies of two views.} \mbox{(\textbf{a}) illustrates} the conditional independence of two observed distributions $\phi_1(x_1)$ and $\phi_2(x_2)$ if it is known that the event $\xi=\xi'$ on the underlying distribution $\psi(\xi)$ occured. Given $\xi=\xi'$, both distributions are conditionally independent, the probability where to expect an observation only depends on $\xi=\xi'$ and the respective individual point spread function $P(x_1|\xi)$ and $P(x_2|\xi)$, i.e. $P(x_1|\xi,x_2) = P(x_1|\xi)$ and $P(x_2|\xi,x_1) = P(x_2|\xi)$. \mbox{(\textbf{b}) illustrates} the relationship between an observed distribution $\phi_2(x_2)$ and $\phi_1(x_1)$ if the event $x_1=x_1'$ occured. Solely the 'inverse' point spread function $Q(\xi|x_1)$ defines the probability for any event $\xi=\xi'$ to have caused the observation $x_1=x_1'$. The point spread function $P(x_2|\xi)$ consecutively defines the probability where to expect a corresponding observation $x_2=x_2'$ given the probability distribution $\psi(\xi)$.
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
 }
-\label{fig:ds-stats-01}
+\label{fig:sup-fig-rf}
 \end{figure*}
 
 \pagebreak
 
-\vspace{10mm}
 
-\subsection*{SUPPLEMENTARY FIGURE 2: The principle of 'virtual' views and sequential updating}
-
+\subsection*{SUPPLEMENTARY FIGURE 2: Illumination selection}
 \vspace{1mm}
-
 \begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-downsampling-statistics-2.png}
+\includegraphics[width=\textwidth]{Illu_Select.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm}\emph{The principle of 'virtual' views and sequential updating.} (\textbf{a}) The ‘classical’ multi-view deconvolution\cite{Shepp1982, KrzicPhD, Temerinac2012, Bonetti2009} where an update step is computed individually for each view and subsequently combined into one update of the deconvolved image. (\textbf{b}) Our new derivation considering conditional probabilities between views. Each individual update step takes into account all other views using ‘virtual views’ and additionally updates the deconvolved image individually, i.e. updates are performed sequentially\cite{Hudson1994} and not combined.
-}\label{fig:ds-stats-02}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-illu-select}
 \end{figure*}
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 3: Illustration of assumption required for incorporating 'virtual' views without additional computational effort}
 
+\subsection*{SUPPLEMENTARY FIGURE 3: Manual alignment}
 \vspace{1mm}
-
 \begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-downsampling.png}
+\includegraphics[width=\textwidth]{manual-view-arrangement.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm}\emph{Illustration of assumption in equation \ref{eq:eq210}.} (\textbf{a}) shows the difference in the result when computing $( f \ast g ) \cdot ( f \ast h )$ in red and the approximation $f \ast ( g \cdot h )$ in black for a random one-dimensional input sequence ($f$) and two kernels with $\sigma$=3 ($g$) and $\sigma$=2 ($h$) after normalization. (\textbf{b}) shows the difference when using the two-dimensional image from \fig \ref{fig:viewsimages}a as input ($f$) and the first two point spread functions from \fig \ref{fig:viewsimages}e as kernels ($g,h$). The upper panel pictures the approximation, the lower panel the correct computation. Note that for (\textbf{a,b}) the approximation is slightly less blurred. Note that the beads are also visible in the lower panel when adjusting the brightness/contrast.
-}\label{fig:downsampling}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-manual-align1}
 \end{figure*}
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 4: Performance comparison of the multi-view deconvolution methods and dependence on the PSF}
 
+\subsection*{SUPPLEMENTARY FIGURE 4: Flatfield correction}
 \vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-flatfield.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-flatfield}
+\end{figure*}
 
+\pagebreak
+
+
+\subsection*{SUPPLEMENTARY FIGURE 5: Pairwise registration by phase correlation}
+\vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-stitching.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm}\emph{Performance comparison and dependence on the PSF} (\textbf{a}) The convergence time of the different algorithms until they reach the same average difference to the ground truth image shown in \fig \ref{fig:viewsimages}e. (\textbf{b}) The number of iterations required until all algorithms reach the same average difference to the ground truth image. One 'iteration' comprises all computional steps until each view contributed once to update the underlying distribution. Note that our Bayesian-based derivation and the Maximization-Likelihood Expectation-Maximization\cite{Shepp1982} method perform almost identical (\textbf{c}) The total number of updates of the underlying distribution until the same average difference is reached. (\textbf{d}) The number of iterations required until the same difference to the ground truth is achieved using 4 views. The number of iterations is plotted relative to the angular difference between the input PSFs. An angular difference of 0 degrees refers to 4 identical PSFs and therefore 4 identical input images, an example of an angular difference of 45 degrees is shown in \fig \ref{fig:viewsimages}e. Plots are shown for different types of PSFs. (\textbf{a-d}) y-axis has logarithmic scale, all computations were performed on a dual-core Intel Core i7 with 2.7Ghz.
-}\label{fig:stitching}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-stitching}
 \end{figure*}
 
 \pagebreak
+
+
+
+\subsection*{SUPPLEMENTARY FIGURE 6: Downsampling with different SNR}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-downsampling.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-downsampling}
+\end{figure*}
+
+\pagebreak
+
+
+
+\subsection*{SUPPLEMENTARY FIGURE 7: Downsampling statistics 1}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-downsampling-statistics-1.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-downsampling-statistics-1}
+\end{figure*}
+
+\pagebreak
+
+
+
+\subsection*{SUPPLEMENTARY FIGURE 8: Downsampling statistics 2}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-downsampling-statistics-2.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-downsampling-statistics-2}
+\end{figure*}
+
+\pagebreak
+
+
+\subsection*{SUPPLEMENTARY FIGURE 9: Interactive inspection and curation of pairwise links}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{Supp-Link-Explorer.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-link-explorer}
+\end{figure*}
+
+\pagebreak
+
+
+\subsection*{SUPPLEMENTARY FIGURE 10: Global optimization}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-globalopt.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-globalopt}
+\end{figure*}
+
+\pagebreak
+
+
+\subsection*{SUPPLEMENTARY FIGURE 11: Affine reffinement via ICP}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-stitching_icp.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-icp}
+\end{figure*}
+
+\pagebreak
+
 
 
 
