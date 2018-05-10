@@ -13,9 +13,11 @@ The \texttt{SpimData} data structure can be saved as an XML \emph{project file},
 
 BigStitcher imposes little constraints on the format and naming of raw data files. Using the Bioformats \cite{bioformats} library, we support a large variety of image file formats, from "conventional" TIFF stacks to vendor-specific formats. The assignment of attributes to the image stacks in the raw data can be done automatically or with minimal interaction from the users. We offer the possibility to immediately compute multi-resolution pyramids from the images and saving them as chunks to HDF5 files. Furthermore, making use of imglib2-cache, we support virtual loading of image planes from the raw files with chaching of already loaded planes.
 
+\begin{comment}
 \subsection{Illumination selection}
 
 When imaging large samples with multiple illumination directions,  a lot of unnecessary images are acquired since typically, only illumination from one direction provides optimal images. We therefore implemented a simple \emph{illumination selection} functionality in BigStitcher. It starts by \emph{combining} all (selected) images by their \texttt{Illumination} attribute, i.e. it groups images that share all other attributes besides \texttt{Illumination}. In each of the resulting groups we select a best image. We do this by loading the pixel data for all images in the group at the lowest resolution level (in the case of non-multiresolution images, this corresponds to the original image) and calculating a \emph{quality metric}. We currently offer mean intensity and mean gradient magnitude as quality metrics. The image with the highest score is kept, while all other images are marked as \emph{missing} in the \texttt{SpimData}, which will lead to them being ignored in subsequent processing steps. 
+\end{comment}
 
 \subsection{Flat-field correction}
 
@@ -140,10 +142,11 @@ In practice, we evalute $I^{fused}$ only at integer coordinates of a user-define
 
 In addition to image fusion, we offer deconvolution of the fused volume using a MultiView formulation of the iterative Richardson-Lucy deconvolution algorithm with Tikhonov regularization and various optimizations. The points spread functions necessary for deconvolution can be extracted from interest points detected in the images (e.g. when subdiffraction fluorescent beads were incorporated with the sample) or supplied as TIFF-stacks by the user. We offer GPU acceleration of the deconvolution on CUDA-capable Nvidia GPUs.
 
+\begin{comment}
 \subsection{Headless operation}
 
 In addition to the graphical user interface (GUI), we offer ImageJ \texttt{Plugin}s for most of the individual steps, such as data import, illumination selection, pairwise shift calculation, link filtering, global optimization and image fusion/deconvolution. The results will not be displayed interactively but saved to the XML project file or output files immediately. The individual steps can be recorded as ImageJ \emph{macros} and easily combined into a script for headless batch processing. 
-
+\end{comment}
 
 
 \pagebreak
