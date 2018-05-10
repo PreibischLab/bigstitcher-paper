@@ -197,7 +197,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{manual-view-arrangement.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+\caption{\hspace{-0.5mm} \emph{Interactive manual alignment of tiled images.} The BigStitcher GUI offers various ways of manually (pre-)aligning tiled images. Images can be moved to a regular grid with a given tile order and overlap \textbf{(A)}. Image locations can also be read from a simple \emph{tile configuration} text file \textbf{(B)}. Furthermore, selected image(s) can be moved along axes via sliders \textbf{(C)}. All changes will be displayed in the BigDataViewer window immediately \textbf{(D)} for quick verification. 
 }
 \label{fig:sup-fig-manual-align1}
 \end{figure*}
@@ -210,7 +210,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-flatfield.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+\caption{\hspace{-0.5mm} \emph{On-the-fly flat-field correction.} The BigStitcher offers correction for camera offsets, fixed pattern noise or uneven illumination. \textbf{(A):}  Simulation of the effects of a constant background offset and Gaussian illumination/detection efficiency \textbf{(C)} on tiled images. By subtracting the \emph{dark image} and modulating with the inverse relative intensity of the \emph{bright image}, such artefacts can be corrected easily \textbf{(B)}. The correction is calculated virtually, with optional cacheing, to allow for immediate inspection of the results.
 }
 \label{fig:sup-fig-flatfield}
 \end{figure*}
@@ -289,9 +289,9 @@
 \subsection*{SUPPLEMENTARY FIGURE 10: Global optimization}
 \vspace{1mm}
 \begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-globalopt.png}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+\centerline{\includegraphics[width=0.85\textwidth]{fig-globalopt.png}}
+\vspace{2.0mm}
+\caption{\hspace{-0.5mm} \emph{Global optimization of pairwise registration in sparse datasets.} \textbf{(A):} Simulation of a tiled image dataset with sparse objects: tiled images of multiple translated Julia fractals moved to a grid according to approximate metadata (with too high overlap). Centers of images for which pairwise shifts can be determined via phase correlation are connected by green lines, whereas centers of neighboring tiles for which no meaningful shift can be calculated are linked by dashed grey lines. Manually measured distances between distinct points in the three fractals are shown in red. Performing global optimization with \emph{absolute shifts} (as it is done BigStitcher's predecessor, the ImageJ Stitching plugin) will correctly align images within connected components of the link graph but place all fractals close to the origin \textbf{(B)}. By using \emph{relative shifts}, BigStitcher will leave disconnected objects at their initial location while still aligning within connected components \textbf{(C)}. As registrations are not propagated between unconnected tiles, distances between neighboring objects might change. By running a second round of optimization to align connected components according to metadata shifts and applying the results to the in-component registrations, distances between neighboring objects are preserved as-well-as-possible \textbf{(D)}.
 }
 \label{fig:sup-fig-globalopt}
 \end{figure*}
