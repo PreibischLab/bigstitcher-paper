@@ -138,11 +138,11 @@ I^{fused}(x) ={ \frac{  \sum_{ I^{raw}_i \in I^{raw}} \Big(I^{raw}_i\big(R_i^{-1
 
 In practice, we evalute $I^{fused}$ only at integer coordinates of a user-defined \emph{bounding box}. We implemented the image fusion to perform all calculations virtually on-the-fly, with caching of previously computed planes using imglib2-cache. This allows the quick inspection of fusion results as well as creation and planewise saving of images that might exceed the RAM available to the user.
 
+\begin{comment}
 \subsection{MultiView Deconvolution}
 
 In addition to image fusion, we offer deconvolution of the fused volume using a MultiView formulation of the iterative Richardson-Lucy deconvolution algorithm with Tikhonov regularization and various optimizations. The points spread functions necessary for deconvolution can be extracted from interest points detected in the images (e.g. when subdiffraction fluorescent beads were incorporated with the sample) or supplied as TIFF-stacks by the user. We offer GPU acceleration of the deconvolution on CUDA-capable Nvidia GPUs.
 
-\begin{comment}
 \subsection{Headless operation}
 
 In addition to the graphical user interface (GUI), we offer ImageJ \texttt{Plugin}s for most of the individual steps, such as data import, illumination selection, pairwise shift calculation, link filtering, global optimization and image fusion/deconvolution. The results will not be displayed interactively but saved to the XML project file or output files immediately. The individual steps can be recorded as ImageJ \emph{macros} and easily combined into a script for headless batch processing. 
