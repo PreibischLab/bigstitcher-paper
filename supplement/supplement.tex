@@ -117,11 +117,6 @@
 %\DeclareMathOperator*{\min}{min}
 %\DeclareMathOperator{\deg}{deg}
 
-
-
-
-
-
 \begin{document}
 
 \maketitle
@@ -143,17 +138,25 @@
 \textbf{\textcolor{red}{Supplementary File}} & \textbf{\textcolor{red}{Title}}\\ \\
 \hline
 \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-rf}} & Downsampling error statistics \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-illu-select}} & Per-axis downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-rf}} & Fluorescence preservation in cleared samples\tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-illu-select}} & Illumination selection \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align1}} &  Manual alignment \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-flatfield}} & Flat-field correction \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-stitching}} & Downsampling error statistics \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling}} & Downsampling error statistics \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-1}} & Downsampling error statistics 1 \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-2}} & Downsampling error statistics 2 \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-link-explorer}} & Downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-stitching}} & Pairwise registration by phase correlation \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling}} & Downsampling with different SNR \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-0}} & Downsampling error statistics 1 \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-1}} & Downsampling error statistics 2 \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-2}} & Downsampling error statistics 3 \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-link-explorer}} & Interactive inspection and curation of pairwise links \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-globalopt}} & Global optimization \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-icp}} & Downsampling error statistics \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-icp}} & Affine refinement via ICP \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-interest-point}} & Interest point visualization \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-manual-align2}} & Manual Transformation of multi-view datasets \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-boundingbox}} & Bounding Box definition \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-fusion}} & Virtual fusion of large image \tablespace \\
+\textbf{Supplementary Note \ref{sec:sup-methods}} & Supplementary methods \tablespace \\
+\textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher User Guide \tablespace \\
+\textbf{Supplementary Note \ref{sec:currentcode}} & Links to the current source codes \tablespace \\
 
 \end{tabular}}
 \caption{\emph{Note: Supplementary Videos 1--XXX are available for download on the journal homepage.}}
@@ -166,12 +169,12 @@
 \titleformat{\section}{\normalfont\fontsize{11.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
 
 
-\subsection*{SUPPLEMENTARY FIGURE 1: Fluorescence in cleared sample??}
+\subsection*{SUPPLEMENTARY FIGURE 1: Fluorescence preservation in cleared samples}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-rf.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+\caption{\hspace{-0.5mm} \emph{Fluorescence preservation and image analysis in cleared samples.} \textbf{(a)-(d)} Optical sections of (??structure??) in a CLARITY-cleared adult mouse brain expressing ??Histone-GFP?? in ??which cells??. Fluorescence is preserved throughout the clearing procedure and can be used in advanced image analyses. The examples show nuclear segmentation via pixel-wise classification by a Random Forest \cite{arganda2017trainable} model. Classification results (probability maps) are overlaid in blue on the grayscale raw intensities.
 }
 \label{fig:sup-fig-rf}
 \end{figure*}
@@ -184,7 +187,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Illu_Select.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+\caption{\hspace{-0.5mm} \emph{Automatic illumination selection.} Best illumination for three consecutive tiles was selected based on brightest view for each tile. Close-ups shows the specified region for both illumination directions.
 }
 \label{fig:sup-fig-illu-select}
 \end{figure*}
@@ -223,7 +226,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-stitching.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+\caption{\hspace{-0.5mm} \emph{Pairwise registration by phase correlation}. \textbf{(A),(B)} Central slices of image stacks from a tiled acquisition (non-regular tiling) of an adult mouse hypothalamus slice. \textbf{(C)} Phase correlation matrix (PCM) calculated from the two images shows a single, distinct peak above nearly constant background. The peak location corresponds to the relative translation $t$ of both tiles. \textbf{(D)} Central slice through the images aligned according to $t$, as displayed in BigDataViewer. 
 }
 \label{fig:sup-fig-stitching}
 \end{figure*}
@@ -237,7 +240,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-downsampling.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+\caption{\hspace{-0.5mm} \emph{Effects of downsampling on simulated data with different SNR.} \textbf{(A)} Simulated image stacks of spheroid-like objects deteriorated by anisotropic sampling, light attenuation, convolution with an anisotropic PSF, and pixel intensity generation using Poisson processes to archive desired signal-to-noise-ratios (SNRs). \textbf{(B), (C), (D)} Effects of downsampling (with Gaussian smoothing for anti-aliasing) on the simulated images. The effects of Poissonian Shot noise are gradually reduced by the blurring of increasing downsampling.
 }
 \label{fig:sup-fig-downsampling}
 \end{figure*}
@@ -251,13 +254,12 @@
 \vspace{-2.0mm}
 \caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
 }
-\label{fig:sup-fig-downsampling-statistics-1}
+\label{fig:sup-fig-downsampling-statistics-0}
 \end{figure*}
 
 \pagebreak
 
-
-\subsection*{SUPPLEMENTARY FIGURE 7: Downsampling statistics 1}
+\subsection*{SUPPLEMENTARY FIGURE 7b: Downsampling statistics 1}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-downsampling-statistics-1.png}
@@ -269,9 +271,21 @@
 
 \pagebreak
 
-
-
 \subsection*{SUPPLEMENTARY FIGURE 8: Downsampling statistics 2}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-downsampling-statistics-1.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+}
+\label{fig:sup-fig-downsampling-statistics-2}
+\end{figure*}
+
+\pagebreak
+
+
+
+\subsection*{SUPPLEMENTARY FIGURE 9: Downsampling statistics 3}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-downsampling-statistics-2.png}
@@ -284,19 +298,19 @@
 \pagebreak
 
 
-\subsection*{SUPPLEMENTARY FIGURE 9a: Interactive inspection and curation of pairwise links}
+\subsection*{SUPPLEMENTARY FIGURE 10: Interactive inspection and curation of pairwise links}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-Link-Explorer.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
+\caption{\hspace{-0.5mm} \emph{Interactive visualization of links in the link explorer.} The BigStitcher GUI offers the exploring and modifying calculated links between corresponding tiles in the link explorer menu. textbf{(A)} Tiles containing links are displayed in yellow and can be selected. \textbf{(B)} Display corresponding tiles of the selected view. Single links can be removed manually or through available filtering options. \textbf{(C)} Corresponding links of the selected view are displayed in real-time in the BigDataViewer.
 }
 \label{fig:sup-fig-link-explorer}
 \end{figure*}
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 9b: Bounding Boxes}
+\subsection*{SUPPLEMENTARY FIGURE 10b: Bounding Boxes}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-BB.png}
@@ -308,7 +322,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 9c: Apply Transformations}
+\subsection*{SUPPLEMENTARY FIGURE 10c: Apply Transformations}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-Transformation.png}
@@ -319,7 +333,8 @@
 \end{figure*}
 
 \pagebreak
-\subsection*{SUPPLEMENTARY FIGURE 10: Global optimization}
+
+\subsection*{SUPPLEMENTARY FIGURE 11: Global optimization}
 \vspace{1mm}
 \begin{figure*}[h!]
 \centerline{\includegraphics[width=0.85\textwidth]{fig-globalopt.png}}
@@ -332,7 +347,7 @@
 \pagebreak
 
 
-\subsection*{SUPPLEMENTARY FIGURE 11: Affine refinement via ICP}
+\subsection*{SUPPLEMENTARY FIGURE 12: Affine refinement via ICP}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-stitching_icp.png}
@@ -344,14 +359,53 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 12: Virtual Fusion of large image}
+
+\subsection*{SUPPLEMENTARY FIGURE 13: Interest Point visualization}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{Supp-IntrestPoints.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Interactive visualization of interest points.} The interest points explorer allows the visualization of interest points and corresponding interest pints between views. \textbf{(A)} select desired interest points for visualization. \textbf{(B)} preview the interest points in the BigDataViewer.
+}
+\label{fig:sup-fig-interest-point}
+\end{figure*}
+
+\pagebreak
+
+
+\subsection*{SUPPLEMENTARY FIGURE 14: Manual Transformation of multi-view datasets}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{Supp-Transformation.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Interactive transformation of views.} Different transformation moldes can be applied to one or more views and simultaneously visualized in the BigDataViewer. \textbf{(A)} Choose transformation model grouping. \textbf{(B)} Further define the transformation model. In this case a rotation around the axis is selected. \textbf{(C)} Select rotation axis and angle. \textbf{(D)} Visualize rotation of the view in the BigDataViewer.
+}
+\label{fig:sup-fig-manual-align2}
+\end{figure*}
+
+\pagebreak
+
+\subsection*{SUPPLEMENTARY FIGURE 15: Bounding Box definition}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{Supp-BB.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Interactive definition of bounding boxes.} The BigStitcher GUI offers the possibility of defining or modifying regions of interest via the creation of bounding boxes. \textbf{(A)} Choose the method used to define a new bounding box. In this case the interactive mode is selected. \textbf{(B)} manually define the bounding box range \textbf{(C)} Preview the size of the specified bounding box in the BigDataViewer in real-time.
+}
+\label{fig:sup-fig-boundingbox}
+\end{figure*}
+
+\pagebreak
+
+
+\subsection*{SUPPLEMENTARY FIGURE 16: Virtual Fusion of large image}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-fusion-screenshot.png}
 \vspace{-2.0mm}
 \caption{\hspace{-0.5mm} \emph{Lorem ipsum.} Dolor sit amet.
 }
-\label{fig:sup-fig-icp}
+\label{fig:sup-fig-fusion}
 \end{figure*}
 
 \pagebreak
@@ -365,98 +419,6 @@
 }
 \label{fig:sup-fig-link-explorer}
 \end{figure*}
-
-\pagebreak
-
-
-
-\titleformat{\section}{\centering\normalfont\fontsize{11.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
-\section*{SUPPLEMENTARY TABLES}
-\titleformat{\section}{\normalfont\fontsize{11.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
-
-%========old table========
-\begin{comment}
-
-\hspace{20mm}
-
-\subsection*{SUPPLEMENTARY TABLE 1: Summary of datasets used in this publication}
-
-\hspace{20mm}
-
-\setcounter{table}{0}
-\newcounter{savecntr1}% Save footnote counter
-\newcounter{restorecntr1}% Restore footnote counter
-\newcounter{savecntr2}% Save footnote counter
-\newcounter{restorecntr2}% Restore footnote counter
-
-\begin{savenotes}
-\begin{table}[h!]
-\center
-{
-\fontsize{9pt}{10pt}\selectfont
-\center
-\begin{tabular}{p{5.5cm}p{3.0cm}p{3.6cm}p{3.5cm}}
-\textbf{Dataset} & \textbf{Size, Lightsheet} & \textbf{Computation Time,} & \textbf{Machine}\\
- & \textbf{Thickness, SNR\footnote{The SNR is estimated by M.S., E.M., and P.T. were additionally supported by the Bundesministerium für Bildung und Forschung grant 031A099.computing the average intensity of the signal, divided by the standard deviation of the signal in areas with homogenous sample intensity}}  &\textbf{Iterations, Method} &  \\
-\\
-\hline
-\\
-\emph{Drosophila} embryo expressing His-YFP in all cells  acquired with Zeiss SPIM prototype using a 20x/0.5 detection objective (\textbf{Fig. 2c-e}, \textbf{Supp. Fig. \ref{fig:resolution}})\setcounter{savecntr1}{\value{footnote}}\footnote{This SPIM acquisition was already used in Preibisch (2010)\cite{Preibisch2010} to illustrate the results of the bead-based registration and multi-view fusion; we use the underlying dataset again to illustrate the improved results of the multi-view deconvolution.} & \mbox{720$\times$380$\times$350~px}, \mbox{7~views}, \mbox{LS$\sim$5$\mu$m, SNR$\sim$30} & \mbox{7~minutes,~~~~~~~~~~~~~~~~} \mbox{12 iterations}, \mbox{optimization I}, $\lambda$~=~0.006 & \mbox{\textcolor{red}{2$\times$~Nvidia~Quadro~4000}\setcounter{savecntr2}{\value{footnote}}\footnote{Two graphics cards in one PC, which can process two 512$\times$512$\times$512 blocks in parallel}}, 64~GB RAM\\
-\\
-\emph{Drosophila} embryo expressing His-YFP in all cells acquired with the OpenSPIM using a 20x/0.5 detection objective (\textbf{Supp. Fig. \ref{fig:openspim}}) & \mbox{793$\times$384$\times$370~px}, \mbox{6~views}, \mbox{LS$\sim$10$\mu$m, SNR$\sim$15} & \mbox{12 minutes\footnote{Note that the increased computation time is due to larger anisotropy of the acquired stacks leading to larger effective PSF sizes, which increases  computational effort. The image could therefore not be split up into two \mbox{512$\times$512$\times$512} blocks.},~~~~~~~~~~~~~~~~} \mbox{12 iterations}, \mbox{optimization I}, $\lambda$~=~0.006 & \mbox{\textcolor{red}{2$\times$~Nvidia~Quadro~4000}}\setcounter{restorecntr2}{\value{footnote}}\setcounter{footnote}{\value{savecntr2}}\footnotemark \setcounter{footnote}{\value{restorecntr2}}, 64~GB RAM\\
-\\
-\emph{Drosophila} ovaries acquired on the Zeiss SPIM prototype using a 20x/0.5 detection objective (\textbf{Supp. Fig. \ref{fig:eggchamber}}) & \mbox{1211$\times$822$\times$430~px}, \mbox{12 views}, \mbox{LS$\sim$5$\mu$m, SNR$\sim$19} & \mbox{36 minutes,~~~~~~~~~~~~~~~~} \mbox{12 iterations}, \mbox{optimization I}, $\lambda$~=~0.006  & \mbox{\textcolor{red}{2$\times$~Nvidia~Quadro~4000}}\setcounter{restorecntr2}{\value{footnote}}\setcounter{footnote}{\value{savecntr2}}\footnotemark \setcounter{footnote}{\value{restorecntr2}}, 64~GB RAM \\
-\\
-\emph{Drosophila} embryo expressing His-YFP in all cells acquired with Zeiss SPIM prototype using a 20x/0.5 detection objective (\textbf{Supp. Video 8-10},\textbf{Supp. Fig. \ref{fig:SIM}}) & \mbox{792$\times$320$\times$310~px}, \mbox{6~views}, \mbox{236 timepoints}, \mbox{LS$\sim$5$\mu$m, SNR$\sim$26} & \mbox{24.3 hours,~~~~~~~~~~~~~~~~} \mbox{12 iterations}, \mbox{optimization I}, $\lambda$~=~0.006 & \mbox{\textcolor{red}{2$\times$~Nvidia~Quadro~4000}}\setcounter{restorecntr2}{\value{footnote}}\setcounter{footnote}{\value{savecntr2}}\footnotemark \setcounter{footnote}{\value{restorecntr2}}, 64~GB RAM\\
-\\
-\emph{Drosophila} embryo expressing Histone-H2Av-mRFPruby fusion in all cells imaged on Zeiss Lightsheet Z1 with a 20x/1.0 detection objective and dual-sided illumination & \mbox{928$\times$390$\times$390~px}, \mbox{6~views}, \mbox{715~timepoints}, \mbox{LS$\sim$5$\mu$m, SNR$\sim$21} & \mbox{35 hours,~~~~~~~~~~~~~~~~} \mbox{10 iterations}, \mbox{optimization I}, $\lambda$~=~0.0006 & \mbox{\textcolor{red}{4$\times$~Nvidia~TESLA}}\footnote{Run on a cluster with 4 nodes that are equipped with one Nvidia TESLA and 64~GB of system memory}, 64~GB RAM \\
-\\
-\emph{C. elegans} embryo in 4-cell stage expressing PH-domain-GFP fusion acquired with Zeiss SPIM prototype using a 40x/0.8 detection objective (\textbf{Fig. 2a,b})\setcounter{restorecntr1}{\value{footnote}}\setcounter{footnote}{\value{savecntr1}}\footnotemark \setcounter{footnote}{\value{restorecntr1}} & \mbox{180$\times$135$\times$180~px}, \mbox{6~views}, \mbox{LS$\sim$3.5$\mu$m, SNR$\sim$40} & \mbox{1 minute,~~~~~~~~~~~~~~~~} \mbox{20 iterations}, \mbox{optimization I}, $\lambda$~=~0.006 & \mbox{\textcolor{blue}{2$\times$~Intel~Xeon E5-2630}}, 64~GB RAM\\
-\\
-Fixed \emph{C. elegans} larvae in L1 stage expressing LMN-1::GFP and stained with Hoechst imaged on Zeiss Lightsheet Z1 with a 20x/1.0 detection objective (\textbf{Fig. 2f,g} and \textbf{Supp. Video 4-7}) & \mbox{1640$\times$1070$\times$345~px}, \mbox{4 views}, \mbox{2~channels}, \mbox{LS$\sim$2$\mu$m}, \mbox{SNR$\sim$62 (Hoechst)}, \mbox{SNR$\sim$24 (GFP)} & \mbox{2$\times$160 minutes,~~~~~~~~~~~~~~~~} \mbox{100 iterations}, \mbox{optimization II}, $\lambda$~=~0 & \mbox{\textcolor{blue}{2$\times$~Intel~Xeon E5-2690}}, 128~GB RAM \\
-\\
-\end{tabular}}
-%\nocaption
-\caption{ }
-\label{tab:experiments}
-\end{table}
-\end{savenotes}
-
-\hspace{20mm}
-
-\subsection*{SUPPLEMENTARY TABLE 1 (CONTINUED): Summary of datasets used in this publication}
-
-\hspace{20mm}
-
-\begin{savenotes}
-\begin{table}[h!]
-\center
-{
-\fontsize{9pt}{10pt}\selectfont
-\center
-\begin{tabular}{p{5.5cm}p{3.0cm}p{3.6cm}p{3.5cm}}
-\textbf{Dataset} & \textbf{Size, Lightsheet} & \textbf{Computation Time,} & \textbf{Machine}\\
- & \textbf{Thickness, SNR}  &\textbf{Iterations, Method} &  \\
-\\
-\hline
-\\
-\emph Fixed {C. elegans} in L1 stage stained with Sytox green acquired with \textcolor{red}{Spinning Disc Confocal} using a 20x/0.5 detection objective (\textbf{Supp. Fig. \ref{fig:spinningdisc}})\footnote{This multi-view spinning disc acquisition was already used in Preibisch (2010)\cite{Preibisch2010} to illustrate the applicability of the bead-based registration and multi-view fusion to other technologies than SPIM; we use the underlying dataset again to illustrate the improved results and applicability of the multi-view deconvolution.} & \mbox{1135$\times$400$\times$430~px}, \mbox{5~views}, \mbox{LS N/A, SNR$\sim$28} & \mbox{36 minutes,~~~~~~~~~~~~~~~~} \mbox{50 iterations}, \mbox{optimization II}, $\lambda$~=~0.0006 & \mbox{\textcolor{blue}{2$\times$~Intel~Xeon E5-2680}}, 128~GB RAM\\
-\\
-\emph Fixed {C. elegans} in L1 stage stained with Sytox green acquired with \textcolor{red}{Spinning Disc Confocal} using a 20x/0.5 detection objective (\textbf{Supp. Fig. \ref{fig:spinningdisc}})\footnote{This is the same dataset as in the row above, but showing the time it took to compute the single-view deconvolution.} & \mbox{1151$\times$426$\times$190~px}, \textcolor{red}{\mbox{1~view}}, \mbox{LS N/A, SNR$\sim$28} & \mbox{202 minutes,~~~~~~~~~~~~~~~~} \mbox{900 iterations}, \textcolor{red}{\mbox{Lucy-Richardson}}, $\lambda$~=~0.0006 & \mbox{\textcolor{blue}{2$\times$~Intel~Xeon E5620}}, 64~GB RAM\\
-\\
-\emph Fixed {Drosophila} embryo stained with Sytox green acquired on the Zeiss SPIM prototype using a 20x/0.5 detection objective (\textbf{Supp. Fig. \ref{fig:twophoton}}) & \mbox{642$\times$316$\times$391~px}, \mbox{9~views}, \mbox{LS$\sim$5$\mu$m, SNR$\sim$20} & \mbox{15 minutes,~~~~~~~~~~~~~~~~} \mbox{15 iterations}, \mbox{optimization I}, $\lambda$~=~0.006 & \mbox{\textcolor{blue}{2$\times$~Intel~Xeon E5-2680}}, 128~GB RAM\\
-\\
-\emph Fixed {Drosophila} embryo stained with Sytox green acquired on a \textcolor{red}{Two-Photon Microscope} using a 20x/0.8 detection objective (\textbf{Supp. Fig. \ref{fig:twophoton}}) & \mbox{856$\times$418$\times$561~px}, \textcolor{red}{\mbox{1~view}}, \mbox{LS N/A, SNR$\sim$7} & \mbox{160 minutes,~~~~~~~~~~~~~~~~} \mbox{300 iterations}, \textcolor{red}{\mbox{Lucy-Richardson}}, $\lambda$~=~0.006 & \mbox{\textcolor{blue}{2$\times$~Intel~Xeon E5620}}, 64~GB RAM\\
-\\
-\end{tabular}}
-%\nocaption
-\caption{Supplementary Table 1: \emph{Summary of all datasets used in this publication}. Note that the multi-view deconvolution of the \emph{C. elegans} larvae in L1 stage (SPIM \& Spinning Disc Confocal) required an additional registration step, which is explained in the \bf{Online Methods}.}
-\label{tab:experiments2}
-\end{table}
-\end{savenotes}
-
-\end{comment}
-%========end old table========
 
 \pagebreak
 
