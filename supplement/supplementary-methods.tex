@@ -1,7 +1,14 @@
-\section{SUPPLEMENTARY METHODS}
-\label{sec:sup-methods}
+%\section{SUPPLEMENTARY METHODS}
+\titleformat{\section}{\centering\normalfont\fontsize{13.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
+\section*{SUPPLEMENTARY NOTE}
+\titleformat{\section}{\centering\normalfont\fontsize{11.5pt}{1em}\bfseries}{\thesection. }{0em}{}
 
-\subsection{\texttt{SpimData} data format}
+\hspace{20mm}
+
+\section{Data Import}
+\label{sec:sup-note1}
+
+\subsection*{\texttt{SpimData} data format}
 
 We internally represent our image data and metadata using an extended version of the \texttt{SpimData} data format of BigDataViewer\cite{pietzsch2015bigdataviewer}. Each image stack is defined by a (\texttt{ViewSetup}, \texttt{TimePoint})-combination. We extend the format by giving each \texttt{ViewSetup} the following \emph{attributes}: \texttt{Channel} to represent color channels, \texttt{Illumination} to represent illumination directions, \texttt{Angle} to represent multi-view acquisition angles and finally \texttt{Tile}, representing (local) x,y points in a multipoint acquisition.
 
@@ -9,7 +16,7 @@ In addition to those attributes, we store detected interest points, bounding box
 
 The \texttt{SpimData} data structure can be saved as an XML \emph{project file}, allowing users to manually edit it with any text editor. We automatically save previous versions of the project file to provide the user with the ability to un-do registration steps.
 
-\subsection{Import of data}
+\subsection*{Import of data}
 
 BigStitcher imposes little constraints on the format and naming of raw data files. Using the Bioformats \cite{bioformats} library, we support a large variety of image file formats, from "conventional" TIFF stacks to vendor-specific formats. The assignment of attributes to the image stacks in the raw data can be done automatically or with minimal interaction from the users. We offer the possibility to immediately compute multi-resolution pyramids from the images and saving them as chunks to HDF5 files. Furthermore, making use of imglib2-cache, we support virtual loading of image planes from the raw files with chaching of already loaded planes.
 
@@ -19,7 +26,7 @@ BigStitcher imposes little constraints on the format and naming of raw data file
 When imaging large samples with multiple illumination directions,  a lot of unnecessary images are acquired since typically, only illumination from one direction provides optimal images. We therefore implemented a simple \emph{illumination selection} functionality in BigStitcher. It starts by \emph{combining} all (selected) images by their \texttt{Illumination} attribute, i.e. it groups images that share all other attributes besides \texttt{Illumination}. In each of the resulting groups we select a best image. We do this by loading the pixel data for all images in the group at the lowest resolution level (in the case of non-multiresolution images, this corresponds to the original image) and calculating a \emph{quality metric}. We currently offer mean intensity and mean gradient magnitude as quality metrics. The image with the highest score is kept, while all other images are marked as \emph{missing} in the \texttt{SpimData}, which will lead to them being ignored in subsequent processing steps. 
 \end{comment}
 
-\subsection{Flat-field correction}
+\section{Flat-field correction}
 
 Flat-field correction is the process of correcting for image artifacts due to uneven illumination or detection efficiency or fixed-pattern noise. Aside from being visually unpleasing, especially in tiled acquisitions, these artifacts can also effect image registration and downstream quantitative image analyses. We therefore offer simple on-the-fly correction for a \emph{dark image} (which might be nonzero due to e.g. camera offset) and a \emph{bright image} (representing uneven ilumination or detection efficiency across the field-of-view). We calculate corrected pixel intensities $C$ from a raw image $R$ and bright and dark images $B$ and $D$ as:
 
@@ -32,21 +39,21 @@ The correction images can either have the same dimensionality as the raw images,
 
 We implemented the flat-field correction as a wrapper around an \texttt{ImgLoader}, calculating corrected pixel intensity values on-the-fly (with optional caching) every time an image is loaded. That way, the corrected images are available for all other processing steps such as intensity-based registration, interest point detection or image fusion, but it is still possible to actviate or de-activate the correction or change bright or dark images after the initial flat-field correction. A separate (bright, dark)-correction image pair can be set for every image in the dataset by modifying the XML project file, while in the GUI we offer user-friendly assignment of correction images to every (channel, illumination direction)-pair.
 
-\subsection{Pairwise shift calculation}
+\section{Pairwise shift calculation}
 
 In BigStitcher, we currently offer three ways of calculating shifts between a pair of images: the Fourier-based \emph{phase correlation} algorithm, the Gradient-descent-based \emph{Lucas-Kanade} algorithm, both intensity-based methods, as well as interest point-based alignment.
 
-\subsubsection{Phase correlation}
+\subsection*{Phase correlation}
 
 By default, we calculate pairwise translational shifts using an ImgLib2 re-implementation of the Fourier-based \emph{phase correlation} algorithm \cite{preibisch2009globally}. In noiseless images, the method produces a phase correlation matrix $Q$ containing a single $\delta$-impulse at the location corresponding to the shift between the two images. Real images might contain multiple peaks, so we localize the $n$ highest peaks in $Q$. By detecting peaks with subpixel accuracy using a quadratic fit \cite{lowe2004distinctive}. Aside from allowing subpixel-accurate registration, we can also use this to counteract the effects of downsampling, allowing us to perform registration of similar quality to full-resolution with significant performance gains.
 
 Due to the periodic nature of the Fourier shift theorem, each peak in the PCM can actually correspond to $2^d$ possible shifts in $d$ dimensions. We therefore test each of these candidate shifts by calculating the cross-correlation between the images with $I2$ shifted according to the candidate shift (optionally with interpolation in the case of sub-pixel shifts). In the end, we keep the shift vector $t$ corresponding the highest cross correlation as the final result (applying downsampling correction, if necessary).
 
-\subsubsection{Lucas-Kanade}
+\subsection*{Lucas-Kanade}
 
 In addition to the default phase correlation-based pairwise shift calculation, we offer registration via an ImgLib2 implementation of the \emph{inverse compositional} formulation of the gradient descent-based Lucas-Kande optical flow algorithm \cite{baker2004lucas}. While the algorithm is applicable to a variety of transformation models, we currently stick to estimating a translation vector $t$. If the pairwise registration converges, we calculate the cross correlation of the overlapping portions of the images as a quality metric for the pairwise registration. 
 
-\subsubsection{Intensity-based Registration of grouped images}
+\subsection*{Intensity-based Registration of grouped images}
 
 In many use cases, one might want to align not single images but groups of images, e.g. all channels of a tile, in the pairwise registration step. For this, we implemented a flexible framework for the registration of grouped images.
 
@@ -54,21 +61,21 @@ Each attribute of the images can be set to be an \emph{axis of application}, an 
 
 In a typical application, the stitching of tiled datasets, we would, for example, start by \emph{applying} the registration to all (\texttt{Angle}, \texttt{TimePoint})-combinations individually, \emph{comparing} by \texttt{Tiles} and finally \emph{grouping} by \texttt{Illumination} and \texttt{Channel} for each tile, e.g. by averaging illumination directions and picking a specific channel.
 
-\subsubsection{Intensity-based registration of images with pre-registrations}
+\subsection*{Intensity-based registration of images with pre-registrations}
 
 The two images $I_1$ and $I_2$ can have arbitrary pre-registrations, i.e. pixel coordinates $x_{px}$ are mapped to world coordinates $x_w$ via the affine transforms $x_{w,I_1} = A _{I_1}x_{px,I_1} + b_{I_1}$ and $x_{w,I_2} = A _{I_2}x_{px,I_2} + b_{I_2}$. Depending on the values of $ A _{I_1}$ and $ A _{I_2}$, we consider two cases: If they are equal, i.e. the pre-registrations differ only by a translation, we perform the shift calculation on the raw pixel data of the overlapping volume to get a shift vector $t$ for $I_2$ in pixel coordinates. The transformation in world coordinates is then given by $R \bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr) R^{-1} $ with $R = \bigl(\begin{smallmatrix}  & A_{I_2} & & b_{I_2} \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$. If the pre-registrations differ in more than just translation, we create virtually transformed images of the smallest rectangular bounding box enclosing the overlapping volume and use them as input to the registration. As the virtual input images are already in world coordinates in this case, the resulting transformation matrix for $I_2$ is simply $\bigl(\begin{smallmatrix}  & I & & t \\  0 & \cdots & 0 & 1 \end{smallmatrix}\bigr)$
 
-\subsubsection{Interest-point based}
+\subsection*{Interest-point based}
 \label{sssec:ip-registration}
 
 For interest-point based pairwise registration, we detect local extrema in either Difference-of-Gaussian or Difference-of-mean filtered images, optionally followed by subpixel refinement of the detections via a quadratic fit. If we are registering a pair of image \emph{groups}, the interest points of each image in the group are pooled, with optional replacement of point clusters within a user-defined radius by their center.
 
 For each image, we apply the current (affine) registrations to the pixel-coordinate interest points and then determine \emph{candidate point matches} via descriptor matching. We then perform model-based outlier removal via the RANSAC algorithm, yielding a set of \emph{inlier point pairs}, $C_{inliers}$, and an optimal translation $t$ for $I_2$, minimizing $\sum_{(ip_1, ip_2) \in C_{inliers} }{|| ip_1 - ip_2 - t||^2}$
 
-\subsection{Global optimization}
+\section{Global optimization}
 \label{ssec:globalopt}
 
-\subsubsection{Estimation of globally optimal transformations}
+\subsection*{Estimation of globally optimal transformations}
 
 The pairwise registration step results in \emph{links} between image (groups) $V$ (note that sice we do not use the actual image \emph{content} in the global optimization, we will refer to the images by their integer \emph{id} in this section: $V \subset \mathbb{N}$). The links can be either in the form of pairwise transformations $T^{p}$  (such that coordinates $x$ from two images $V_i$ and $V_j$ can be transformed according to $T^p_{ij} (x_{j}) = x_i$) or \emph{point correspondences} $PM$ from which such transformations can be estimated.
 The pairwise registrations thus form a \emph{link graph} $(V, C)$ with edges $C = \{(i,j) \in V \times V | T^p_{ij} \in T^p \}$ between image pairs for which we could determine pairwise transformations. Simply traversing a spanning tree of the link graph and propagating the pairwise transformations can lead to the compounding of pairwise registration errors, even if the traversal is done along a \emph{minimal} spanning tree determined according to some quality metric $q_{ij}$, e.g. cross-correlation, of the pairwise registrations.
@@ -84,13 +91,13 @@ We determine the globally optimal registrations $R$ given the image (groups) $V$
 
 Note that for all fixed views, the registration will be constrained to be the indentity transformation $I$: $\forall V_i \in F: R_{i} = I$.
 
-\subsubsection{Global optimization given pairwise transfomations}
+\subsection*{Global optimization given pairwise transfomations}
 
 The intensity-based pairwise shift calculations do not directly give us the point correspondences we need for the global optimization step, instead the results are pairwise transformations $T^{p}$ in the form of affine transform matrices. We can, however, easily construct point correspondences by taking a set of points and transforming them with the \emph{inverse} transform (the only requirement being that the $n$-dimensional points do not all lie in a subspace of lower dimensionality of $\mathbb{R}^n$).  
 
 Using the 3-dimensional pairwise transformations $T^{p}$ ($T^p_{ij} (x_{j}) = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R^{meta}$, we use the 8-point approximate bounding box of their overlapping region $BB_{ij}$ to construct the point correspondences: $PM_{ij} = \{ \big(bb_k, (T^p_{ij})^{-1}(bb_k) \big) | bb_k \in BB_{ij}\}$. We can then determine the gobally optimal registrations $R$ by performing the minimization described above (\ref{eq:globalopt-eq1}).  
 
-\subsubsection{Global optimization with iterative link dropping}
+\subsection*{Global optimization with iterative link dropping}
 
 Once the global optimization terminates due to convergence or exceeding of the maximium number of iterations, we can calculate the \emph{error} of the individual images as the average displacement of all interest points in an image to their point matches:
 
@@ -108,7 +115,7 @@ c_{worst} = \argmax_{(i,j)} \max_{(x_k, y_k) \in PM_{ij}}\bigg( (1-q_{ij})^2 \sq
 
 with $d_{ijk}$ denoting the distance of the $k$'th point match of the link $(i,j)$, $d_{ijk} = || R_{i}(x_k) - R_{j}(y_k) ||$, $\deg(i)$ denoting the degree (number of neighbors) of an image $V_i$ in the link graph and $q_{ij}$ being a \emph{quality metric} $\in (0,1)$ of the link, e.g. 0-truncated cross correlation. We then remove the worst link from the links ($C^{n+1} \leftarrow C^{n} \setminus c_{worst}$) and repeat the optimization step \ref{eq:globalopt-eq1} with the new link graph $(V, C^{n+1})$. The whole process is repeated until the errors fall below a user-defined threshold (in the worst case, links will be dropped until we end up with \emph{spanning trees} of the connected components in the link graph). 
 
-\subsubsection{Two-round global optimization using metadata}
+\subsection*{Two-round global optimization using metadata}
 
 If some cases, the link graph might contain multiple connected components, e.g. in datasets from screening applications, where the actual sample only occupies isolated "islands" and most images contain only background. In this case, we can only realibly determine pairwise transformations within the connected components and align images within the components in the global optimization step. We might, however, have resonable registrations $R^{meta}$ from metadata and wish to keep as closely as possible to those if we do not have \emph{stong} links.
 
@@ -121,13 +128,14 @@ For this, we offer a \emph{two-round} version of the global optimization. In the
 
 Note that we use the corners $bb_k$ of the bounding box $BB_{ij}$ of the overlapping volume of two images $V_i$ and $V_j$ as the point correspondences. The overlap is determined accoring to the metadata transformations $R^{meta}$ and we essentially try to "un-do" the registrations of the first round as well as possible (while keeping the registrations \emph{within} the connected components). The final transformations $R$ are the concatenation of the registrations within the connected components with the relative transformations of the connected components: $R_{i} \leftarrow R^{cc}_{CC(i)} R^{strong}_{i}$.
 
-\subsection{MultiView Registration}
+\section{MultiView Registration}
 
 For MultiView registration, e.g. registration of angles or time series stablilization, we first detect interest points in the individual images as described above (\ref{sssec:ip-registration}). Images may be grouped (and are by default if we are, e.g. registering tiled acquisitions from multiple angles for which we already aligned the tiles via an intensity-based method) according to their attributes, by pooling their interest points and optionally merging clusters. For registering time-series data, we offer four strategies. First, we can treat time points individually, registering only images within a time point. We can also perform interest point matching between different time points, either comparing all-to-all, all to a user-defined \emph{reference} time point or all time points within a defined range to each other.
 
 Pairwise point correspondences can either be established by descriptor matching followed by RANSAC outlier removal, a modified version of the iterative closest point (ICP) algorithm or by simply matching the center of mass of the point clouds of both images (note that in this case the registration will be constrained to be a translation). Using the link graph $(V,C)$ and pairwise point correspondences $P_{ij}$ established thus, we calculate the final registration by performing global optimization as described above (\ref{ssec:globalopt}), optionally with iterative link removal and a second round to preserve metadata.
 
-\subsection{Image Fusion}
+\section{Image Fusion}
+\label{sec:fusion}
 
 We \emph{fuse} multiple images by performing a weighted average of the raw images $I^{raw}$ transformed by their registrations $R$. Each raw image $I^{raw}_i$ has a set weight images $W_i$. For example, we allow the user to weigh the images with a cosine-shaped fade-out, deemphasizing the artifact-prone border regions of the individual images, as well as by the approximate local entropy, to emphasize images with sharper structures in overlapping regions. Since the raw images will be evaluated at non-integer coordinates, we offer the choice between nearest-neighbour and linear interpolation. Downsampling can easily be achieved by prepending a scaling transformation to each of the registrations $R$. The intensity of the fused volume at a coordinate $x$ is given by:
 
@@ -139,98 +147,11 @@ I^{fused}(x) ={ \frac{  \sum_{ I^{raw}_i \in I^{raw}} \Big(I^{raw}_i\big(R_i^{-1
 In practice, we evalute $I^{fused}$ only at integer coordinates of a user-defined \emph{bounding box}. We implemented the image fusion to perform all calculations virtually on-the-fly, with caching of previously computed planes using imglib2-cache. This allows the quick inspection of fusion results as well as creation and planewise saving of images that might exceed the RAM available to the user.
 
 \begin{comment}
-\subsection{MultiView Deconvolution}
+\section{MultiView Deconvolution}
 
 In addition to image fusion, we offer deconvolution of the fused volume using a MultiView formulation of the iterative Richardson-Lucy deconvolution algorithm with Tikhonov regularization and various optimizations. The points spread functions necessary for deconvolution can be extracted from interest points detected in the images (e.g. when subdiffraction fluorescent beads were incorporated with the sample) or supplied as TIFF-stacks by the user. We offer GPU acceleration of the deconvolution on CUDA-capable Nvidia GPUs.
 
-\subsection{Headless operation}
+\section{Headless operation}
 
 In addition to the graphical user interface (GUI), we offer ImageJ \texttt{Plugin}s for most of the individual steps, such as data import, illumination selection, pairwise shift calculation, link filtering, global optimization and image fusion/deconvolution. The results will not be displayed interactively but saved to the XML project file or output files immediately. The individual steps can be recorded as ImageJ \emph{macros} and easily combined into a script for headless batch processing. 
-\end{comment}
-
-
-\pagebreak
-
-
-
-
-
-%================ old text, left as a comment in case we need some commands from it ====================
-
-\begin{comment}
-
-This document closely follows the notation introduced in the paper of L. B. Lucy\cite{lucy1974} whenever possible.
-%In section \ref{sec:singleview} we re-state the formalization of the deconvolution problem as defined by Lucy and re-derive the iterative solution for the single view case as shown by Richardson\cite{richardson1972} and Lucy\cite{lucy1974}. In section \ref{sec:multiview} we derive the \emph{bayesian} extension to the multi-view case as used in\cite{KrzicPhD, PreibischPhD, Temerinac2012}. Section \ref{sec:conditional} discusses the implications of independence between views and in section \ref{sec:efficientmv} we show the derivation of the efficient \emph{bayesian} multi-view deconvolution that takes into account conditional probabilities for the first time. In section \ref{sec:optimizeconvergence} we introduce a faster alternative optimization scheme and section \ref{sec:benchmark} evaluates all methods and compares our new derivations considering conditional probabilities to previously existing methods.
-Note that for simplicity all derivations in this document only cover the one-dimensional case. Nevertheless, all equations are valid for any \emph{n}-dimensional case.
-
-%\subsection{Derivation of the iterative deconvolution scheme}
-\subsection{Derivation of the Bayesian-based single-view deconvolution: REMOVE AND REPLACE WITH OUT STUFF}
-\label{sec:singleview}
-
-This section re-derives the classical Bayesian-based Richardson\cite{richardson1972}-Lucy\cite{lucy1974} deconvolution for single images, other derivations presented in this document build up on it. The goal is to estimate the frequency distribution of an underlying signal $\psi(\xi)$ from a finite number of measurements $x^{1'}, x^{2'}, ..., x^{N'}$. The resulting observed distribution $\phi(x)$ is defined as
-\begin{equation}
-\label{eq:eq1}
-\phi(x) = \int_{\xi}{\psi(\xi)P(x|\xi)}d\xi
-\end{equation}
-where $P(x|\xi)$ is the probability of a measurement occuring at $x=x'$ when it is known that the event \mbox{$\xi=\xi'$} occured. In more practical image analysis terms equation \ref{eq:eq1} describes the one-dimensional convolution operation where $\phi(x)$ is the blurred image, $P(x|\xi)$ is the kernel and $\psi(\xi)$ is the undegraded (or deconvolved) image. All distributions are treated as probability distributions and fulfill the following constraints:
-\begin{equation}
-\label{eq:eq3}
-\int_{\xi}{\psi(\xi)}d\xi = \int_{x}{\phi(x)}dx = \int_{x}{P(x|\xi)}dx = 1 ~~~and~~~ \psi(\xi) > 0, ~\phi(x) \geq 0, ~P(x|\xi) \geq 0
-\end{equation}
-
-\noindent The basis for the derivation of the Bayesian-based deconvolution is the tautology
-\begin{equation}
-\label{eq:eq5}
-P(\xi=\xi' \wedge x=x') = P(x=x' \wedge \xi=\xi')
-\end{equation}
-It states that it is equally probable that the event $\xi'$ results in a measurement at $x'$ and that the measurement at $x'$ was caused by the event $\xi'$. Integrating equation \ref{eq:eq5} over the measured distribution yields the joint probability distribution
-\begin{equation}
-\int_x P(\xi \wedge x) dx = \int_x P(x \wedge \xi) dx
-\end{equation}
-which can be expressed using conditional probabilities
-\begin{equation}
-\int_x P(\xi) P(x|\xi) dx = \int_x P(x) P(\xi|x) dx
-\end{equation}
-and in correspondence to Lucy's notation looks like (equation \ref{eq:eq1})
-\begin{equation}
-\label{eq:eq7}
-\int_x \psi(\xi) P(x|\xi) dx = \int_x \phi(x) Q(\xi|x) dx
-\end{equation}
-where $P(\xi) \equiv \psi(\xi), P(x) \equiv \phi(x), P(\xi|x) \equiv Q(\xi|x)$. $Q(\xi|x)$ denotes what Lucy calls the 'inverse' conditional probability to $P(x|\xi)$. It defines the probability that an event at $\xi'$ occured, given a specific measurement at $x'$. As $\psi(\xi)$ does not depend on $x$, equation \ref{eq:eq7} can be rewritten as
-\begin{equation}
-\label{eq:eq9}
-\psi(\xi) \overbrace{\int_x P(x|\xi) dx}^{=1} = \int_x \phi(x) Q(\xi|x) dx
-\end{equation}
-hence (due to equation \ref{eq:eq3})
-\begin{equation}
-\label{eq:eq11}
-\psi(\xi) = \int_x \phi(x) Q(\xi|x) dx
-\end{equation}
-which corresponds to the inverse of the convolution in equation \ref{eq:eq1}. Although $Q(\xi|x)$ cannot be used to directly compute $\psi(\xi)$, \emph{Bayes' Theorem} and subsequently equation \ref{eq:eq1} can be used to reformulate it as
-\begin{equation}
-\label{eq:eq12}
-Q(\xi|x) = \frac{\psi(\xi) P(x|\xi)}{\phi(x)} =  \frac{\psi(\xi) P(x|\xi)}{\int_\xi \psi(\xi) P(x|\xi) d\xi}
-\end{equation}
-Replacing $Q(\xi|x)$ in equation \ref{eq:eq11} yields
-\begin{equation}
-\label{eq:eq13}
-\psi(\xi) = \int_x \phi(x) \frac{\psi(\xi) P(x|\xi)}{\int_\xi \psi(\xi) P(x|\xi) d\xi} dx
-          = \psi(\xi) \int_x  \frac{ \phi(x) }{\int_\xi \psi(\xi) P(x|\xi) d\xi} P(x|\xi) dx
-\end{equation}
-which exactly re-states the deconvolution scheme introduced by Lucy and Richardson. The fact that both sides of the equation contain the desired underlying (deconvolved) distribution $\psi(\xi)$ suggests an iterative scheme to converge towards the correct solution
-\begin{equation}
-\label{eq:eq15}
-\psi^{r+1}(\xi) = \psi^r(\xi) \int_x \frac{ \phi(x) }{\int_\xi \psi^r(\xi) P(x|\xi) d\xi} P(x|\xi) dx
-\end{equation}
-where $\psi^0(\xi)$ is simply a constant distribution with each value being the average intensity of the measured distribution $\phi(x)$.
-
-Equation \ref{eq:eq15} turns out to be a maximum-likelihood (ML) expection-maximization (EM) formulation\cite{Dempster77}, which works as follows. First, it computes for every pixel the convolution of the current guess of the deconvolved image $\psi^r(\xi)$ with the kernel (PSF) $P(x|\xi)$, i.e. $\phi^r(x) = \int_\xi \psi^r(\xi) P(x|\xi) d\xi$. In EM-terms $\phi^r(x)$ describes the \emph{expected value}.  The quotient between the input image $\phi(x)$ and the \emph{expected value} $\phi^r(x)$ yields the disparity for every pixel. These values are initially large but will become very small upon convergence. In an ideal scenario all values of $\phi^r(x)$ and $\phi(x)$ will be identical once the algorithm converged. This ratio is subsequently convolved with the point spread function $P(x|\xi)$ reflecting which pixels influence each other. In EM-terms this is called the \emph{maximization step}. This also preserves smoothness. These resulting values are then pixel-wise multiplied with the current guess of the deconvolved image $\psi^r(\xi)$, which we call an RL-update (Richardson-Lucy). It results in a new guess for the deconvolved image.
-
-Starting from an initial guess of an image with constant values, this scheme will converge towards the correct solution if the guess of the point spread function is correct and if the observed distribution is not degraded by noise, transformations, etc.
-
-pixel-by-pixel the quotient between the input image $\phi(x)$ and the convolution of the current guess of the deconvolved image $\psi^r(\xi)$ with the kernel (aka PSF) $P(x|\xi)$, which yields a per pixel difference. These values are initially large but will become very small upon convergence. This quotient image is subsequently convolved with the point spread function $P(x|\xi)$ reflecting which pixels influence each other. This also preserves smoothness. These resulting values are then pixel-wise multiplied with the current guess of the deconvolved image $\psi^r(\xi)$, yielding a new guess of the deconvolved image. Starting from an initial guess of an image with constant values, this scheme will converge towards the correct solution if the guess of the point spread function is correct and if the observed distribution is not degraded by noise, transformations, etc.
-
-
-\pagebreak
-
 \end{comment}
