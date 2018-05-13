@@ -142,13 +142,13 @@
 \textbf{Supplementary Figure \ref{fig:sup-fig-illu-select}} & Automatic illumination selection \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align1}} &  Manual alignment \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-flatfield}} & Flat-field correction \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-globalopt}} & Global optimization \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-stitching}} & Pairwise registration by phase correlation \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-downsampling}} & Downsampling with different SNR \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-0}} & Downsampling error statistics 1 \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-1}} & Downsampling error statistics 2 \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-2}} & Downsampling error statistics 3 \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-link-explorer}} & Interactive inspection and curation of pairwise links \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-globalopt}} & Global optimization \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-icp}} & Affine refinement via ICP \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-boundingbox}} & Bounding Box definition \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-fusion}} & Virtual fusion of large image \tablespace \\
@@ -160,7 +160,7 @@
 \textbf{Supplementary Note \ref{sec:currentcode}} & Links to the current source codes \tablespace \\
 
 \end{tabular}}
-\caption{\emph{Note: Supplementary Videos 1--XXX are available for download on the journal homepage.}}
+\caption{\emph{Note: Supplementary Videos 1--5 are available for download on the journal homepage.}}
 \end{table}
 
 \pagebreak
@@ -180,7 +180,7 @@
 \label{fig:sup-fig-rf}
 \end{figure*}
 
-\subsection*{SUPPLEMENTARY FIGURE 2: Automatic illumination selection}[h!]
+\subsection*{SUPPLEMENTARY FIGURE 2: Automatic illumination selection}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Illu_Select.png}
@@ -209,24 +209,35 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-flatfield.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{On-the-fly flat-field correction.} The BigStitcher offers correction for camera offsets, fixed pattern noise or uneven illumination. \textbf{(A):}  Simulation of the effects of a constant background offset and Gaussian illumination/detection efficiency \textbf{(C)} on tiled images. By subtracting the \emph{dark image} and modulating with the inverse relative intensity of the \emph{bright image}, such artifacts can be corrected easily \textbf{(B)}. The correction is calculated virtually, with optional caching, to allow for immediate inspection of the results.
+\caption{\hspace{-0.5mm} \emph{On-the-fly flat-field correction.} The BigStitcher offers correction for camera offsets, fixed pattern noise or uneven illumination. \textbf{(A)}  Simulation of the effects of a constant background offset and Gaussian illumination/detection efficiency \textbf{(C)} on tiled images. By subtracting the \emph{dark image} and modulating with the inverse relative intensity of the \emph{bright image}, such artifacts can be corrected easily \textbf{(B)}. The correction is calculated virtually, with optional caching, to allow for immediate inspection of the results.
 }
 \label{fig:sup-fig-flatfield}
 \end{figure*}
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 5: Pairwise registration by phase correlation}
+\subsection*{SUPPLEMENTARY FIGURE 5: Global optimization}
+\vspace{1mm}
+\begin{figure*}[h!]
+\centerline{\includegraphics[width=0.85\textwidth]{fig-globalopt.png}}
+\vspace{2.0mm}
+\caption{\hspace{-0.5mm} \emph{Global optimization of pairwise registration in sparse datasets connected by "empty tiles" (noise only) .} \textbf{(A)} Simulation of a tiled image dataset with sparse objects: tiled images of multiple translated Julia fractals moved to a grid according to approximate metadata (with too high overlap). Centers of images for which pairwise shifts can be determined via phase correlation are connected by green lines, whereas centers of neighboring tiles for which no meaningful shift can be calculated are linked by dashed grey lines. Manually measured distances between distinct points in the three fractals are shown in red. Performing global optimization with \emph{absolute shifts} (as it is done BigStitcher's predecessor, the ImageJ Stitching plugin) will correctly align images within connected components of the link graph but place all fractals close to the origin \textbf{(B)}. By using \emph{relative shifts}, BigStitcher will leave disconnected objects at their initial location while still aligning within connected components \textbf{(C)}. As registrations are not propagated between unconnected tiles, distances between neighboring objects might change. By running a second round of optimization to align connected components according to metadata shifts and applying the results to the in-component registrations, distances between neighboring objects are preserved as-good-as-possible \textbf{(D)}.
+}
+\label{fig:sup-fig-globalopt}
+\end{figure*}
+
+
+\subsection*{SUPPLEMENTARY FIGURE 6: Pairwise registration by phase correlation}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-stitching.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Pairwise registration by phase correlation}. \textbf{(A),(B)} Central slices of image stacks from a tiled acquisition (non-regular tiling) of an adult mouse hypothalamus slice. \textbf{(C)} Phase correlation matrix (PCM) calculated from the two images shows a single, distinct peak above nearly constant background. The peak location corresponds to the relative translation $t$ of both tiles. \textbf{(D)} Central slice through the images aligned according to $t$, as displayed in BigDataViewer. 
+\caption{\hspace{-0.5mm} \emph{Pairwise registration by phase correlation}. \textbf{(A),(B)} Central slices of image stacks from a tiled acquisition (non-regular tiling) of an adult mouse hypothalamus slice. \textbf{(C)} Phase correlation matrix (PCM) calculated from the two images shows a single, distinct peak above nearly constant background. The peak location corresponds to the relative translation $t$ of both tiles. \textbf{(D)} Central slice through the images aligned according to $t$, as displayed in interactively during the reconstruction process. 
 }
 \label{fig:sup-fig-stitching}
 \end{figure*}
 
-\subsection*{SUPPLEMENTARY FIGURE 6: Downsampling with different SNR}
+\subsection*{SUPPLEMENTARY FIGURE 7: Downsampling with different SNR}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-downsampling.png}
@@ -238,7 +249,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 7: Downsampling statistics 1}
+\subsection*{SUPPLEMENTARY FIGURE 8: Downsampling statistics 1}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-downsampling-statistics-0.png}
@@ -248,7 +259,7 @@
 \label{fig:sup-fig-downsampling-statistics-0}
 \end{figure*}
 
-\subsection*{SUPPLEMENTARY FIGURE 8: Downsampling statistics 2}
+\subsection*{SUPPLEMENTARY FIGURE 9: Downsampling statistics 2}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-downsampling-statistics-1.png}
@@ -260,7 +271,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 9: Downsampling statistics 3}
+\subsection*{SUPPLEMENTARY FIGURE 10: Downsampling statistics 3}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-downsampling-statistics-2.png}
@@ -272,27 +283,17 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 10: Interactive inspection and curation of pairwise links}
+\subsection*{SUPPLEMENTARY FIGURE 11: Interactive inspection and curation of pairwise links}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-Link-Explorer.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Interactive visualization of links in the link explorer.} The BigStitcher GUI offers the exploring and modifying calculated links between corresponding tiles in the link explorer menu. textbf{(A)} Tiles containing links are displayed in yellow and can be selected. \textbf{(B)} Display corresponding tiles of the selected view. Single links can be removed manually or through available filtering options. \textbf{(C)} Corresponding links of the selected view are displayed in real-time in the BigDataViewer.
+\caption{\hspace{-0.5mm} \emph{Interactive visualization of links in the link explorer.} The BigStitcher GUI offers the exploring and modifying calculated links between corresponding tiles in the link explorer menu. \textbf{(A)} Tiles containing links are displayed in yellow and can be selected. \textbf{(B)} Display corresponding tiles of the selected view. Single links can be removed manually or through available filtering options. \textbf{(C)} Corresponding links of the selected view are displayed in real-time in the BigDataViewer.
 }
 \label{fig:sup-fig-link-explorer}
 \end{figure*}
 
 \pagebreak
-
-\subsection*{SUPPLEMENTARY FIGURE 11: Global optimization}
-\vspace{1mm}
-\begin{figure*}[h!]
-\centerline{\includegraphics[width=0.85\textwidth]{fig-globalopt.png}}
-\vspace{2.0mm}
-\caption{\hspace{-0.5mm} \emph{Global optimization of pairwise registration in sparse datasets.} \textbf{(A)} Simulation of a tiled image dataset with sparse objects: tiled images of multiple translated Julia fractals moved to a grid according to approximate metadata (with too high overlap). Centers of images for which pairwise shifts can be determined via phase correlation are connected by green lines, whereas centers of neighboring tiles for which no meaningful shift can be calculated are linked by dashed grey lines. Manually measured distances between distinct points in the three fractals are shown in red. Performing global optimization with \emph{absolute shifts} (as it is done BigStitcher's predecessor, the ImageJ Stitching plugin) will correctly align images within connected components of the link graph but place all fractals close to the origin \textbf{(B)}. By using \emph{relative shifts}, BigStitcher will leave disconnected objects at their initial location while still aligning within connected components \textbf{(C)}. As registrations are not propagated between unconnected tiles, distances between neighboring objects might change. By running a second round of optimization to align connected components according to metadata shifts and applying the results to the in-component registrations, distances between neighboring objects are preserved as-well-as-possible \textbf{(D)}.
-}
-\label{fig:sup-fig-globalopt}
-\end{figure*}
 
 
 \subsection*{SUPPLEMENTARY FIGURE 12: Affine refinement via ICP}
@@ -337,7 +338,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-IntrestPoints.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Interactive visualization of interest points.} The interest points explorer allows the visualization of interest points and corresponding interest pints between views. \textbf{(A)} select desired interest points for visualization. \textbf{(B)} preview the interest points in the BigDataViewer.
+\caption{\hspace{-0.5mm} \emph{Interactive visualization of interest points.} The interest points explorer allows the visualization of interest points and corresponding interest points between views. \textbf{(A)} select desired interest points for visualization. \textbf{(B)} preview the interest points overlaid in the BigDataViewer.
 }
 \label{fig:sup-fig-interest-point}
 \end{figure*}
@@ -350,7 +351,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-Transformation.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Interactive transformation of views.} Different transformation moldes can be applied to one or more views and simultaneously visualized in the BigDataViewer. \textbf{(A)} Choose transformation model grouping. \textbf{(B)} Further define the transformation model. In this case a rotation around the axis is selected. \textbf{(C)} Select rotation axis and angle. \textbf{(D)} Visualize rotation of the view in the BigDataViewer.
+\caption{\hspace{-0.5mm} \emph{Interactive transformation of views.} Different transformation models can be applied to one or more views and simultaneously visualized in the BigDataViewer. \textbf{(A)} Choose transformation model grouping. \textbf{(B)} Further define the transformation model. In this case a rotation around the axis is selected. \textbf{(C)} Select rotation axis and angle. \textbf{(D)} Visualize rotation of the view in the BigDataViewer.
 }
 \label{fig:sup-fig-manual-align2}
 \end{figure*}
