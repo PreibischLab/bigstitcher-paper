@@ -219,7 +219,7 @@
 \subsection*{SUPPLEMENTARY FIGURE 5: Global optimization}
 \vspace{1mm}
 \begin{figure*}[h!]
-\centerline{\includegraphics[width=0.85\textwidth]{fig-globalopt.png}}
+\centerline{\includegraphics[width=0.85\textwidth]{fig-globalopt.jpg}}
 \vspace{2.0mm}
 \caption{\hspace{-0.5mm} \emph{Global optimization of pairwise registration in sparse datasets connected by "empty tiles" (noise only) .} \textbf{(A)} Simulation of a tiled image dataset with sparse objects: tiled images of multiple translated Julia fractals moved to a grid according to approximate metadata (with too high overlap). Centers of images for which pairwise shifts can be determined via phase correlation are connected by green lines, whereas centers of neighboring tiles for which no meaningful shift can be calculated are linked by dashed grey lines. Manually measured distances between distinct points in the three fractals are shown in red. Performing global optimization with \emph{absolute shifts} (as it is done BigStitcher's predecessor, the ImageJ Stitching plugin) will correctly align images within connected components of the link graph but place all fractals close to the origin \textbf{(B)}. By using \emph{relative shifts}, BigStitcher will leave disconnected objects at their initial location while still aligning within connected components \textbf{(C)}. As registrations are not propagated between unconnected tiles, distances between neighboring objects might change. By running a second round of optimization to align connected components according to metadata shifts and applying the results to the in-component registrations, distances between neighboring objects are preserved as-good-as-possible \textbf{(D)}.
 }
@@ -299,7 +299,7 @@
 \subsection*{SUPPLEMENTARY FIGURE 12: Affine refinement via ICP}
 \vspace{1mm}
 \begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-stitching_icp.png}
+\includegraphics[width=\textwidth]{fig-stitching_icp.jpg}
 \vspace{-2.0mm}
 \caption{\hspace{-0.5mm} \emph{Illustration of different steps for multi-tile alignment} \textbf{(A)} Four overlapping image tiles randomly color-coded illustrate the typical error when only the metadata as read from the microscope is applied. \textbf{(B)} Shows the same four image tiles as in (A), but without random color coding. \textbf{(C)} Quality of the registration after applying the phase-correlation based stitching with downsampling 4 and two-round global optimization. \textbf{(D)} Result after applying the automatic ICP refinement for tile alignment and chromatic aberration correction. \textbf{(A-D)} Insets highlight specific areas to better appreciate quality differences.
 }
