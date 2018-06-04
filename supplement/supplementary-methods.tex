@@ -27,6 +27,7 @@ When imaging large samples with multiple illumination directions,  a lot of unne
 \end{comment}
 
 \section{Flat-field correction}
+\label{sec:flatfield}
 
 Flat-field correction is the process of correcting for image artifacts due to uneven illumination or detection efficiency or fixed-pattern noise. Aside from being visually unpleasing, especially in tiled acquisitions, these artifacts can also effect image registration and downstream quantitative image analyses. We therefore offer simple on-the-fly correction for a \emph{dark image} (which might be nonzero due to e.g. camera offset) and a \emph{bright image} (representing uneven ilumination or detection efficiency across the field-of-view). We calculate corrected pixel intensities $C$ from a raw image $R$ and bright and dark images $B$ and $D$ as:
 
@@ -135,6 +136,25 @@ Note that we use the corners $bb_k$ of the bounding box $BB_{ij}$ of the overlap
 For MultiView registration, e.g. registration of angles or time series stablilization, we first detect interest points in the individual images as described above (\ref{sssec:ip-registration}). Images may be grouped (and are by default if we are, e.g. registering tiled acquisitions from multiple angles for which we already aligned the tiles via an intensity-based method) according to their attributes, by pooling their interest points and optionally merging clusters. For registering time-series data, we offer four strategies. First, we can treat time points individually, registering only images within a time point. We can also perform interest point matching between different time points, either comparing all-to-all, all to a user-defined \emph{reference} time point or all time points within a defined range to each other.
 
 Pairwise point correspondences can either be established by descriptor matching followed by RANSAC outlier removal, a modified version of the iterative closest point (ICP) algorithm or by simply matching the center of mass of the point clouds of both images (note that in this case the registration will be constrained to be a translation). Using the link graph $(V,C)$ and pairwise point correspondences $P_{ij}$ established thus, we calculate the final registration by performing global optimization as described above (\ref{ssec:globalopt}), optionally with iterative link removal and a second round to preserve metadata.
+
+\section{Brightness and Contrast adjustment}
+\label{sec:brightness-adjust}
+
+Even after correcting for fixed-pattern noise (\ref{sec:flatfield}), differences in brightness and contrast between images, e.g. due to bleaching, might persist and be visible in the fused images. To correct for this, we estimate optimal linear transforms of pixel intensities in adjacent images \cite{blasse2017premosa} to achieve uniform brightness and contrast in the whole dataset. We minimize the intensity difference of all pixels in the overlapping volume $O_{AB}$ of two images $I_A, I_B$ (with corresponding coordinates $(x_A, x_B)$ according to the current registrations): 
+
+\begin{equation}
+\label{eq:brighness-adjust-1}
+\argmin_{\alpha, \beta} \sum_{I_A  \in I}  \bigg( \sum_{I_B \in I \setminus I_A} \Big( \sum_{(x_A, x_B) \in O_{AB}} \big( I_B(x_B) - \left[ \alpha^{I_A} I_A(x_A) + \beta^{I_A} \right] \big)^2 \Big)\bigg)
+\end{equation}
+
+Since this is equal to one-dimensional point correspondence registration, we can make use of the same iterative optimization algorithm used for image registration (\ref{ssec:globalopt}). To reduce influence of noise and computational costs, we use (precomputed) downsampled versions of the images for the optimization. A problem with unconstrained optimization is the possibility of convergence to the trivial solution of setting all pixel intensities to zero. We therefore formulate the linear transform $I(x)*\alpha + \beta$ as a weighted average between a linear transform, an additive transform and the identity transform:
+
+\begin{equation}
+\label{eq:brighness-adjust-2}
+\alpha I(x) + \beta = \lambda_1 * (\alpha' I(x) + \beta_1) + \lambda_2 * (I(x) + \beta_2) + \lambda_3 * I(x) 
+\end{equation}
+
+with user-definable regularization parameters $\lambda_1, \lambda_2, \lambda_3: \lambda_1+ \lambda_2+\lambda_3 = 1$. By using nonzero $\lambda_2, \lambda_3$, we can constrain the optimization to not converge to the trivial solution.
 
 \section{Image Fusion}
 \label{sec:fusion}
