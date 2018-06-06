@@ -137,6 +137,18 @@ For MultiView registration, e.g. registration of angles or time series stabliliz
 
 Pairwise point correspondences can either be established by descriptor matching followed by RANSAC outlier removal, a modified version of the iterative closest point (ICP) algorithm or by simply matching the center of mass of the point clouds of both images (note that in this case the registration will be constrained to be a translation). Using the link graph $(V,C)$ and pairwise point correspondences $P_{ij}$ established thus, we calculate the final registration by performing global optimization as described above (\ref{ssec:globalopt}), optionally with iterative link removal and a second round to preserve metadata.
 
+\section{Image Fusion}
+\label{sec:fusion}
+
+We \emph{fuse} multiple images by performing a weighted average of the raw images $I^{raw}$ transformed by their registrations $R$. Each raw image $I^{raw}_i$ has a set weight images $W_i$. For example, we allow the user to weigh the images with a cosine-shaped fade-out, deemphasizing the artifact-prone border regions of the individual images, as well as by the approximate local entropy, to emphasize images with sharper structures in overlapping regions. Since the raw images will be evaluated at non-integer coordinates, we offer the choice between nearest-neighbour and linear interpolation. Downsampling can easily be achieved by prepending a scaling transformation to each of the registrations $R$. The intensity of the fused volume at a coordinate $x$ is given by:
+
+\begin{equation}
+\label{eq:fusion-eq1}
+I^{fused}(x) ={ \frac{  \sum_{ I^{raw}_i \in I^{raw}} \Big(I^{raw}_i\big(R_i^{-1}(x)\big) * \prod_{w_j \in W_i}{w_j\big(R_i^{-1}(x)\big)\Big)}}{ \sum_{I^{raw}_i \in I^{raw}}\Big( \prod_{w_j \in W_i}{w_j\big(R_i^{-1}(x)\big)\Big)}}}
+\end{equation}
+
+In practice, we evalute $I^{fused}$ only at integer coordinates of a user-defined \emph{bounding box}. We implemented the image fusion to perform all calculations virtually on-the-fly, with caching of previously computed planes using imglib2-cache. This allows the quick inspection of fusion results as well as creation and planewise saving of images that might exceed the RAM available to the user.
+
 \section{Brightness and Contrast adjustment}
 \label{sec:brightness-adjust}
 
@@ -155,18 +167,6 @@ Since this is equal to one-dimensional point correspondence registration, we can
 \end{equation}
 
 with user-definable regularization parameters $\lambda_1, \lambda_2, \lambda_3: \lambda_1+ \lambda_2+\lambda_3 = 1$. By using nonzero $\lambda_2, \lambda_3$, we can constrain the optimization to not converge to the trivial solution.
-
-\section{Image Fusion}
-\label{sec:fusion}
-
-We \emph{fuse} multiple images by performing a weighted average of the raw images $I^{raw}$ transformed by their registrations $R$. Each raw image $I^{raw}_i$ has a set weight images $W_i$. For example, we allow the user to weigh the images with a cosine-shaped fade-out, deemphasizing the artifact-prone border regions of the individual images, as well as by the approximate local entropy, to emphasize images with sharper structures in overlapping regions. Since the raw images will be evaluated at non-integer coordinates, we offer the choice between nearest-neighbour and linear interpolation. Downsampling can easily be achieved by prepending a scaling transformation to each of the registrations $R$. The intensity of the fused volume at a coordinate $x$ is given by:
-
-\begin{equation}
-\label{eq:fusion-eq1}
-I^{fused}(x) ={ \frac{  \sum_{ I^{raw}_i \in I^{raw}} \Big(I^{raw}_i\big(R_i^{-1}(x)\big) * \prod_{w_j \in W_i}{w_j\big(R_i^{-1}(x)\big)\Big)}}{ \sum_{I^{raw}_i \in I^{raw}}\Big( \prod_{w_j \in W_i}{w_j\big(R_i^{-1}(x)\big)\Big)}}}
-\end{equation}
-
-In practice, we evalute $I^{fused}$ only at integer coordinates of a user-defined \emph{bounding box}. We implemented the image fusion to perform all calculations virtually on-the-fly, with caching of previously computed planes using imglib2-cache. This allows the quick inspection of fusion results as well as creation and planewise saving of images that might exceed the RAM available to the user.
 
 \begin{comment}
 \section{MultiView Deconvolution}
