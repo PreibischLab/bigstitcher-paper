@@ -157,6 +157,7 @@
 \textbf{Supplementary Figure \ref{fig:sup-fig-expansion-microscopy}} & Expansion Microscopy Stitching \tablespace \\
 \textbf{Supplementary Note \ref{sec:sup-note1}-\ref{sec:brightness-adjust}} & Supplementary methods \tablespace \\
 \textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher User Guide \tablespace \\
+\textbf{Supplementary Note \ref{sec:example}} & Example Datasets for BigStitcher \tablespace \\
 \textbf{Supplementary Note \ref{sec:currentcode}} & Links to the current source codes \tablespace \\
 
 \end{tabular}}
@@ -378,6 +379,21 @@
 
 \input{user-guide/user-guide-main.tex}
 
+\pagebreak
+
+\section{Example Datasets for BigStitcher}
+\label{sec:examples}
+
+We prepared three different examples of different size and complexity for testing the BigStitcher. We suggest to run BigStitcher on these first before applying it to your dataset. This allows you to quickly test features in an environment where you can easily ask for advice on GitHub or the ImageJ Forum.
+
+\begin{description}
+\item 2d multi-tile dataset ($2.8$ MB) \\
+Maximum intensity projection of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each. You can download the raw input here and a reconstructed BigStitcher project here.
+\item 3d multi-tile dataset ($123$ MB)\\ 
+3d confocal scan of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each, channels are distributed over different files. You can download the raw input here and a reconstructed BigStitcher project here.
+\item 3d multi-tile multi-view dataset ($10$ GB)\\ 
+3d light-sheet scan of a cleared section of an adult mouse brain expressing H2B-GFP in all bsx neurons. It contains 2 orthogonal angles, 2 illumination directions, and 6 tiles. It was downsampled 2-fold in each dimension from its original size. You can download the reconstructed BigStitcher project here and just the original XML file without any alignment or illumination selection here.
+\end{description}
 \pagebreak
 
 % description of current version location is in currentcode.tex 
