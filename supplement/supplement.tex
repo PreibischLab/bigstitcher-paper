@@ -373,6 +373,7 @@
 
 \input supplementary-methods.tex
 
+\pagebreak
 %\titleformat{\section}{\centering\normalfont\fontsize{13.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
 \section{BigStitcher User Guide}
 \label{sec:documentation}
@@ -382,17 +383,19 @@
 \pagebreak
 
 \section{Example Datasets for BigStitcher}
-\label{sec:examples}
+\label{sec:example}
 
 We prepared three different examples of different size and complexity for testing the BigStitcher. We suggest to run BigStitcher on these first before applying it to your dataset. This allows you to quickly test features in an environment where you can easily ask for advice on GitHub or the ImageJ Forum.
 
 \begin{description}
 \item 2d multi-tile dataset ($2.8$ MB) \\
-Maximum intensity projection of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each. You can download the raw input here and a reconstructed BigStitcher project here.
-\item 3d multi-tile dataset ($123$ MB)\\ 
-3d confocal scan of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each, channels are distributed over different files. You can download the raw input here and a reconstructed BigStitcher project here.
+Maximum intensity projection of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each. You can download the raw input at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_2d.zip} and a reconstructed BigStitcher project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_2d_stitched_h5.zip}. In the reconstructed project, the images were imported into the BigStitcher using the AutoLoader (with immediate resaving as HDF5 and Movement to a regular 2-by-3 grid with 10\% overlap between the tiles). We calculated pairwise shifts using phase correlation with default parameters, using the precomputed 2x2 downsampling and averaging the channels. We ignored links with correlation $<0.7$ and calculated the final registration using the two-round global optimization with strict constraints. 
+\item 3d multi-tile dataset ($123$ MB)
+\begin{sloppypar} % to prevent ugly linebreak in url
+3d confocal scan of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each, channels are distributed over different files. You can download the raw input at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_3d.zip} and the reconstructed project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_3d_stitched_h5.zip}. In the reconstructed project, we ran the same import and reconstruction steps as for the 2d dataset and in addition performed affine refinement of the registration using IPC with default parameters and simple tile refinement to create the final reconstructed project.
+\end{sloppypar}
 \item 3d multi-tile multi-view dataset ($10$ GB)\\ 
-3d light-sheet scan of a cleared section of an adult mouse brain expressing H2B-GFP in all bsx neurons. It contains 2 orthogonal angles, 2 illumination directions, and 6 tiles. It was downsampled 2-fold in each dimension from its original size. You can download the reconstructed BigStitcher project here and just the original XML file without any alignment or illumination selection here.
+3d light-sheet scan of a cleared section of an adult mouse brain expressing H2B-GFP in all bsx neurons. It contains 2 orthogonal angles, 2 illumination directions, and 6 tiles. It was downsampled 2-fold in each dimension from its original size. You can download the reconstructed BigStitcher project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Clearing_3d.zip} and just the original XML file without any alignment or illumination selection at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Clearing_3d_initial_xml.zip}.
 \end{description}
 \pagebreak
 
