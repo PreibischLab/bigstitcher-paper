@@ -389,13 +389,30 @@ We prepared three different examples of different size and complexity for testin
 
 \begin{description}
 \item 2d multi-tile dataset ($2.8$ MB) \\
-Maximum intensity projection of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each. You can download the raw input at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_2d.zip} and a reconstructed BigStitcher project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_2d_stitched_h5.zip}. In the reconstructed project, the images were imported into the BigStitcher using the AutoLoader (with immediate resaving as HDF5 and Movement to a regular 2-by-3 grid with 10\% overlap between the tiles). We calculated pairwise shifts using phase correlation with default parameters, using the precomputed 2x2 downsampling and averaging the channels. We ignored links with correlation $<0.7$ and calculated the final registration using the two-round global optimization with strict constraints. 
+Maximum intensity projection of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each. You can download the raw input at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_2d.zip} and a reconstructed BigStitcher project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_2d_h5_aligned.zip}. In the reconstructed project, the images were imported into the BigStitcher using the AutoLoader (with immediate resaving as HDF5 and Movement to a regular 2-by-3 grid with 10\% overlap between the tiles). We calculated pairwise shifts using phase correlation with default parameters, using the precomputed 2x2 downsampling and averaging the channels. We ignored links with correlation $<0.7$ and calculated the final registration using the two-round global optimization with strict constraints. 
 \item 3d multi-tile dataset ($123$ MB)
 \begin{sloppypar} % to prevent ugly linebreak in url
-3d confocal scan of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each, channels are distributed over different files. You can download the raw input at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_3d.zip} and the reconstructed project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_3d_stitched_h5.zip}. In the reconstructed project, we ran the same import and reconstruction steps as for the 2d dataset and in addition performed affine refinement of the registration using IPC with default parameters and simple tile refinement to create the final reconstructed project.
+3d confocal scan of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each, channels are distributed over different files. You can download the raw input at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_3d.zip} and the reconstructed project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_3d_h5_aligned.zip}. In the reconstructed project, we ran the same import and reconstruction steps as for the 2d dataset and in addition performed affine refinement of the registration using IPC with default parameters and simple tile refinement to create the final reconstructed project.
 \end{sloppypar}
-\item 3d multi-tile multi-view dataset ($10$ GB)\\ 
-3d light-sheet scan of a cleared section of an adult mouse brain expressing H2B-GFP in all bsx neurons. It contains 2 orthogonal angles, 2 illumination directions, and 6 tiles. It was downsampled 2-fold in each dimension from its original size. You can download the reconstructed BigStitcher project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Clearing_3d.zip} and just the original XML file without any alignment or illumination selection at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Clearing_3d_initial_xml.zip}.
+\item 3d multi-tile multi-view dataset ($12$ GB)\\ 
+3d light-sheet scan of a cleared section of an adult mouse brain expressing H2B-GFP in all bsx neurons. It contains 2 orthogonal angles, 2 illumination directions, and 6 tiles. It was downsampled 2-fold in each dimension from its original size. You can download the \textbf{raw} BigStitcher project in HDF5 format where tiles are placed according to the approximate coordinates from the microscope at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Clearing_3d_h5.zip}. You can download the XML file describing the \textbf{fully reconstructed} dataset (works with the same HDF5 file) at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Clearing_3d_xml_aligned.zip}. You simply need to extract this small $1.5$~MB archive in the same directory and open the xml file in BigStitcher. In order to reconstruct the sample, we performed the following steps:
+\begin{itemize}
+\item Illumination Selection (Pick Brightest)
+\item For each angle:
+	\begin{itemize}
+		\item Select all views, Stitch dataset with downsampling 4,4,2
+		\item Correlation range $0.7$ ... $1.0$, filter z-shift by $25$ pixels, global optimization with RELAXED handling
+		\item Refine with ICP, simple (tile registration)
+	\end{itemize}
+\item Switch to multi-view mode, select 2nd view only, apply transformation, same for all, rotation around axis, $180$ degrees around the Y-axis
+\item Select both, register using interested points, fast translation invariant, compare all views, forICP\_2\_1, group tiles and illuminations, fix first view, do not map back, affine, regularize, redundancy $1$, significance $1.5$, RANSAC error $30$, iterations VERY THOROUGH, regularize with rigid, lambda $0.1$, simply group, merge distance $5$.
+\item Select both, detect interest points, Difference-of-Gaussian, label nuclei, group tiles and illuminations, 3-d quadratic fit, interactive, downsample XY $4$, downsample Z $2$, same min and max for all, in interactive or advanced mode sigma=$1.3645$ and threshold=$0.008432$
+\item Select both, register using interested points, assign closest-points, only overlapping views, label nuclei, do not group, affine, regularize, max distance $5$, max iterations $100$, regularize with rigid, lambda $0.1$
+\item Fuse as desired ...
+\end{itemize}
+
+We will upload videos of the entire alignment process, including multi-view, in due time and will link the videos from here.
+
 \end{description}
 \pagebreak
 
