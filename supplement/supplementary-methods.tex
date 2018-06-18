@@ -169,6 +169,8 @@ Since this is equal to one-dimensional point correspondence registration, we can
 
 with user-definable regularization parameters $\lambda_1, \lambda_2, \lambda_3: \lambda_1+ \lambda_2+\lambda_3 = 1$. By using nonzero $\lambda_2, \lambda_3$, we can constrain the optimization to not converge to the trivial solution.
 
+The size of overlaps between image tiles can differ significantly. Therefore, intensity transformations supported by many overlapping pixels will implicitly have a higher weight, which can lead to the fact that visible intensity differences between tiles with little overlap persist. To compensate this effect we allow to balance overlaps by setting a maximal number of corresponding pixels. To ensure equal distribution of these corresponding pixels, we randomly remove pixels from the set of all pixels until the desired number is achieved.
+
 \begin{comment}
 \section{MultiView Deconvolution}
 
