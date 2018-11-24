@@ -18,7 +18,7 @@ The \texttt{SpimData} data structure can be saved as an XML \emph{project file},
 
 \subsection*{Import of data}
 
-BigStitcher imposes little constraints on the format and naming of raw data files. Using the Bioformats \cite{bioformats} library, we support a large variety of image file formats, from "conventional" TIFF stacks to vendor-specific formats. The assignment of attributes to the image stacks in the raw data can be done automatically or with minimal interaction from the users. We offer the possibility to immediately compute multi-resolution pyramids from the images and saving them as chunks to HDF5 files. Furthermore, making use of cached ImgLib2 data structures, we support virtual loading of image planes from the raw files with chaching of already loaded planes.
+BigStitcher imposes little constraints on the format and naming of raw data files. Using the Bioformats \cite{bioformats} library, we support a large variety of image file formats, from "conventional" TIFF stacks to vendor-specific formats. The assignment of attributes to the image stacks in the raw data can be done automatically or with minimal interaction from the users. We offer the possibility to immediately compute multi-resolution pyramids from the images and saving them as chunks to HDF5 files. Furthermore, making use of cached ImgLib2 data structures, we support virtual loading of image planes from the raw files with caching of already loaded planes.
 
 \begin{comment}
 \subsection{Illumination selection}
@@ -38,7 +38,7 @@ C_{x} = \frac{(R_{x} - D_{x'}) * \overline{(B-D)} }{(B_{x'}- D_{x'})}
 
 The correction images can either have the same dimensionality as the raw images, in which case $x' = x$, or have lower dimensionality (e.g. when using 2D correction images on a 3D image stack), in which case $x' = (x_1 \hdots x_n)$ with $n$ being the dimensionality of the correction images. If a dark image is not provided by the user, we assume it to have constant intensity of 0 (corresponding to no background offset). Likewise, if no bright image is provided, we assume it to have constant intensity of 1 (uniform illumination and detection efficiency). 
 
-We implemented the flat-field correction as a wrapper around an \texttt{ImgLoader}, calculating corrected pixel intensity values on-the-fly (with optional caching) every time an image is loaded. That way, the corrected images are available for all other processing steps such as intensity-based registration, interest point detection or image fusion, but it is still possible to actviate or de-activate the correction or change bright or dark images after the initial flat-field correction. A separate (bright, dark)-correction image pair can be set for every image in the dataset by modifying the XML project file, while in the GUI we offer user-friendly assignment of correction images to every (channel, illumination direction)-pair.
+We implemented the flat-field correction as a wrapper around an \texttt{ImgLoader}, calculating corrected pixel intensity values on-the-fly (with optional caching) every time an image is loaded. That way, the corrected images are available for all other processing steps such as intensity-based registration, interest point detection or image fusion, but it is still possible to activate or de-activate the correction or change bright or dark images after the initial flat-field correction. A separate (bright, dark)-correction image pair can be set for every image in the dataset by modifying the XML project file, while in the GUI we offer user-friendly assignment of correction images to every (channel, illumination direction)-pair.
 
 \section{Pairwise shift calculation}
 
@@ -92,24 +92,24 @@ We determine the globally optimal registrations $R$ given the image (groups) $V$
 \argmin_{R \setminus \{R_i | V_i \in F\}} \sum_{(i,j) \in C} \bigg( \sum_{(x_{k}, y_{k}) \in PM_{ij}} || R_{i}( x_{k}) - R_{j}( y_{k}) ||^2 \bigg)
 \end{equation}
 
-Note that for all fixed views, the registration will be constrained to be the indentity transformation $I$: $\forall V_i \in F: R_{i} = I$.
+Note that for all fixed views, the registration will be constrained to be the identity transformation $I$: $\forall V_i \in F: R_{i} = I$.
 
 \subsection*{Global optimization given pairwise transfomations}
 
 The intensity-based pairwise shift calculations do not directly give us the point correspondences we need for the global optimization step, instead the results are pairwise transformations $T^{p}$ in the form of affine transform matrices. We can, however, easily construct point correspondences by taking a set of points and transforming them with the \emph{inverse} transform (the only requirement being that the $n$-dimensional points do not all lie in a subspace of lower dimensionality of $\mathbb{R}^n$).  
 
-Using the 3-dimensional pairwise transformations $T^{p}$ ($T^p_{ij} (x_{j}) = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R^{meta}$, we use the 8-point approximate bounding box of their overlapping region $BB_{ij}$ to construct the point correspondences: $PM_{ij} = \{ \big(bb_k, (T^p_{ij})^{-1}(bb_k) \big) | bb_k \in BB_{ij}\}$. We can then determine the gobally optimal registrations $R$ by performing the minimization described above (\ref{eq:globalopt-eq1}).  
+Using the 3-dimensional pairwise transformations $T^{p}$ ($T^p_{ij} (x_{j}) = x_i$) between two image (groups) $V_i$ and $V_j$ given their existing registrations $R^{meta}$, we use the 8-point approximate bounding box of their overlapping region $BB_{ij}$ to construct the point correspondences: $PM_{ij} = \{ \big(bb_k, (T^p_{ij})^{-1}(bb_k) \big) | bb_k \in BB_{ij}\}$. We can then determine the globally optimal registrations $R$ by performing the minimization described above (\ref{eq:globalopt-eq1}).  
 
 \subsection*{Global optimization with iterative link dropping}
 
-Once the global optimization terminates due to convergence or exceeding of the maximium number of iterations, we can calculate the \emph{error} of the individual images as the average displacement of all interest points in an image to their point matches:
+Once the global optimization terminates due to convergence or exceeding of the maximum number of iterations, we can calculate the \emph{error} of the individual images as the average displacement of all interest points in an image to their point matches:
 
 \begin{equation}
 \label{eq:gloablopt-eq2}
 e_i = \frac{\sum_{\{j: (i,j) \in C\}}  \sum_{(x_{k}, y_{k}) \in PM_{ij}} || R_{i}( x_{k}) - R_{j}( y_{k}) ||  }{ \sum_{\{j: (i,j) \in C\}} |PM_{ij}| }
 \end{equation}
 
-If the link graph $(V,C^n)$ contains links with contradicting point correspondences, stopping after one round of global optimization might leave us with unsatisfying results. In the \emph{iterative} version of the global optimization, we therefore check that both the average error of all images and the ratio of maximal and average error fall below a user-defined threshold. If these condiditions are not yet met, we will proceed to iteratively remove disagreeing links from the link graph and repeat the global optimization. To do this, we first determine the link with the highest error by maximizing:
+If the link graph $(V,C^n)$ contains links with contradicting point correspondences, stopping after one round of global optimization might leave us with unsatisfying results. In the \emph{iterative} version of the global optimization, we therefore check that both the average error of all images and the ratio of maximal and average error fall below a user-defined threshold. If these conditions are not yet met, we will proceed to iteratively remove disagreeing links from the link graph and repeat the global optimization. To do this, we first determine the link with the highest error by maximizing:
 
 \begin{equation}
 \label{eq:globalopt-eq3}
@@ -120,7 +120,7 @@ with $d_{ijk}$ denoting the distance of the $k$'th point match of the link $(i,j
 
 \subsection*{Two-round global optimization using metadata}
 
-If some cases, the link graph might contain multiple connected components, e.g. in datasets from screening applications, where the actual sample only occupies isolated "islands" and most images contain only background. In this case, we can only realibly determine pairwise transformations within the connected components and align images within the components in the global optimization step. We might, however, have reasonable registrations $R^{meta}$ from metadata and wish to keep as closely as possible to those if we do not have \emph{strong} links.
+If some cases, the link graph might contain multiple connected components, e.g. in datasets from screening applications, where the actual sample only occupies isolated "islands" and most images contain only background. In this case, we can only reliably determine pairwise transformations within the connected components and align images within the components in the global optimization step. We might, however, have reasonable registrations $R^{meta}$ from metadata and wish to keep as closely as possible to those if we do not have \emph{strong} links.
 
 For this, we developed a \emph{two-round} version of the global optimization. In the first round, we determine registrations $R^{strong}$ as described above, using the graph of \emph{strong} links, i.e. links that are backed by pairwise transformations. In the second round, we determine the connected components in the $(V, C^{strong} )$ graph and a mapping $CC: \mathbb{N} \to \mathbb{N}$ from image (group) indices to  connected component indices as well as \emph{weak links} $C^{weak} = \{(i,j) \in V \times V | CC(i) \neq CC(j) \}$ between images in different components. We then determine transformations $R^{cc}$ for each connected component not containing a fixed image by minimizing:
 
@@ -129,11 +129,11 @@ For this, we developed a \emph{two-round} version of the global optimization. In
 \argmin_{R^{cc} \setminus \{ r^{cc}_{i} \in R^{cc} | CC_i \cap F \neq \emptyset \}} \sum_{(i,j) \in C^{weak}} \sum_{bb_{k} \in BB_{ij}} || R^{cc}_{CC(i)}\big( R^{strong}_{i}( bb_{k})\big) -  R^{cc}_{CC(j)}\big( R^{strong}_{j}( bb_{k}) \big) ||^2 
 \end{equation}
 
-Note that we use the corners $bb_k$ of the bounding box $BB_{ij}$ of the overlapping volume of two images $V_i$ and $V_j$ as the point correspondences. The overlap is determined accoring to the metadata transformations $R^{meta}$ and we essentially try to "un-do" the registrations of the first round as well as possible (while keeping the registrations \emph{within} the connected components). The final transformations $R$ are the concatenation of the registrations within the connected components with the relative transformations of the connected components: $R_{i} \leftarrow R^{cc}_{CC(i)} R^{strong}_{i}$.
+Note that we use the corners $bb_k$ of the bounding box $BB_{ij}$ of the overlapping volume of two images $V_i$ and $V_j$ as the point correspondences. The overlap is determined according to the metadata transformations $R^{meta}$ and we essentially try to "un-do" the registrations of the first round as well as possible (while keeping the registrations \emph{within} the connected components). The final transformations $R$ are the concatenation of the registrations within the connected components with the relative transformations of the connected components: $R_{i} \leftarrow R^{cc}_{CC(i)} R^{strong}_{i}$.
 
 \section{MultiView Registration}
 
-For MultiView registration, e.g. registration of angles or time series stablilization, we first detect interest points in the individual images as described above (\ref{sssec:ip-registration}). Images may be grouped (and are by default if we are, e.g. registering tiled acquisitions from multiple angles for which we already aligned the tiles via an intensity-based method) according to their attributes, by pooling their interest points and optionally merging clusters.
+For MultiView registration, e.g. registration of angles or time series stabilization, we first detect interest points in the individual images as described above (\ref{sssec:ip-registration}). Images may be grouped (and are by default if we are, e.g. registering tiled acquisitions from multiple angles for which we already aligned the tiles via an intensity-based method) according to their attributes, by pooling their interest points and optionally merging clusters.
 %For registering time-series data, we offer four strategies. First, we can treat time points individually, registering only images within a time point. We can also perform interest point matching between different time points, either comparing all-to-all, all to a user-defined \emph{reference} time point or all time points within a defined range to each other.
 
 Pairwise point correspondences can either be established by descriptor matching followed by RANSAC outlier removal, a modified version of the iterative closest point (ICP) algorithm or by simply matching the center of mass of the point clouds of both images (note that in this case the registration will be constrained to be a translation). Using the link graph $(V,C)$ and pairwise point correspondences $P_{ij}$ established thus, we calculate the final registration by performing global optimization as described above (\ref{ssec:globalopt}), optionally with iterative link removal and a second round to preserve metadata.
@@ -141,14 +141,14 @@ Pairwise point correspondences can either be established by descriptor matching 
 \section{Image Fusion}
 \label{sec:fusion}
 
-We \emph{fuse} multiple images by performing a weighted average of the raw images $I^{raw}$ transformed by their registrations $R$. Each raw image $I^{raw}_i$ has a set weight images $W_i$. For example, we allow the user to weigh the images with a cosine-shaped fade-out, deemphasizing the artifact-prone border regions of the individual images, as well as by the approximate local entropy, to emphasize images with sharper structures in overlapping regions. Since the raw images will be evaluated at non-integer coordinates, we offer the choice between nearest-neighbour and linear interpolation. Downsampling can easily be achieved by prepending a scaling transformation to each of the registrations $R$. The intensity of the fused volume at a coordinate $x$ is given by:
+We \emph{fuse} multiple images by performing a weighted average of the raw images $I^{raw}$ transformed by their registrations $R$. Each raw image $I^{raw}_i$ has a set weight images $W_i$. For example, we allow the user to weigh the images with a cosine-shaped fade-out, de-emphasizing the artifact-prone border regions of the individual images, as well as by the approximate local entropy, to emphasize images with sharper structures in overlapping regions. Since the raw images will be evaluated at non-integer coordinates, we offer the choice between nearest-neighbor and linear interpolation. Downsampling can easily be achieved by prepending a scaling transformation to each of the registrations $R$. The intensity of the fused volume at a coordinate $x$ is given by:
 
 \begin{equation}
 \label{eq:fusion-eq1}
 I^{fused}(x) ={ \frac{  \sum_{ I^{raw}_i \in I^{raw}} \Big(I^{raw}_i\big(R_i^{-1}(x)\big) * \prod_{w_j \in W_i}{w_j\big(R_i^{-1}(x)\big)\Big)}}{ \sum_{I^{raw}_i \in I^{raw}}\Big( \prod_{w_j \in W_i}{w_j\big(R_i^{-1}(x)\big)\Big)}}}
 \end{equation}
 
-In practice, we evalute $I^{fused}$ only at integer coordinates of a user-defined \emph{bounding box}. We implemented the image fusion to perform all calculations virtually on-the-fly, with caching of previously computed planes using imglib2-cache. This allows the quick inspection of fusion results as well as creation and planewise saving of images that might exceed the RAM available to the user.
+In practice, we evaluate $I^{fused}$ only at integer coordinates of a user-defined \emph{bounding box}. We implemented the image fusion to perform all calculations virtually on-the-fly, with caching of previously computed planes using imglib2-cache. This allows the quick inspection of fusion results as well as creation and planewise saving of images that might exceed the RAM available to the user.
 
 \section{Brightness and Contrast adjustment}
 \label{sec:brightness-adjust}
