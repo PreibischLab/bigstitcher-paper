@@ -87,7 +87,7 @@
 %  can be indicated with a superscript in italics,
 %  which is easily obtained with \supit{}.
 
-\author{David H{\"o}rl\textsuperscript{*}, Fabio Rojas Rusak\textsuperscript{*}, Friedrich Preusser, Paul Tillberg, Nadine Randel, Raghhav~K.~Chhetri, Albert Cardona, Philipp J. Keller, Hartmann Harz, Heinrich Leonhardt, Mathias Treier, Stephan Preibisch\textsuperscript{\#}
+\author{David H{\"o}rl\textsuperscript{\#}, Fabio Rojas Rusak\textsuperscript{\#}, Friedrich Preusser, Paul Tillberg, Nadine Randel, Raghhav~K.~Chhetri, Albert Cardona, Philipp J. Keller, Hartmann Harz, Heinrich Leonhardt, Mathias Treier, Stephan Preibisch\textsuperscript{*}
 %\skiplinehalf
 %\small{
 %\supit{1}Max Planck Institute of Molecular Cell Biology and Genetics, Pfotenhauerstrasse 108, Dresden, Germany \\
@@ -161,7 +161,7 @@
 \textbf{Supplementary Note \ref{sec:currentcode}} & Links to the current source codes \tablespace \\
 
 \end{tabular}}
-\caption{}%\emph{Note: Supplementary Videos 1--5 are available for download on the journal homepage.}}
+\caption{\emph{Note: Supplementary Videos 1--6 are available for download on the journal homepage.}}
 \end{table}
 
 \pagebreak
@@ -387,6 +387,8 @@
 
 We prepared three different examples of different size and complexity for testing the BigStitcher. We suggest to run BigStitcher on these first before applying it to your dataset. This allows you to quickly test features in an environment where you can easily ask for advice on GitHub or the ImageJ Forum.
 
+\textcolor{red}{To ensure your anonymity you can download all example files from google drive \url{https://drive.google.com/open?id=1dapQf7gwyqIYa4aeB_2oSZFTWwxmg_IA}. Additionally you can use the TOR-browser for download \url{https://www.torproject.org/projects/torbrowser.html.en}.}
+
 \begin{description}
 \item 2d multi-tile dataset ($2.8$ MB) \\
 Maximum intensity projection of the nervous system of a Drosophila larva containing 6 tiles and 3 channels each. You can download the raw input at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_2d.zip} and a reconstructed BigStitcher project at \url{http://preibischlab.mdc-berlin.de/BigStitcher/Grid_2d_h5_aligned.zip}. In the reconstructed project, the images were imported into the BigStitcher using the AutoLoader (with immediate resaving as HDF5 and Movement to a regular 2-by-3 grid with 10\% overlap between the tiles). We calculated pairwise shifts using phase correlation with default parameters, using the precomputed 2x2 downsampling and averaging the channels. We ignored links with correlation $<0.7$ and calculated the final registration using the two-round global optimization with strict constraints. 
@@ -412,7 +414,7 @@ Maximum intensity projection of the nervous system of a Drosophila larva contain
 %\end{itemize}
 \end{description}
 
-We will add more complex examples soon, please check the BigStitcher websites for updates \url{https://imagej.net/BigStitcher}. We will also upload videos of the entire alignment process in due time and will link the videos from here.
+We will add larger and more complex examples on the BigStitcher website \url{https://imagej.net/BigStitcher} and will also link videos of the  alignment process from there.
 
 %\pagebreak
 
