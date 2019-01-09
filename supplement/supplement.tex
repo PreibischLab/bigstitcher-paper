@@ -70,6 +70,12 @@
 %\usepackage{sectsty}Bayesian-based single-view and multi-view deconvolution
 %\allsectionsfont{\sffamily}
 
+\usepackage{pdflscape}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{longtable}
+\usepackage{multirow}
+
 \captionsetup[table]{labelformat=empty}
 
 \newcommand\smallurl[1]{{\small{\url{#1}}}}
@@ -155,6 +161,7 @@
 \textbf{Supplementary Figure \ref{fig:sup-fig-interest-point}} & Interest point visualization \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align2}} & Manual Transformation of multi-view datasets \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-expansion-microscopy}} & Expansion Microscopy Stitching \tablespace \\
+\textbf{Supplementary Table \ref{tab:datasets}} & Datasets used in this publication \tablespace \\
 \textbf{Supplementary Note \ref{sec:sup-note1}-\ref{sec:brightness-adjust}} & Supplementary methods \tablespace \\
 \textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher User Guide \tablespace \\
 \textbf{Supplementary Note \ref{sec:example}} & Example Datasets for BigStitcher \tablespace \\
@@ -370,6 +377,44 @@
 \end{figure*}
 
 \pagebreak
+\begin{landscape}
+
+
+\setcounter{table}{0} 
+
+\fontsize{8.5pt}{10pt}\selectfont
+\begin{longtable}{lll}
+\caption{Supplementary Table 1: \emph{Summary of all datasets used in this publication}. \label{tab:datasets} }\\ \\
+
+\toprule
+                                                                                                                                                       \thead[l]{ \textbf{Dataset}} &                                                                                                                                                                \thead[l]{\textbf{Size}} &                                                                                                                                                                                                                                                                                                                                                \thead[l]{\textbf{Microscope \& Acquisition settings}} \\
+\midrule \\
+\endhead
+\midrule
+\multicolumn{3}{c}{{Continued on next page}} \\
+\midrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+                         \makecell[l]{Coronal slice from a adult \\mouse brain expressing H2B-eGFP\\ under the neuronal BSX promoter\\(\textbf{Figure 2a + Supplement})} &         \makecell[l]{1920$\times$1920$\times$1039 16 bit stacks\\26 tiles from 1 angles (10\% overlap) \\2 channels, single illumination\\\textbf{0.36 TB total size}}  &                                                                     \makecell[l]{Lightsheet Z.1 with EC Plan-Neofluar 5x/0.16 objective \\5.37$\mu{}m$ LS thickness, 538.3647546$\mu{}m$ Confocal parameter\\0.915$\times$0.915$\times$2.57425409$\mu{}m$ pixels\\119.8ms exposure on PCO.edge camera\\lasers: 561 nm 100\%, 488 nm 80\%\\filters: EF1 BP 505-545, EF 2 BP 575-615} \\ \\
+                         
+                                         \multirowcell{2}[-4ex][l]{Whole adult mouse brain \\expressing H2B-eGFP in all \\BSX-expressign neurons\\(\textbf{Figure 1d-n + Figure 2d})} &             \makecell[l]{1920$\times$1920$\times$770 16 bit stacks\\56 tiles from 2 angles (10\% overlap) \\2 channels, dual illumination\\\textbf{1.2 TB total size}}  &                                                               \makecell[l]{Lightsheet Z.1 with EC Plan-Neofluar 5x/0.16 objective \\5.97$\mu{}m$ LS thickness, 665.3906758999999$\mu{}m$ Confocal parameter\\0.915$\times$0.915$\times$4.929649351$\mu{}m$ pixels\\119.8ms exposure on PCO.edge camera\\lasers: 561 nm 40\%, 488 nm 40\%\\filters: EF1 BP 505-545, EF 2 BP 575-615} \\ \\
+                                                                                                                                   
+         &    \makecell[l]{1920$\times$1920$\times$645 16 bit stacks\\63 tiles from 2 angles (10\% overlap) \\2 channels, dual illumination\\\textbf{1.1 TB total size}}  &                                                                    \makecell[l]{Lightsheet Z.1 with EC Plan-Neofluar 5x/0.16 objective \\10.44$\mu{}m$ LS thickness, 2034.834282$\mu{}m$ Confocal parameter\\0.915$\times$0.915$\times$6.203581395$\mu{}m$ pixels\\119.8ms exposure on PCO.edge camera\\lasers: 561 nm 40\%, 488 nm 40\%\\filters: EF1 BP 505-545, EF 2 BP 575-615} \\ \\
+
+ \multirowcell{2}[-4ex][l]{Coronal slice through an adult \\mouse brain expressing an H2B-eGFP \\lineage tracing marker in BSX-expressing \\neurons (\textbf{Figure 2b + Supplement})} &            \makecell[l]{1920$\times$1920$\times$828 16 bit stacks\\35 tiles from 2 angles (10\% overlap) \\2 channels, dual illumination\\\textbf{0.78 TB total size}}  &                                                                    \makecell[l]{Lightsheet Z.1 with EC Plan-Neofluar 5x/0.16 objective \\10.44$\mu{}m$ LS thickness, 2034.834282$\mu{}m$ Confocal parameter\\0.915$\times$0.915$\times$4.930096618$\mu{}m$ pixels\\119.8ms exposure on PCO.edge camera\\lasers: 561 nm 50\%, 488 nm 50\%\\filters: EF1 BP 505-545, EF 2 BP 575-615} \\ \\
+                                                                                                                                    &             \makecell[l]{1920$\times$1920$\times$960 16 bit stacks\\35 tiles from 2 angles (10\% overlap) \\2 channels, dual illumination\\\textbf{0.9 TB total size}}  &                                                                    \makecell[l]{Lightsheet Z.1 with EC Plan-Neofluar 5x/0.16 objective \\10.44$\mu{}m$ LS thickness, 2034.834282$\mu{}m$ Confocal parameter\\0.915$\times$0.915$\times$4.930916667$\mu{}m$ pixels\\119.8ms exposure on PCO.edge camera\\lasers: 561 nm 50\%, 488 nm 50\%\\filters: EF1 BP 505-545, EF 2 BP 575-615} \\ \\
+                              \makecell[l]{Whole \emph{C. elegans} during dauer \\with all neuron nuclei expressing tagRFP in \\and co-stained with DAPI(\textbf{Figure 2f})} &  \makecell[l]{750$\times$1920$\times$40 16 bit stacks\\16 tiles from 4 angles (10\% overlap) \\2 channels, single illumination\\\textbf{0.003 (2,96GB) TB total size}}  &  \makecell[l]{Lightsheet Z.1 with W Plan-Apochromat 20x/1.0 objective (2$\times$ zoom)\\1.82$\mu{}m$ LS thickness, 56.72238239$\mu{}m$ Confocal parameter\\0.114$\times$0.114$\times$0.8035$\mu{}m$ pixels\\59.9ms exposure on PCO.edge camera\\lasers: DAPI 505 nm 2\%, DAPI 561 nm 0.2\%, RFP 561 nm 5\%\\filters: DAPI CAM BS Mirror, RFP CAM BS SBS LP 560, RFP EF 1 BP 575-615} \\ \\
+                          \makecell[l]{Central nervous system of a Drosophila\\ 1st instar larva with immunostaining \\for tubulin(\textbf{Figure 2c,e + Supplement})} &                     \makecell[l]{2048$\times$2048$\times$923 stacks\\? tiles from 4 angles (28\% overlap) \\1 channels, dual illumination\\\textbf{? TB total size}}  &                                                                                                                \makecell[l]{IsoView with SpecialOptics 16x/NA 0.71 objective \\4.92$\mu{}m$ LS thickness, 416.0$\mu{}m$ Confocal parameter\\0.4125$\times$0.4125$\times$0.8125$\mu{}m$ pixels\\?ms exposure on Orca Flash 4.0 v2 sCMOS camera\\lasers: 488 nm Laser?\\filters: ?} \\ \\
+\end{longtable}
+
+
+
+\end{landscape}
+\pagebreak
+
+
 
 \input supplementary-methods.tex
 
