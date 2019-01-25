@@ -178,12 +178,12 @@
 \titleformat{\section}{\normalfont\fontsize{11.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
 
 
-\subsection*{SUPPLEMENTARY FIGURE 1: Fluorescence preservation in cleared samples}
+\subsection*{\red{SUPPLEMENTARY FIGURE 1: Fluorescence preservation in cleared samples}}
 \vspace{1mm}
 \begin{figure*}[ht!]
 \includegraphics[width=\textwidth]{fig-rf.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Fluorescence preservation and image analysis in cleared samples.} \textbf{(a)-(d)} Optical sections through an adult mouse hypothalamus in a CLARITY-cleared adult mouse brain expressing H2B-GFP in all bsx neurons. Fluorescence is preserved throughout the clearing procedure and can be used in advanced image analyses. The examples shows nuclear segmentation of pixel-wise classification using a Random Forest \cite{arganda2017trainable} model. Classification results (probability maps) are overlaid in blue onto the grayscale raw intensities.
+\caption{\hspace{-0.5mm} \emph{Fluorescence preservation and image analysis in cleared samples.} \textbf{(a)-(d)} Optical sections through an adult mouse hypothalamus in a CLARITY-cleared adult mouse brain expressing H2B-GFP in all bsx neurons. Fluorescence is preserved throughout the clearing procedure. \red{However, the signal is degrading with imaging depth and can typically be recorded up to 1 -- 2 cm into the sample, depending on the tissue type and the quality of the clearing process. This maximal imaging depth limits the size of the sample that can be acquired from a single orientation. The brightness and contrast was adjusted individually for each slice. Slight saturation was used to also display the autofluorescent signal.} 
 }
 \label{fig:sup-fig-rf}
 \end{figure*}
@@ -341,12 +341,12 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 15: Interest point visualization}
+\subsection*{\red{SUPPLEMENTARY FIGURE 15: Interest point visualization}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-IntrestPoints.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Interactive visualization of interest points.} The interest points explorer allows the visualization of interest points and corresponding interest points between views. \textbf{(A)} select desired interest points for visualization. \textbf{(B)} preview the interest points overlaid in the BigDataViewer.
+\caption{\hspace{-0.5mm} \emph{Interactive visualization of interest points.} The interest points explorer allows the visualization of interest points and corresponding interest points between views. \textbf{(A)} select desired interest points for visualization. \textbf{(B)} preview the interest points overlaid in the BigDataViewer. \red{Red dots intersect with the current image plane, green dots are projections from different z-planes. The white box marks the zoom-in shown in (C). \textbf{(C)} Zoom-in into the region outlined in (B).}
 }
 \label{fig:sup-fig-interest-point}
 \end{figure*}
@@ -371,7 +371,7 @@
 \begin{figure*}[h!]
 \center\includegraphics[width=\textwidth-1.35cm]{fig-expansion_tiling.jpg}
 \vspace{2.0mm}
-\caption{\hspace{-0.5mm} \emph{Expansion microscopy stitching} \textbf{(A)} All tiles of one view of the expanded Drosophila central nervous system. Each image tile is randomly colored. Dotted lines highlight orthogonal sections in (B) and (C). \textbf{(B,C)} Orthogonal view showing the stitching of the orthogonal angle at two different cut planes.
+\caption{\hspace{-0.5mm} \emph{Expansion microscopy stitching} \red{\textbf{(A)} All tiles (randomly colored) of one view of the expanded Drosophila central nervous system. Dotted lines highlight orthogonal sections in (B) and (C). \textbf{(B,C)} Stitching of an orthogonal view showing at two different cut planes. Red scalebar takes expansion into account.}
 }
 \label{fig:sup-fig-expansion-microscopy}
 \end{figure*}
@@ -432,7 +432,7 @@
 
 We prepared three different examples of different size and complexity for testing the BigStitcher. We suggest to run BigStitcher on these first before applying it to your dataset. This allows you to quickly test features in an environment where you can easily ask for advice on GitHub or the ImageJ Forum.
 
-\textcolor{red}{To ensure your anonymity you can download all example files from google drive \url{https://drive.google.com/open?id=1dapQf7gwyqIYa4aeB_2oSZFTWwxmg_IA}. Additionally you can use the TOR-browser for download \url{https://www.torproject.org/projects/torbrowser.html.en}.}
+\textcolor{red}{The data can be downloaded from the Open Science Foundation \url{https://www.nature.com/sdata/policies/repositories}.}
 
 \begin{description}
 \item 2d multi-tile dataset ($2.8$ MB) \\
