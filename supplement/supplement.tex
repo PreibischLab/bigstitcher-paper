@@ -161,6 +161,7 @@
 \textbf{Supplementary Figure \ref{fig:sup-fig-interest-point}} & Interest point visualization \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align2}} & Manual Transformation of multi-view datasets \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-expansion-microscopy}} & Expansion Microscopy Stitching \tablespace \\
+\textbf{\red{Supplementary Table \ref{tab:benchmarks}}} & \red{Performance Comparison} \tablespace \\
 \textbf{\red{Supplementary Table \ref{tab:datasets}}} & \red{Datasets used in this publication} \tablespace \\
 \textbf{Supplementary Note \ref{sec:sup-note1}-\ref{sec:expansion}} & Supplementary methods \tablespace \\
 \textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher User Guide \tablespace \\
@@ -182,8 +183,8 @@
 \vspace{1mm}
 \begin{figure*}[ht!]
 \includegraphics[width=\textwidth]{fig-rf.png}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Fluorescence preservation and image analysis in cleared samples.} \textbf{(a)-(d)} Optical sections through an adult mouse hypothalamus in a CLARITY-cleared adult mouse brain expressing H2B-GFP in all bsx neurons. Fluorescence is preserved throughout the clearing procedure. \red{However, the signal is degrading with imaging depth and can typically be recorded up to 1 -- 2 cm into the sample, depending on the tissue type and the quality of the clearing process. This maximal imaging depth limits the size of the sample that can be acquired from a single orientation. The brightness and contrast was adjusted individually for each slice. Slight saturation was used to also display the autofluorescent signal.} 
+\vspace{-4.0mm}
+\caption{\hspace{-0.5mm}\red{\emph{Quantification of fluorescence preservation in cleared samples.} \textbf{(a-f)} Optical sections through an CLARITY-cleared adult mouse hypothalamus expressing H2B-GFP in all bsx neurons. Fluorescence is preserved throughout the clearing procedure. However, the signal is degrading with imaging depth and can typically be recorded up to 1 -- 2 cm into the sample, depending on the tissue type and the quality of the clearing process limiting the size of the sample that can be acquired from a single orientation. Brightness and contrast was adjusted individually. \textbf{(g)} Quantification of image quality using (relative) Fourier Ring Correlation (FRC) analysis built into BigStitcher. Note that FRC produces high values for the camera patterns if no signal is present. The relative FRC accurately measures image quality as illustrated by the position of the panels (a-f).} 
 }
 \label{fig:sup-fig-rf}
 \end{figure*}
@@ -379,12 +380,28 @@
 \pagebreak
 \begin{landscape}
 
+\setcounter{figure}{0} 
+% should be called Supplementary Figure
+\renewcommand{\figurename}{Supplementary Table}
 
-\setcounter{table}{0} 
+\subsection*{SUPPLEMENTARY TABLE 1: Performance Comparison}
+%\vspace{1mm}
+\begin{figure*}[h!]
+\center\includegraphics[width=\textwidth+5.00cm]{supp_table_1.pdf}
+\vspace{0.5mm}
+\caption{\hspace{-0.5mm} \red{\emph{Comparison of BigSticher features and performance with other available stitching programs.} Benchmarks were performed on a HP Z840 workstation running Windows 10 Pro with two Intel Xenon E5-2667v4 CPUs and 512 GB memory. The benchmarks for the Arivis software were performed on a HIVE system running Windows Server 2012 R2 with two Intel Xenon E5-2640v3 CPUs and 256 GB memory. The latest stable version of each stitching program was used. BigStitcher datasets were stitched using 4x times (x,y) downsampling, and fusion was performed at stated downsampling levels. Correctness of the stitching could only be confirmed in the BigStitcher due to the flexibility of interactive inspection. Processing of multi-view, dual-illumination datasets as well as ICP refinement and virtual fusion is only possible in BigStitcher. Note that fusion in BigStitcher also performs intensity adjustment. All displayed values are averaged from three independent runs of each respective software except those marked with a black star. \textbf{Note that image fusion results are not comparable since all other applications fuse datasets using translation-only, which is a significantly simpler problem that cannot align the datasets sufficiently well while BigStitcher uses affine models. Therefore translation-only results on dual-illumination datasets are grayed and marked with a red star.} A cross indicates that the functionality is not supported by the software, 'n.a.' indicates that the dataset did not require this feature.}
+}
+\label{tab:benchmarks}
+\end{figure*}
 
+
+\setcounter{table}{1} 
+
+\captionsetup{singlelinecheck = false, format= hang, justification=raggedright, labelsep=space}
+  
 \fontsize{8.5pt}{10pt}\selectfont
 {\color{red}\begin{longtable}{lll}
-\caption{Supplementary Table 1: \emph{Summary of all datasets used in this publication}. \label{tab:datasets} }\\ \\
+\caption{\textbf{SUPPLEMENTARY TABLE 2: Summary of all datasets used in this publication}. \label{tab:datasets} }\\ \\
 
 \toprule
                                                                                                                                                        \thead[l]{ \textbf{Dataset}} &                                                                                                                                                                \thead[l]{\textbf{Size}} &                                                                                                                                                                                                                                                                                                                                                \thead[l]{\textbf{Microscope \& Acquisition settings}} \\
