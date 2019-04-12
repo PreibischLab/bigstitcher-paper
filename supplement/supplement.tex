@@ -144,7 +144,9 @@
 \textbf{\textcolor{red}{Supplementary File}} & \textbf{\textcolor{red}{Title}}\\ \\
 \hline
 \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-rf}} & Fluorescence preservation in cleared samples\tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-fig-rf}}} & \red{Quantification of fluorescence preservation in cleared tissue}\tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-chromatic}}} & \red{Chromatic aberration correction}\tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-spherical}}} & \red{Spherical aberration correction}\tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-illu-select}} & Automatic illumination selection \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align1}} &  Manual alignment \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-flatfield}} & Flat-field correction \tablespace \\
@@ -157,10 +159,20 @@
 \textbf{Supplementary Figure \ref{fig:sup-fig-link-explorer}} & Interactive inspection and curation of pairwise links \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-icp}} & Affine refinement via ICP \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-boundingbox}} & Bounding Box definition \tablespace \\
+
+\textbf{\red{Supplementary Figure \ref{fig:sup-fig-registration-quality}}} & \red{Quantification of Image Registration Quality}\tablespace \\
+
+\textbf{\red{Supplementary Figure \ref{fig:sup-rFRC}}} & \red{Automatic Quantification of Image Quality}\tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-rfrc-brain}}} & \red{Quality Estimation in Whole-Brain Mouse Acquisition}\tablespace \\
+
 \textbf{Supplementary Figure \ref{fig:sup-fig-fusion}} & Virtual fusion of large image \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-interest-point}} & Interest point visualization \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align2}} & Manual Transformation of multi-view datasets \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-expansion-microscopy}} & Expansion Microscopy Stitching \tablespace \\
+
+\textbf{\red{Supplementary Figure \ref{fig:non-rigid}}} & \red{Principles of Non-Rigid Alignment}\tablespace \\
+
+
 \textbf{\red{Supplementary Table \ref{tab:benchmarks}}} & \red{Performance Comparison} \tablespace \\
 \textbf{\red{Supplementary Table \ref{tab:datasets}}} & \red{Datasets used in this publication} \tablespace \\
 \textbf{Supplementary Note \ref{sec:sup-note1}-\ref{sec:expansion}} & Supplementary methods \tablespace \\
@@ -179,17 +191,17 @@
 \titleformat{\section}{\normalfont\fontsize{11.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
 
 
-\subsection*{\red{SUPPLEMENTARY FIGURE 1: Fluorescence preservation in cleared samples}}
+\subsection*{\red{SUPPLEMENTARY FIGURE 1: Quantification of fluorescence preservation in cleared tissue}}
 \vspace{1mm}
 \begin{figure*}[ht!]
 \includegraphics[width=\textwidth]{fig-rf.png}
 \vspace{-4.0mm}
-\caption{\hspace{-0.5mm}\red{\emph{Quantification of fluorescence preservation in cleared samples.} \textbf{(a-f)} Optical sections through an CLARITY-cleared adult mouse hypothalamus expressing H2B-GFP in all bsx neurons. Fluorescence is preserved throughout the clearing procedure. However, the signal is degrading with imaging depth and can typically be recorded up to 1 -- 2 cm into the sample, depending on the tissue type and the quality of the clearing process limiting the size of the sample that can be acquired from a single orientation. Brightness and contrast was adjusted individually. \textbf{(g)} Quantification of image quality using (relative) Fourier Ring Correlation (FRC) analysis built into BigStitcher. Note that FRC produces high values for the camera patterns if no signal is present. The relative FRC accurately measures image quality as illustrated by the position of the panels (a-f).} 
+\caption{\hspace{-0.5mm}\red{\emph{Quantification of fluorescence preservation in cleared tissue.} \textbf{(a-f)} Optical sections through an CLARITY-cleared adult mouse hypothalamus expressing H2B-GFP in all bsx neurons. Fluorescence is preserved throughout the clearing procedure. However, the signal is degrading with imaging depth and can typically be recorded up to 1 -- 2 cm into the sample, depending on the tissue type and the quality of the clearing process limiting the size of the sample that can be acquired from a single orientation. Brightness and contrast was adjusted individually. \textbf{(g)} Quantification of image quality using (relative) Fourier Ring Correlation (FRC) analysis built into BigStitcher. Note that FRC produces high values for the camera patterns if no signal is present. The relative FRC accurately measures image quality as illustrated by the position of the panels (a-f).} 
 }
 \label{fig:sup-fig-rf}
 \end{figure*}
 
-\subsection*{SUPPLEMENTARY FIGURE 2: Chromatic aberration correction}
+\subsection*{\red{SUPPLEMENTARY FIGURE 2: Chromatic aberration correction}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-chr_aberrations.jpg}
@@ -201,7 +213,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 3: Spherical aberration correction}
+\subsection*{\red{SUPPLEMENTARY FIGURE 3: Spherical aberration correction}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-sph_aberrations.jpg}
@@ -353,38 +365,38 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE ??: Quantification of Image Registration Quality}
+\subsection*{\red{SUPPLEMENTARY FIGURE ??: Quantification of Image Registration Quality}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{bigstitcher_registrationquality.jpg}
 \vspace{-2.0mm}
 \caption{\hspace{-0.5mm} \red{\emph{Quantification of Image Registration Quality.} Text missing ...
 }}
-\label{fig:sup-fig-fusion}
+\label{fig:sup-fig-registration-quality}
 \end{figure*}
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE ??: Automatic Quantification of Image Quality}
+\subsection*{\red{SUPPLEMENTARY FIGURE ??: Automatic Quantification of Image Quality}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{rFRC.jpg}
 \vspace{-2.0mm}
 \caption{\hspace{-0.5mm} \red{\emph{Automatic Quantification of Image Quality.} \textbf{(a-d)} Four different z-planes from a volume that overlays the results of the relative Fourier Ring Correlation (rFRC) computed in $128$x$128$ blocks using a spacing of 10 pixels (magenta) and cleared image data (same as Suppl. Fig. 1). The rFRC robustly detects areas with high image quality. Note that (a) is deepest inside the tissue and (d) is at the surface of the sample.
 }}
-\label{fig:sup-fig-fusion}
+\label{fig:sup-rFRC}
 \end{figure*}
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE ??: Quality Estimation in Whole-Brain Mouse Acquisition}
+\subsection*{\red{SUPPLEMENTARY FIGURE ??: Quality Estimation in Whole-Brain Mouse Acquisition}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{rFRC_brain.jpg}
 \vspace{-2.0mm}
 \caption{\hspace{-0.5mm} \red{\emph{Quality Estimation in Whole-Brain Mouse Acquisition.} Application of our relative Fourier Ring Correlation (rFRC) to the reconstruction of an entire adult mouse brain. The rFRC was computed in $512$x$512$ blocks using a spacing of 256 pixels and transformed and rendered as the reconstructed volume (see Fig. 3d). \textbf{(a,b,c)} single slice through rFRC volume based on image data acquired with left illumination (a), right illumination (b), and both overlaid (c), dotted lines outline the orthogonal shown views in (d-h). \textbf{(d-h)} orthogonal views to (a-c) highlighting the contribution in image quality from different illumination directions and acquisition angles. \textbf{(i)} illustration of the color scheme used in (h) and the type of data displayed in (d-g).
 }}
-\label{fig:sup-fig-fusion}
+\label{fig:sup-rfrc-brain}
 \end{figure*}
 
 \pagebreak
@@ -426,7 +438,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 17: Expansion Microscopy Stitching}
+\subsection*{SUPPLEMENTARY FIGURE ??: Expansion Microscopy Stitching}
 %\vspace{1mm}
 \begin{figure*}[h!]
 \center\includegraphics[width=\textwidth-1.35cm]{fig-expansion_tiling.jpg}
@@ -438,14 +450,14 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE ??: Principle of Non-Rigid Alignment}
+\subsection*{SUPPLEMENTARY FIGURE ??: Principles of Non-Rigid Alignment}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{non-rigid.png}
 \vspace{-2.0mm}
 \caption{\hspace{-0.5mm} \red{\emph{Principle of Non-Rigid Alignment.} The non-rigid alignment applies a different affine transformation to each pixel of each transformed image. This continuous transformation space is defined by corresponding interest points between overlapping images. We therefore first identify all sets of all corresponding interest points that belong to each other as defined by pairwise correspondences (see Example Correspondences). Each individual set of correspondences across $n$ images then define a $unique$ $point$, of which typically hundreds to thousands per image exist. The left part of the figure illustrates a single $unique$ $point$, which is defined as the average position of all corresponding interest points. Once all unique points are assigned to each correspondence, the non-rigid transformation can be individually computed for each transformed image.
 }}
-\label{fig:sup-fig-illu-select}
+\label{fig:non-rigid}
 \end{figure*}
 
 \pagebreak
@@ -475,7 +487,8 @@
 \caption{\textbf{SUPPLEMENTARY TABLE 2: Summary of all datasets used in this publication}. \label{tab:datasets} }\\ \\
 
 \toprule
-                                                                                                                                                       \thead[l]{ \textbf{Dataset}} &                                                                                                                                                                \thead[l]{\textbf{Size}} &                                                                                                                                                                                                                                                                                                                                                \thead[l]{\textbf{Microscope \& Acquisition settings}} \\
+\thead[l]{ \textbf{Dataset}} &
+\thead[l]{\textbf{Size}} &                                                                                                                                                                                                                                                                                                                                                \thead[l]{\textbf{Microscope \& Acquisition settings}} \\
 \midrule \\
 \endhead
 \midrule
