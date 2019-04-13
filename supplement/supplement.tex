@@ -145,11 +145,14 @@
 \hline
 \\
 \textbf{\red{Supplementary Figure \ref{fig:sup-fig-rf}}} & \red{Quantification of fluorescence preservation in cleared tissue}\tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-illu-select}} & Automatic illumination selection \tablespace \\
 \textbf{\red{Supplementary Figure \ref{fig:sup-chromatic}}} & \red{Chromatic aberration correction}\tablespace \\
 \textbf{\red{Supplementary Figure \ref{fig:sup-spherical}}} & \red{Spherical aberration correction}\tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-illu-select}} & Automatic illumination selection \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align1}} &  Manual alignment \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-flatfield}} & Flat-field correction \tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-rFRC}}} & \red{Automatic quantification of image quality}\tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-rfrc-brain}}} & \red{Quality Estimation in whole-brain mouse acquisition}\tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-icp}} & Affine refinement via ICP \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-globalopt}} & Global optimization \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-stitching}} & Pairwise registration by phase correlation \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-downsampling}} & Downsampling with different SNR \tablespace \\
@@ -157,16 +160,13 @@
 \textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-1}} & Downsampling error statistics 2 \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-downsampling-statistics-2}} & Downsampling error statistics 3 \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-link-explorer}} & Interactive inspection and curation of pairwise links \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-icp}} & Affine refinement via ICP \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-boundingbox}} & Bounding Box definition \tablespace \\
-\textbf{\red{Supplementary Figure \ref{fig:sup-fig-registration-quality}}} & \red{Quantification of Image Registration Quality}\tablespace \\
-\textbf{\red{Supplementary Figure \ref{fig:sup-rFRC}}} & \red{Automatic Quantification of Image Quality}\tablespace \\
-\textbf{\red{Supplementary Figure \ref{fig:sup-rfrc-brain}}} & \red{Quality Estimation in Whole-Brain Mouse Acquisition}\tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-fig-registration-quality}}} & \red{Quantification of image registration quality}\tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-boundingbox}} & Bounding-box definition \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-fusion}} & Virtual fusion of large image \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-interest-point}} & Interest point visualization \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-manual-align2}} & Manual Transformation of multi-view datasets \tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-expansion-microscopy}} & Expansion Microscopy Stitching \tablespace \\
-\textbf{\red{Supplementary Figure \ref{fig:non-rigid}}} & \red{Principles of Non-Rigid Alignment}\tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-manual-align2}} & Manual transformation of multi-view datasets \tablespace \\
+\textbf{Supplementary Figure \ref{fig:sup-fig-expansion-microscopy}} & Expansion microscopy reconstruction \tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:non-rigid}}} & \red{Principles of non-rigid alignment}\tablespace \\
 \end{tabular}}
 \hspace{10mm}
 \caption{\emph{Continued on the following page}}
@@ -181,11 +181,11 @@
 \textbf{\textcolor{red}{Supplementary File}} & \textbf{\textcolor{red}{Title}}\\ \\
 \hline
 \\
-\textbf{\red{Supplementary Table \ref{tab:benchmarks}}} & \red{Performance Comparison} \tablespace \\
+\textbf{\red{Supplementary Table \ref{tab:benchmarks}}} & \red{Performance comparison} \tablespace \\
 \textbf{\red{Supplementary Table \ref{tab:datasets}}} & \red{Datasets used in this publication} \tablespace \\
 \textbf{Supplementary Note \ref{sec:sup-note1}-\ref{sec:expansion}} & Supplementary methods \tablespace \\
-\textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher User Guide \tablespace \\
-\textbf{Supplementary Note \ref{sec:example}} & Example Datasets for BigStitcher \tablespace \\
+\textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher user guide \tablespace \\
+\textbf{Supplementary Note \ref{sec:example}} & Example datasets for BigStitcher \tablespace \\
 \textbf{Supplementary Note \ref{sec:currentcode}} & Links to the current source codes \tablespace \\
 
 \end{tabular}}
@@ -210,31 +210,9 @@
 \label{fig:sup-fig-rf}
 \end{figure*}
 
-\subsection*{\red{SUPPLEMENTARY FIGURE 2: Chromatic aberration correction}}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-chr_aberrations.jpg}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Chromatic aberration correction.} If sufficient autofluorescent signal is in common between channels the ICP refinement on an affine model can be used to approximately correct chromatic aberrations are within the range of a few pixels. Here, the 488 and 561 channels are shown in magenta and green, respectively. Zoom-ins (i) -- (iv) illustrate the correction on one example image tile 1920x1920 pixels in size. In the bottom right the interest points (all points of the entire stack are shown for one slice) used for alignment are shown. Please note that for example (ii) was not used for alignment.
-}}
-\label{fig:sup-chromatic}
-\end{figure*}
-
 \pagebreak
 
-\subsection*{\red{SUPPLEMENTARY FIGURE 3: Spherical aberration correction}}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-sph_aberrations.jpg}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Spherical aberration correction.} \textbf{(A-C)} show the same area of the CLARITY-cleared adult mouse hypothalamus expressing H2B-GFP in all bsx neurons where the corners of 4 image tiles of the same wavelength overlap. Zoom-ins (i)--(iv) show the alignment quality by overlay in different colors (first row), after image fusing using blending (second row), and the sobel-filtering of the blending fusion (third row). \textbf{(A)}~shows results for stitching, \textbf{(B)} when using affine refinement, and \textbf{(C)} when using affine refinement on re-blocked images. Note that affine, and split-affine improve the alignment quality. Blending-fusion can reduce the artifacts as it reduces the contribution of pixels close to the image tile borders. Arrows outline cases where artifacts persist even after commonly-used blending-fusion. For example, the artifact visible in the fusion in (iii) stems from misalignments of the pink and red tile, as this part of the green tile is almost invisible after fusion.
-}}
-\label{fig:sup-spherical}
-\end{figure*}
-
-\pagebreak
-
-\subsection*{SUPPLEMENTARY FIGURE ??: Automatic illumination selection}
+\subsection*{SUPPLEMENTARY FIGURE 2: Automatic illumination selection}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Illu_Select.jpg}
@@ -246,7 +224,32 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE ??: Manual alignment}
+\subsection*{\red{SUPPLEMENTARY FIGURE 3: Chromatic aberration correction}}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-chr_aberrations.jpg}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \red{\emph{Chromatic aberration correction.} If sufficient autofluorescent signal is in common between channels the ICP refinement on an affine model can be used to approximately correct chromatic aberrations are within the range of a few pixels. Here, the 488 and 561 channels are shown in magenta and green, respectively. Zoom-ins (i) -- (iv) illustrate the correction on one example image tile 1920x1920 pixels in size. In the bottom right the interest points (all points of the entire stack are shown for one slice) used for alignment are shown. Please note that for example (ii) was not used for alignment.
+}}
+\label{fig:sup-chromatic}
+\end{figure*}
+
+\pagebreak
+
+\subsection*{\red{SUPPLEMENTARY FIGURE 4: Spherical aberration correction}}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-sph_aberrations.jpg}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \red{\emph{Spherical aberration correction.} \textbf{(A-C)} show the same area of the CLARITY-cleared adult mouse hypothalamus expressing H2B-GFP in all bsx neurons where the corners of 4 image tiles of the same wavelength overlap. Zoom-ins (i)--(iv) show the alignment quality by overlay in different colors (first row), after image fusing using blending (second row), and the sobel-filtering of the blending fusion (third row). \textbf{(A)}~shows results for stitching, \textbf{(B)} when using affine refinement, and \textbf{(C)} when using affine refinement on re-blocked images. Note that affine, and split-affine improve the alignment quality. Blending-fusion can reduce the artifacts as it reduces the contribution of pixels close to the image tile borders. Arrows outline cases where artifacts persist even after commonly-used blending-fusion. For example, the artifact visible in the fusion in (iii) stems from misalignments of the pink and red tile, as this part of the green tile is almost invisible after fusion.
+}}
+\label{fig:sup-spherical}
+\end{figure*}
+
+\pagebreak
+
+
+\subsection*{SUPPLEMENTARY FIGURE 5: Manual alignment}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{manual-view-arrangement.jpg}
@@ -258,7 +261,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE ??: Flat-field correction}
+\subsection*{SUPPLEMENTARY FIGURE 6: Flat-field correction}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-flatfield.jpg}
@@ -270,123 +273,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 5: Global optimization}
-\vspace{1mm}
-\begin{figure*}[h!]
-\centerline{\includegraphics[width=0.85\textwidth]{fig-globalopt.jpg}}
-\vspace{2.0mm}
-\caption{\hspace{-0.5mm} \emph{Global optimization of pairwise registration in sparse datasets connected by "empty tiles" (noise only) .} \textbf{(A)} Simulation of a tiled image dataset with sparse objects: tiled images of multiple translated Julia fractals moved to a grid according to approximate metadata (with too high overlap). Centers of images for which pairwise shifts can be determined via phase correlation are connected by green lines, whereas centers of neighboring tiles for which no meaningful shift can be calculated are linked by dashed grey lines. Manually measured distances between distinct points in the three fractals are shown in red. \textbf{(B)} performing global optimization with \emph{absolute shifts} (as it is done BigStitcher's predecessor, the ImageJ Stitching plugin) will correctly align images within connected components of the link graph but place all fractals close to the origin. \textbf{(C)} by using \emph{relative shifts}, BigStitcher will leave disconnected objects at their initial location while still aligning within connected components. \textbf{(D)} as registrations are not propagated between unconnected tiles, distances between neighboring objects might change. By running a second round of optimization to align connected components according to metadata shifts and applying the results to the in-component registrations, distances between neighboring objects are preserved as-good-as-possible.
-}
-\label{fig:sup-fig-globalopt}
-\end{figure*}
-
-
-\subsection*{SUPPLEMENTARY FIGURE 6: Pairwise registration by phase correlation}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-stitching.jpg}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Pairwise registration by phase correlation}. \textbf{(A),(B)} Central slices of image stacks from a tiled acquisition (non-regular tiling) of an adult mouse hypothalamus slice. \textbf{(C)} Phase correlation matrix (PCM) calculated from the two images shows a single, distinct peak above nearly constant background. The peak location corresponds to the relative translation $t$ of both tiles. \textbf{(D)} Central slice through the images aligned according to $t$, as displayed in interactively during the reconstruction process. 
-}
-\label{fig:sup-fig-stitching}
-\end{figure*}
-
-\subsection*{SUPPLEMENTARY FIGURE 7: Downsampling with different SNR}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-downsampling.jpg}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Effects of downsampling on simulated data with different SNR.} \textbf{(A)} Simulated image stacks of spheroid-like objects deteriorated by anisotropic sampling, light attenuation, convolution with an anisotropic PSF, and pixel intensity generation using Poisson processes to archive desired signal-to-noise-ratios (SNRs). A central slice through 3d volumes is shown. \textbf{(B), (C), (D)} Effects of downsampling on the simulated images. The effects of Poisson Shot Noise are gradually reduced by the blurring of increasing downsampling.
-}
-\label{fig:sup-fig-downsampling}
-\end{figure*}
-
-\pagebreak
-
-\subsection*{SUPPLEMENTARY FIGURE 8: Downsampling statistics 1}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-downsampling-statistics-0.png}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Processing times and overall errors.} \textbf{(A)} Processing times for sub-pixel precise identification of overlap between simulation spheroids. With increasing downsampling, the computation time drops significantly. \textbf{(B)} Average errors including their standard deviation for all combinations of SNR and downsampling. \textbf{(A,B)} All errors are in units of the input images (no downsampling). For each combination of SNR and downsampling 300 independent simulations were run to compute the values.
-}
-\label{fig:sup-fig-downsampling-statistics-0}
-\end{figure*}
-
-\subsection*{SUPPLEMENTARY FIGURE 9: Downsampling statistics 2}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-downsampling-statistics-1.png}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Errors for different downsamplings at SNR=8.} \textbf{(A-D)} Histograms showing the distributions of error of the simulations. Errors initially decrease due to the smoothing effect of the downsampling. All errors are in pixel units of the original resolution (DS1). Each histogram consists of 300 independent simulations.
-}
-\label{fig:sup-fig-downsampling-statistics-1}
-\end{figure*}
-
-\pagebreak
-
-\subsection*{SUPPLEMENTARY FIGURE 10: Downsampling statistics 3}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-downsampling-statistics-2.png}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Absolute distance errors at SNR=8.} \textbf{(A-D)}  Histograms showing the absolute distances between computed and known shift between two simulated spheroids, split by dimension. It illustrates a normal distribution of the error made during the pairwise phase correlation. All errors are in pixel units of the original resolution (DS1). Each histogram consists of 300 independent simulations.
-}
-\label{fig:sup-fig-downsampling-statistics-2}
-\end{figure*}
-
-\pagebreak
-
-\subsection*{SUPPLEMENTARY FIGURE 11: Interactive inspection and curation of pairwise links}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{Supp-Link-Explorer.jpg}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Interactive visualization of links in the link explorer.} The BigStitcher GUI offers to explore and modify calculated links between corresponding tiles in the link explorer menu. \textbf{(A)} tiles containing links are displayed in yellow and can be selected. \textbf{(B)} display corresponding tiles of the selected view. Single links can be removed manually or through available filtering options. \textbf{(C)} corresponding links of the selected view are displayed in real-time in the BigDataViewer.
-}
-\label{fig:sup-fig-link-explorer}
-\end{figure*}
-
-\pagebreak
-
-
-\subsection*{SUPPLEMENTARY FIGURE 12: Affine refinement via ICP}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{fig-stitching_icp.jpg}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Illustration of different steps for multi-tile alignment} \textbf{(A)} Four overlapping image tiles randomly color-coded illustrate the typical error when only the metadata as read from the microscope is applied. \textbf{(B)} Shows the same four image tiles as in (A), but without random color coding. \textbf{(C)} Quality of the registration after applying the phase-correlation based stitching with downsampling 4 and two-round global optimization. \textbf{(D)} Result after applying the automatic ICP refinement for tile alignment and chromatic aberration correction. \textbf{(A-D)} Insets highlight specific areas to better appreciate quality differences.
-}
-\label{fig:sup-fig-icp}
-\end{figure*}
-
-\pagebreak
-
-\subsection*{SUPPLEMENTARY FIGURE 13: Bounding Box definition}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{Supp-BB.jpg}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Interactive definition of bounding boxes.} The BigStitcher GUI offers the possibility of defining or modifying regions of interest via the creation of bounding boxes. \textbf{(A)} Choose the method used to define a new bounding box. In this case the interactive mode is selected. \textbf{(B)} manually define the bounding box range \textbf{(C)} Preview the size of the specified bounding box in the BigDataViewer in real-time.
-}
-\label{fig:sup-fig-boundingbox}
-\end{figure*}
-
-\pagebreak
-
-\subsection*{\red{SUPPLEMENTARY FIGURE ??: Quantification of Image Registration Quality}}
-\vspace{1mm}
-\begin{figure*}[h!]
-\includegraphics[width=\textwidth]{bigstitcher_registrationquality.jpg}
-\vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Quantification of Image Registration Quality.} Text missing ...
-}}
-\label{fig:sup-fig-registration-quality}
-\end{figure*}
-
-\pagebreak
-
-\subsection*{\red{SUPPLEMENTARY FIGURE ??: Automatic Quantification of Image Quality}}
+\subsection*{\red{SUPPLEMENTARY FIGURE 7: Automatic quantification of image quality}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{rFRC.jpg}
@@ -398,7 +285,7 @@
 
 \pagebreak
 
-\subsection*{\red{SUPPLEMENTARY FIGURE ??: Quality Estimation in Whole-Brain Mouse Acquisition}}
+\subsection*{\red{SUPPLEMENTARY FIGURE 8: Quality estimation in whole-brain mouse acquisition}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{rFRC_brain.jpg}
@@ -408,9 +295,123 @@
 \label{fig:sup-rfrc-brain}
 \end{figure*}
 
+\subsection*{SUPPLEMENTARY FIGURE 9: Affine refinement via ICP}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-stitching_icp.jpg}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Illustration of different steps for multi-tile alignment} \textbf{(A)} Four overlapping image tiles randomly color-coded illustrate the typical error when only the metadata as read from the microscope is applied. \textbf{(B)} Shows the same four image tiles as in (A), but without random color coding. \textbf{(C)} Quality of the registration after applying the phase-correlation based stitching with downsampling 4 and two-round global optimization. \textbf{(D)} Result after applying the automatic ICP refinement for tile alignment and chromatic aberration correction. \textbf{(A-D)} Insets highlight specific areas to better appreciate quality differences.
+}
+\label{fig:sup-fig-icp}
+\end{figure*}
+
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 14: Virtual Fusion of large image}
+\pagebreak
+\subsection*{SUPPLEMENTARY FIGURE 10: Global optimization}
+\vspace{1mm}
+\begin{figure*}[h!]
+\centerline{\includegraphics[width=0.85\textwidth]{fig-globalopt.jpg}}
+\vspace{2.0mm}
+\caption{\hspace{-0.5mm} \emph{Global optimization of pairwise registration in sparse datasets connected by "empty tiles" (noise only) .} \textbf{(A)} Simulation of a tiled image dataset with sparse objects: tiled images of multiple translated Julia fractals moved to a grid according to approximate metadata (with too high overlap). Centers of images for which pairwise shifts can be determined via phase correlation are connected by green lines, whereas centers of neighboring tiles for which no meaningful shift can be calculated are linked by dashed grey lines. Manually measured distances between distinct points in the three fractals are shown in red. \textbf{(B)} performing global optimization with \emph{absolute shifts} (as it is done BigStitcher's predecessor, the ImageJ Stitching plugin) will correctly align images within connected components of the link graph but place all fractals close to the origin. \textbf{(C)} by using \emph{relative shifts}, BigStitcher will leave disconnected objects at their initial location while still aligning within connected components. \textbf{(D)} as registrations are not propagated between unconnected tiles, distances between neighboring objects might change. By running a second round of optimization to align connected components according to metadata shifts and applying the results to the in-component registrations, distances between neighboring objects are preserved as-good-as-possible.
+}
+\label{fig:sup-fig-globalopt}
+\end{figure*}
+
+
+\subsection*{SUPPLEMENTARY FIGURE 11: Pairwise registration by phase correlation}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-stitching.jpg}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Pairwise registration by phase correlation}. \textbf{(A),(B)} Central slices of image stacks from a tiled acquisition (non-regular tiling) of an adult mouse hypothalamus slice. \textbf{(C)} Phase correlation matrix (PCM) calculated from the two images shows a single, distinct peak above nearly constant background. The peak location corresponds to the relative translation $t$ of both tiles. \textbf{(D)} Central slice through the images aligned according to $t$, as displayed in interactively during the reconstruction process. 
+}
+\label{fig:sup-fig-stitching}
+\end{figure*}
+
+\subsection*{SUPPLEMENTARY FIGURE 12: Downsampling with different SNR}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-downsampling.jpg}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Effects of downsampling on simulated data with different SNR.} \textbf{(A)} Simulated image stacks of spheroid-like objects deteriorated by anisotropic sampling, light attenuation, convolution with an anisotropic PSF, and pixel intensity generation using Poisson processes to archive desired signal-to-noise-ratios (SNRs). A central slice through 3d volumes is shown. \textbf{(B), (C), (D)} Effects of downsampling on the simulated images. The effects of Poisson Shot Noise are gradually reduced by the blurring of increasing downsampling.
+}
+\label{fig:sup-fig-downsampling}
+\end{figure*}
+
+\pagebreak
+
+\subsection*{SUPPLEMENTARY FIGURE 13: Downsampling statistics 1}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-downsampling-statistics-0.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Processing times and overall errors.} \textbf{(A)} Processing times for sub-pixel precise identification of overlap between simulation spheroids. With increasing downsampling, the computation time drops significantly. \textbf{(B)} Average errors including their standard deviation for all combinations of SNR and downsampling. \textbf{(A,B)} All errors are in units of the input images (no downsampling). For each combination of SNR and downsampling 300 independent simulations were run to compute the values.
+}
+\label{fig:sup-fig-downsampling-statistics-0}
+\end{figure*}
+
+\subsection*{SUPPLEMENTARY FIGURE 14: Downsampling statistics 2}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-downsampling-statistics-1.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Errors for different downsamplings at SNR=8.} \textbf{(A-D)} Histograms showing the distributions of error of the simulations. Errors initially decrease due to the smoothing effect of the downsampling. All errors are in pixel units of the original resolution (DS1). Each histogram consists of 300 independent simulations.
+}
+\label{fig:sup-fig-downsampling-statistics-1}
+\end{figure*}
+
+\pagebreak
+
+\subsection*{SUPPLEMENTARY FIGURE 15: Downsampling statistics 3}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{fig-downsampling-statistics-2.png}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Absolute distance errors at SNR=8.} \textbf{(A-D)}  Histograms showing the absolute distances between computed and known shift between two simulated spheroids, split by dimension. It illustrates a normal distribution of the error made during the pairwise phase correlation. All errors are in pixel units of the original resolution (DS1). Each histogram consists of 300 independent simulations.
+}
+\label{fig:sup-fig-downsampling-statistics-2}
+\end{figure*}
+
+\pagebreak
+
+\subsection*{SUPPLEMENTARY FIGURE 16: Interactive inspection and curation of pairwise links}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{Supp-Link-Explorer.jpg}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Interactive visualization of links in the link explorer.} The BigStitcher GUI offers to explore and modify calculated links between corresponding tiles in the link explorer menu. \textbf{(A)} tiles containing links are displayed in yellow and can be selected. \textbf{(B)} display corresponding tiles of the selected view. Single links can be removed manually or through available filtering options. \textbf{(C)} corresponding links of the selected view are displayed in real-time in the BigDataViewer.
+}
+\label{fig:sup-fig-link-explorer}
+\end{figure*}
+
+\pagebreak
+
+\subsection*{\red{SUPPLEMENTARY FIGURE 17: Quantification of image registration quality}}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{bigstitcher_registrationquality.jpg}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \red{\emph{Quantification of Image Registration Quality.} Text missing ...
+}}
+\label{fig:sup-fig-registration-quality}
+\end{figure*}
+
+\pagebreak
+
+\subsection*{SUPPLEMENTARY FIGURE 18: Bounding-box definition}
+\vspace{1mm}
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{Supp-BB.jpg}
+\vspace{-2.0mm}
+\caption{\hspace{-0.5mm} \emph{Interactive definition of bounding boxes.} The BigStitcher GUI offers the possibility of defining or modifying regions of interest via the creation of bounding boxes. \textbf{(A)} Choose the method used to define a new bounding box. In this case the interactive mode is selected. \textbf{(B)} manually define the bounding box range \textbf{(C)} Preview the size of the specified bounding box in the BigDataViewer in real-time.
+}
+\label{fig:sup-fig-boundingbox}
+\end{figure*}
+
+\pagebreak
+
+\subsection*{SUPPLEMENTARY FIGURE 19: Virtual fusion of large Image}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-fusion-screenshot.jpg}
@@ -422,7 +423,7 @@
 
 \pagebreak
 
-\subsection*{\red{SUPPLEMENTARY FIGURE 15: Interest point visualization}}
+\subsection*{\red{SUPPLEMENTARY FIGURE 20: Interest point visualization}}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-IntrestPoints.jpg}
@@ -435,7 +436,7 @@
 \pagebreak
 
 
-\subsection*{SUPPLEMENTARY FIGURE 16: Manual Transformation of multi-view datasets}
+\subsection*{SUPPLEMENTARY FIGURE 21: Manual transformation of multi-view datasets}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{Supp-Transformation.jpg}
@@ -447,7 +448,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE ??: Expansion Microscopy Stitching}
+\subsection*{SUPPLEMENTARY FIGURE 22: Expansion microscopy reconstruction}
 %\vspace{1mm}
 \begin{figure*}[h!]
 \center\includegraphics[width=\textwidth-1.35cm]{fig-expansion_tiling.jpg}
@@ -459,7 +460,7 @@
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE ??: Principles of Non-Rigid Alignment}
+\subsection*{SUPPLEMENTARY FIGURE 23: Principles of non-rigid alignment}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{non-rigid.png}
@@ -476,7 +477,7 @@
 % should be called Supplementary Figure
 \renewcommand{\figurename}{Supplementary Table}
 
-\subsection*{SUPPLEMENTARY TABLE 1: Performance Comparison}
+\subsection*{SUPPLEMENTARY TABLE 1: Performance comparison}
 %\vspace{1mm}
 \begin{figure*}[h!]
 \center\includegraphics[width=\textwidth+5.00cm]{supp_table_1.pdf}
@@ -533,14 +534,14 @@
 
 %\pagebreak
 %\titleformat{\section}{\centering\normalfont\fontsize{13.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
-\section{BigStitcher User Guide}
+\section{BigStitcher user guide}
 \label{sec:documentation}
 
 \input{user-guide/user-guide-main.tex}
 
 %\pagebreak
 
-\section{Example Datasets for BigStitcher}
+\section{Example datasets for BigStitcher}
 \label{sec:example}
 
 We prepared three different examples of different size and complexity for testing the BigStitcher. We suggest to run BigStitcher on these first before applying it to your dataset. This allows you to quickly test features in an environment where you can easily ask for advice on GitHub or the ImageJ Forum.
