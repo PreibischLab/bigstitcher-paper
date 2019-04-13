@@ -229,7 +229,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-chr_aberrations.jpg}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Chromatic aberration correction.} If sufficient autofluorescent signal is in common between channels the ICP refinement on an affine model can be used to approximately correct chromatic aberrations are within the range of a few pixels. Here, the 488 and 561 channels are shown in magenta and green, respectively. Zoom-ins (i) -- (iv) illustrate the correction on one example image tile 1920x1920 pixels in size. In the bottom right the interest points (all points of the entire stack are shown for one slice) used for alignment are shown. Please note that for example (ii) was not used for alignment.
+\caption{\hspace{-0.5mm} \red{\emph{Chromatic aberration correction.} If sufficient autofluorescent signal is in common between channels the ICP refinement on an affine model can be used to approximately correct chromatic aberrations are within the range of a few pixels. Here, the 488 and 561 channels are shown in magenta and green, respectively. Zoom-ins (i) -- (iv) illustrate the correction on one example image tile 1920x1920 pixels in size. In the bottom right the interest points (all points of the entire stack are shown for one slice) used for alignment are shown. Please note that for example the point in zoom-in (ii) was not used for alignment. If aberrations are significantly bigger than illustrated in this example or if not enough common autofluorescence between channels exist, images can be preprocessed with dedicated chromatic aberration software before import into BigStitcher (see Limitations section in \textbf{Online Methods}).
 }}
 \label{fig:sup-chromatic}
 \end{figure*}
@@ -295,12 +295,14 @@
 \label{fig:sup-rfrc-brain}
 \end{figure*}
 
+\pagebreak
+
 \subsection*{SUPPLEMENTARY FIGURE 9: Affine refinement via ICP}
 \vspace{1mm}
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-stitching_icp.jpg}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Illustration of different steps for multi-tile alignment} \textbf{(A)} Four overlapping image tiles randomly color-coded illustrate the typical error when only the metadata as read from the microscope is applied. \textbf{(B)} Shows the same four image tiles as in (A), but without random color coding. \textbf{(C)} Quality of the registration after applying the phase-correlation based stitching with downsampling 4 and two-round global optimization. \textbf{(D)} Result after applying the automatic ICP refinement for tile alignment and chromatic aberration correction. \textbf{(A-D)} Insets highlight specific areas to better appreciate quality differences.
+\caption{\hspace{-0.5mm} \emph{Illustration of different steps for multi-tile alignment} \textbf{(A)} Four overlapping image tiles randomly color-coded illustrate the typical error when only the metadata as read from the microscope is applied. \textbf{(B)} Shows the same four image tiles as in (A), but without random color coding. \textbf{(C)} Quality of the registration after applying the phase-correlation based stitching with downsampling 4 and two-round global optimization. \textbf{(D)} \red{Result after applying the automatic ICP refinement for tile alignment, spherical and chromatic aberration correction. \textbf{(A-D)} Insets highlight specific areas to better appreciate quality differences.}
 }
 \label{fig:sup-fig-icp}
 \end{figure*}
