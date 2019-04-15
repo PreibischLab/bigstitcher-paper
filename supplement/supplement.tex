@@ -181,8 +181,8 @@
 \textbf{\textcolor{red}{Supplementary File}} & \textbf{\textcolor{red}{Title}}\\ \\
 \hline
 \\
-\textbf{\red{Supplementary Table \ref{tab:benchmarks}}} & \red{Performance comparison} \tablespace \\
 \textbf{\red{Supplementary Table \ref{tab:datasets}}} & \red{Datasets used in this publication} \tablespace \\
+\textbf{\red{Supplementary Table \ref{tab:benchmarks}}} & \red{Performance comparison} \tablespace \\
 \textbf{Supplementary Note \ref{sec:sup-note1}-\ref{sec:expansion}} & Supplementary methods \tablespace \\
 \textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher user guide \tablespace \\
 \textbf{Supplementary Note \ref{sec:example}} & Example datasets for BigStitcher \tablespace \\
@@ -475,28 +475,17 @@
 \pagebreak
 \begin{landscape}
 
-\setcounter{figure}{0} 
+\setcounter{figure}{1} 
 % should be called Supplementary Figure
 \renewcommand{\figurename}{Supplementary Table}
 
-\subsection*{SUPPLEMENTARY TABLE 1: Performance comparison}
-%\vspace{1mm}
-\begin{figure*}[h!]
-\center\includegraphics[width=\textwidth+5.00cm]{supp_table_1.pdf}
-\vspace{0.5mm}
-\caption{\hspace{-0.5mm} \red{\emph{Comparison of BigSticher features and performance with other available stitching programs.} Benchmarks were performed on a HP Z840 workstation running Windows 10 Pro with two Intel Xenon E5-2667v4 CPUs and 512 GB memory. The benchmarks for the Arivis software were performed on a HIVE system running Windows Server 2012 R2 with two Intel Xenon E5-2640v3 CPUs and 256 GB memory. The latest stable version of each stitching program was used. BigStitcher datasets were stitched using 4x times (x,y) downsampling, and fusion was performed at stated downsampling levels. Correctness of the stitching could only be confirmed in the BigStitcher due to the flexibility of interactive inspection. Processing of multi-view, dual-illumination datasets as well as ICP refinement and virtual fusion is only possible in BigStitcher. Note that fusion in BigStitcher also performs intensity adjustment. All displayed values are averaged from three independent runs of each respective software except those marked with a black star. \textbf{Note that image fusion results are not comparable since all other applications fuse datasets using translation-only, which is a significantly simpler problem that cannot align the datasets sufficiently well while BigStitcher uses affine models. Therefore translation-only results on dual-illumination datasets are grayed and marked with a red star.} A cross indicates that the functionality is not supported by the software, 'n.a.' indicates that the dataset did not require this feature.}
-}
-\label{tab:benchmarks}
-\end{figure*}
-
-
-\setcounter{table}{1} 
+%\setcounter{table}{1} 
 
 \captionsetup{singlelinecheck = false, format= hang, justification=raggedright, labelsep=space}
   
 \fontsize{8.5pt}{10pt}\selectfont
 {\color{red}\begin{longtable}{lll}
-\caption{\textbf{SUPPLEMENTARY TABLE 2: Summary of all datasets used in this publication}. \label{tab:datasets} }\\ \\
+\caption{\textbf{SUPPLEMENTARY TABLE 1: Summary of all datasets used in this publication}. \label{tab:datasets} }\\ \\
 
 \toprule
 \thead[l]{ \textbf{Dataset}} &
@@ -525,7 +514,19 @@
                           \makecell[l]{Central nervous system of a Drosophila\\ 1st instar larva with immunostaining \\for tubulin(\textbf{Figure 2c,e + Supplement})} &                     \makecell[l]{2048$\times$2048$\times$923 stacks\\26 tiles from 2 angles (28\% overlap) \\1 channels, dual illumination\\\textbf{0.188 TB total size}}  &                                                                                                                \makecell[l]{IsoView with SpecialOptics 16x/NA 0.71 objective \\4.92$\mu{}m$ LS thickness, 416.0$\mu{}m$ Confocal parameter\\0.4125$\times$0.4125$\times$0.8125$\mu{}m$ pixels\\20.1ms exposure on Orca Flash 4.0 v2 sCMOS camera\\lasers: 488 nm 10.6mW\\filters: BP488/10 EX, BP525/50 EM } \\ \\
 \end{longtable}}
 
+\pagebreak
 
+\captionsetup{singlelinecheck = false, format=plain, justification=justified, labelsep=space}
+
+\subsection*{SUPPLEMENTARY TABLE 2: Performance comparison}
+%\vspace{1mm}
+\begin{figure*}[h!]
+\center\includegraphics[width=\textwidth+5.00cm]{supp_table_1.pdf}
+\vspace{0.5mm}
+\caption{\hspace{-0.5mm} \red{\emph{Comparison of BigSticher features and performance with other available stitching programs.} Benchmarks were performed on a HP Z840 workstation running Windows 10 Pro with two Intel Xenon E5-2667v4 CPUs and 512 GB memory. The benchmarks for the Arivis software were performed on a HIVE system running Windows Server 2012 R2 with two Intel Xenon E5-2640v3 CPUs and 256 GB memory. The latest stable version of each stitching program was used. BigStitcher datasets were stitched using 4x times (x,y) downsampling, and fusion was performed at stated downsampling levels. Correctness of the stitching could only be confirmed in the BigStitcher due to the flexibility of interactive inspection. Processing of multi-view, dual-illumination datasets as well as ICP refinement and virtual fusion is only possible in BigStitcher. Note that fusion in BigStitcher also performs intensity adjustment. All displayed values are averaged from three independent runs of each respective software except those marked with a black star. \textbf{Note that image fusion results are not comparable since all other applications fuse datasets using translation-only, which is a significantly simpler problem that cannot align the datasets sufficiently well while BigStitcher uses affine models. Therefore translation-only results on dual-illumination datasets are grayed and marked with a red star.} A cross indicates that the functionality is not supported by the software, 'n.a.' indicates that the dataset did not require this feature.}
+}
+\label{tab:benchmarks}
+\end{figure*}
 
 \end{landscape}
 \pagebreak
