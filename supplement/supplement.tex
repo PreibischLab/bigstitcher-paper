@@ -145,7 +145,7 @@
 \hline
 \\
 \textbf{\red{Supplementary Figure \ref{fig:sup-fig-rf}}} & \red{Quantification of fluorescence preservation in cleared tissue}\tablespace \\
-\textbf{Supplementary Figure \ref{fig:sup-fig-illu-select}} & Automatic illumination selection \tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-fig-illu-select}}} & \red{Quantification of automatic illumination selection} \tablespace \\
 \textbf{\red{Supplementary Figure \ref{fig:sup-chromatic}}} & \red{Chromatic aberration correction}\tablespace \\
 \textbf{\red{Supplementary Figure \ref{fig:sup-spherical}}} & \red{Spherical aberration correction}\tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align1}} &  Manual alignment \tablespace \\
@@ -205,19 +205,19 @@
 \begin{figure*}[ht!]
 \includegraphics[width=\textwidth]{fig-rf.jpg}
 \vspace{-4.0mm}
-\caption{\hspace{-0.5mm}\red{\emph{Quantification of fluorescence preservation in cleared tissue.} \textbf{(a-f)} Optical sections through an CLARITY-cleared adult mouse hypothalamus expressing H2B-GFP in all bsx neurons. Fluorescence is preserved throughout the clearing procedure. However, the signal is degrading with imaging depth and can typically be recorded up to 1 -- 2 cm into the sample, depending on the tissue type and the quality of the clearing process limiting the size of the sample that can be acquired from a single orientation. Brightness and contrast was adjusted individually. \textbf{(g)} Quantification of image quality using (relative) Fourier Ring Correlation (FRC) analysis built into BigStitcher. Note that FRC produces high values for the camera patterns if no signal is present. The relative FRC accurately measures image quality as illustrated by the position of the panels (a-f).} 
+\caption{\hspace{-0.5mm}\red{\emph{Quantification of fluorescence preservation in cleared tissue.} \textbf{(a-f)} Optical sections through an CLARITY-cleared adult mouse hypothalamus expressing H2B-GFP in all bsx neurons. Fluorescence is preserved throughout the clearing procedure. However, the signal is degrading with imaging depth and can typically be recorded up to 1 -- 2 cm into the sample, depending on the tissue type and the quality of the clearing process limiting the size of the sample that can be acquired from a single orientation. Brightness and contrast was adjusted individually. \textbf{(g)} Quantification of image quality using (relative) Fourier Ring Correlation ([r]FRC, see \textbf{Online Methods}) in BigStitcher. Note that FRC produces high values for the camera patterns if no signal is present. The rFRC accurately measures image quality as illustrated by the position of the panels (a-f).} 
 }
 \label{fig:sup-fig-rf}
 \end{figure*}
 
 \pagebreak
 
-\subsection*{SUPPLEMENTARY FIGURE 2: Automatic illumination selection}
+\subsection*{\red{SUPPLEMENTARY FIGURE 2: Quantification of automatic illumination selection}}
 \vspace{1mm}
 \begin{figure*}[h!]
-\includegraphics[width=\textwidth]{Illu_Select.jpg}
+\includegraphics[width=\textwidth]{fig-Illumination-Select.jpg}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Automatic illumination selection.} Best illumination for three consecutive tiles was selected based on brightest view for each tile. Close-ups shows the specified region for both illumination directions and illustrate that this metric is usually sufficient for a correct decision of the sharper illumination direction of each tile.
+\caption{\hspace{-0.5mm} \red{\emph{Automatic illumination selection.} \textbf{(A)} A small 166GB multi-view, dual-illumination, multi-tile dataset specifically acquired for verification purposes, here to quantify the properties of automatic illumination selection. Shown is a slice through the first of two angles, where six tiles and two illumination directions are highlighted. We manually confirmed that the left three tiles need to be assigned to left illumination, and the right three tiles to right illumination. \textbf{(B)} compares the distinction power of the methods \emph{Mean intensity}, \emph{Gradient magintude}, and \emph{Relative Fourier Ring Correlation} (see \textbf{Online Methods}) by their respective quality scores. All methods correctly predict the assignment, while the \emph{Relative Fourier Ring Correlation} distinguishes the illumination directions best. Note that \emph{Mean intensity} almost produces an error for tile~8 of the second angle (180 degrees)} \textbf{(C)} Another example of best illumination for three consecutive tiles (left to right), selected based on \emph{Mean intensity} for each tile. Close-ups shows the specified region for both illumination directions.
 }
 \label{fig:sup-fig-illu-select}
 \end{figure*}
@@ -278,7 +278,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{rFRC.jpg}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Automatic Quantification of Image Quality.} \textbf{(a-d)} Four different z-planes from a volume that overlays the results of the relative Fourier Ring Correlation (rFRC) computed in $128$x$128$ blocks using a spacing of 10 pixels (magenta) and cleared image data (same as Suppl. Fig. 1). The rFRC robustly detects areas with high image quality. Note that (a) is deepest inside the tissue and (d) is at the surface of the sample.
+\caption{\hspace{-0.5mm} \red{\emph{Automatic Quantification of Image Quality.} \textbf{(a-d)} Four different z-planes from a volume that overlays the results of the relative Fourier Ring Correlation (rFRC, see \textbf{Online Methods}) computed in $128$x$128$ blocks using a spacing of 10 pixels (magenta) and cleared image data (same as Suppl. Fig. 1). The rFRC robustly detects areas with high image quality. Note that (a) is deepest inside the tissue and (d) is at the surface of the sample.
 }}
 \label{fig:sup-rFRC}
 \end{figure*}
@@ -290,7 +290,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{rFRC_brain.jpg}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Quality Estimation in Whole-Brain Mouse Acquisition.} Application of our relative Fourier Ring Correlation (rFRC) to the reconstruction of an entire adult mouse brain. The rFRC was computed in $512$x$512$ blocks using a spacing of 256 pixels and transformed and rendered as the reconstructed volume (see Fig. 3d). \textbf{(a,b,c)} single slice through rFRC volume based on image data acquired with left illumination (a), right illumination (b), and both overlaid (c), dotted lines outline the orthogonal shown views in (d-h). \textbf{(d-h)} orthogonal views to (a-c) highlighting the contribution in image quality from different illumination directions and acquisition angles. \textbf{(i)} illustration of the color scheme used in (h) and the type of data displayed in (d-g).
+\caption{\hspace{-0.5mm} \red{\emph{Quality Estimation in Whole-Brain Mouse Acquisition.} Application of our relative Fourier Ring Correlation (rFRC, see \textbf{Online Methods}) to the reconstruction of an entire adult mouse brain. The rFRC was computed in $512$x$512$ blocks using a spacing of 256 pixels and transformed and rendered as the reconstructed volume (see Fig. 3d). \textbf{(a,b,c)} single slice through rFRC volume based on image data acquired with left illumination (a), right illumination (b), and both overlaid (c), dotted lines outline the orthogonal shown views in (d-h). \textbf{(d-h)} orthogonal views to (a-c) highlighting the contribution in image quality from different illumination directions and acquisition angles. \textbf{(i)} illustration of the color scheme used in (h) and the type of data displayed in (d-g).
 }}
 \label{fig:sup-rfrc-brain}
 \end{figure*}
