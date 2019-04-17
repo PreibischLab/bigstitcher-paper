@@ -8,6 +8,12 @@
 \section{Data Import}
 \label{sec:sup-note1}
 
+\subsection*{General remarks on data import}
+
+\red{Microscopy acquisitions are saved in a multitude of vendor-specific and custom formats. We developed an extendable, user-friendly interface that automatically imports almost any format and extracts relevant metadata such as illumination directions, sample rotation, and approximate image positions using Bioformats\cite{bioformats} (see below). Alternatively, the importer supports interactive placement of image tiles using regular grids or text file-based definitions (Supplementary Fig. \ref{fig:sup-fig-manual-align1}). BigStitcher accesses image data through memory-cached, virtual loading\cite{ImgLib2}, optionally combined with virtual flatfield correction (Supplementary Fig. \ref{fig:sup-fig-flatfield} and Supplementary Note \ref{sec:flatfield}). Performance is optimal when images are stored using a multiresolution, blocked, compressed format enabling interactive visualization, processing and interaction with terabyte-sized image datasets. The importer therefore suggests by default to resave single-block images (e.g. TIFF) into the BigDataViewer HDF5 format\cite{BDV}.}
+
+\red{Data import is described in detail on the BigStitcher Wiki \ref{https://imagej.net/BigStitcher_Define_new_dataset}. We added an example youtube video that illustrates how the most generic import from TIFF stacks works in BigStitcher: \url{https://youtu.be/aUofNP6V0lg}. In }
+
 \subsection*{\texttt{SpimData} data format}
 
 We internally represent our image data and metadata using an extended version of the \texttt{SpimData} data format of BigDataViewer\cite{pietzsch2015bigdataviewer}. Each image stack is defined by a (\texttt{ViewSetup}, \texttt{TimePoint})-combination. We extend the format by giving each \texttt{ViewSetup} the following \emph{attributes}: \texttt{Channel} to represent color channels, \texttt{Illumination} to represent illumination directions, \texttt{Angle} to represent multi-view acquisition angles and finally \texttt{Tile}, representing (local) x,y points in a multipoint acquisition.
