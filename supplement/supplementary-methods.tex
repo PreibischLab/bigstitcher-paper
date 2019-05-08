@@ -31,7 +31,7 @@ When imaging large samples with multiple illumination directions,  a lot of unne
 \section{Flat-field correction}
 \label{sec:flatfield}
 
-Flat-field correction is the process of correcting for image artifacts due to uneven illumination or detection efficiency or fixed-pattern noise. Aside from being visually unpleasing, especially in tiled acquisitions, these artifacts can also effect image registration and downstream quantitative image analyses. We therefore offer simple on-the-fly correction for a \emph{dark image} (which might be nonzero due to e.g. camera offset) and a \emph{bright image} (representing uneven ilumination or detection efficiency across the field-of-view). We calculate corrected pixel intensities $C$ from a raw image $R$ and bright and dark images $B$ and $D$ as:
+Flat-field correction is the process of correcting for image artifacts due to uneven illumination or detection efficiency or fixed-pattern noise. Aside from being visually unpleasing, especially in tiled acquisitions, these artifacts can also effect image registration and downstream quantitative image analyses. We therefore offer simple on-the-fly correction for a \emph{dark image} (which might be nonzero due to e.g. camera offset) and a \emph{bright image} (representing uneven illumination or detection efficiency across the field-of-view). We calculate corrected pixel intensities $C$ from a raw image $R$ and bright and dark images $B$ and $D$ as:
 
 \begin{equation}
 \label{eq:flatfield-eq1}
@@ -56,13 +56,13 @@ By default, we calculate pairwise translational shifts of two images $I_1$ and $
 
 \subsection*{Lucas-Kanade}
 
-In addition to the default phase correlation-based pairwise shift calculation, we offer registration via an ImgLib2 implementation of the \emph{inverse compositional} formulation of the gradient descent-based Lucas-Kande optical flow algorithm \cite{baker2004lucas}. While the algorithm is applicable to a variety of transformation models, we currently stick to estimating a translation vector $t$. If the pairwise registration converges, we calculate the cross correlation of the overlapping portions of the images as a quality metric for the pairwise registration. 
+In addition to the default phase correlation-based pairwise shift calculation, we offer registration via an ImgLib2 implementation of the \emph{inverse compositional} formulation of the gradient descent-based Lucas-Kanade optical flow algorithm \cite{baker2004lucas}. While the algorithm is applicable to a variety of transformation models, we currently stick to estimating a translation vector $t$. If the pairwise registration converges, we calculate the cross correlation of the overlapping portions of the images as a quality metric for the pairwise registration. 
 
 \subsection*{Intensity-based Registration of grouped images}
 
 In many use cases, one might want to align not single images but groups of images, e.g. all channels of a tile, in the pairwise registration step. For this, we implemented a flexible framework for the registration of grouped images.
 
-Each attribute of the images can be set to be an \emph{axis of application}, an \emph{axis of comparison} or an \emph{axis of grouping}. The registration will proceed by first splitting the images by the application attributes, i.e. grouping all images that have the same value for these attributes. In each each group, the images are then split by the comparison attributes and finally, the remaining image groups (that differ only in the grouping attributes) are combined into one image stack by either averaging all images for each grouping attribute or picking the image with a specific instance of the attribute.   
+Each attribute of the images can be set to be an \emph{axis of application}, an \emph{axis of comparison} or an \emph{axis of grouping}. The registration will proceed by first splitting the images by the application attributes, i.e. grouping all images that have the same value for these attributes. In each group, the images are then split by the comparison attributes and finally, the remaining image groups (that differ only in the grouping attributes) are combined into one image stack by either averaging all images for each grouping attribute or picking the image with a specific instance of the attribute.   
 
 In a typical application, the stitching of tiled datasets, we would, for example, start by \emph{applying} the registration to all (\texttt{Angle}, \texttt{TimePoint})-combinations individually, \emph{comparing} by \texttt{Tiles} and finally \emph{grouping} by \texttt{Illumination} and \texttt{Channel} for each tile, e.g. by averaging illumination directions and picking a specific channel.
 
@@ -96,7 +96,7 @@ We determine the globally optimal registrations $R$ given the image (groups) $V$
 
 Note that for all fixed views, the registration will be constrained to be the identity transformation $I$: $\forall V_i \in F: R_{i} = I$.
 
-\subsection*{Global optimization given pairwise transfomations}
+\subsection*{Global optimization given pairwise transformations}
 
 The intensity-based pairwise shift calculations do not directly give us the point correspondences we need for the global optimization step, instead the results are pairwise transformations $T^{p}$ in the form of affine transform matrices. We can, however, easily construct point correspondences by taking a set of points and transforming them with the \emph{inverse} transform (the only requirement being that the $n$-dimensional points do not all lie in a subspace of lower dimensionality of $\mathbb{R}^n$).  
 
