@@ -151,7 +151,7 @@
 \textbf{Supplementary Figure \ref{fig:sup-fig-manual-align1}} &  Manual alignment \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-flatfield}} & Flat-field correction \tablespace \\
 \textbf{\red{Supplementary Figure \ref{fig:sup-rFRC}}} & \red{Automatic quantification of image quality}\tablespace \\
-\textbf{\red{Supplementary Figure \ref{fig:sup-rfrc-brain}}} & \red{Quality Estimation in whole-brain mouse acquisition}\tablespace \\
+\textbf{\red{Supplementary Figure \ref{fig:sup-rfrc-brain}}} & \red{Quality estimation in whole-brain mouse acquisition}\tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-icp}} & Affine refinement via ICP \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-globalopt}} & Global optimization \tablespace \\
 \textbf{Supplementary Figure \ref{fig:sup-fig-stitching}} & Pairwise registration by phase correlation \tablespace \\
@@ -183,12 +183,28 @@
 \\
 \textbf{\red{Supplementary Table \ref{tab:datasets}}} & \red{Datasets used in this publication} \tablespace \\
 \textbf{\red{Supplementary Table \ref{tab:benchmarks}}} & \red{Performance comparison} \tablespace \\
-\textbf{Supplementary Note \ref{sec:sup-note1}-\ref{sec:expansion}} & Supplementary methods \tablespace \\
-\textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher user guide \tablespace \\
+\textbf{~} & {~} \tablespace \\
+\textbf{Supplementary Note \ref{sec:clearing}} & Sample clearing \tablespace \\
+\textbf{Supplementary Note \ref{sec:expansion}} & Expansion microscopy \tablespace \\
+\textbf{Supplementary Note \ref{sec:imaging}} & Imaging strategies \tablespace \\
+\textbf{Supplementary Note \ref{sec:sup-note1}} & Data import \tablespace \\
+\textbf{Supplementary Note \ref{sec:flatfield}} & Flat-field correction \tablespace \\
+\textbf{Supplementary Note \ref{sec:pairwiseshift}} & Pairwise shift calculation \tablespace \\
+\textbf{Supplementary Note \ref{sec:quantPCM}} & Quantification of pairwise image stitching \tablespace \\
+\textbf{Supplementary Note \ref{sec:mvr}} & MultiView Registration \tablespace \\
+\textbf{Supplementary Note \ref{sec:quantReg}} & Quantification of overall registration quality \tablespace \\
+\textbf{Supplementary Note \ref{sec:mvdecon}} & Multiview deconvolution \tablespace \\
+\textbf{Supplementary Note \ref{sec:psf}} & PSF measurement and PSF extraction \tablespace \\
+\textbf{Supplementary Note \ref{ssec:globalopt}} & Global optimization \tablespace \\
+\textbf{Supplementary Note \ref{sec:raytracing}} & Simulation of light propagation in tissue using raytracing \tablespace \\
+\textbf{Supplementary Note \ref{sec:nonrigid}} & Non-rigid transformation \tablespace \\
+\textbf{Supplementary Note \ref{sec:frc}} & Quality estimation using relative Fourier Ring Correlation \tablespace \\
+\textbf{Supplementary Note \ref{sec:fusion}} & Image fusion \tablespace \\
+\textbf{Supplementary Note \ref{sec:brightness-adjust}} & Brightness and contrast adjustment \tablespace \\
 \textbf{Supplementary Note \ref{sec:example}} & Example datasets for BigStitcher \tablespace \\
 \textbf{Supplementary Note \ref{sec:currentcode}} & Links to the current source codes \tablespace \\
-\textbf{\red{Supplementary Note \ref{sec:bugs}}} & \red{Bug reports and feature requests} \tablespace \\
-
+\textbf{Supplementary Note \ref{sec:bugs}} & Bug reports and feature requests \tablespace \\
+\textbf{Supplementary Note \ref{sec:documentation}} & BigStitcher user guide \tablespace \\
 \end{tabular}}
 \caption{\emph{Note: Supplementary Videos 1--\red{9} are available for download on the journal homepage.}}
 \end{table}
@@ -544,10 +560,6 @@
 
 %\pagebreak
 %\titleformat{\section}{\centering\normalfont\fontsize{13.5pt}{1em}\bfseries}{SUPPLEMENTARY NOTE \thesection: }{0em}{}
-\section{BigStitcher user guide}
-\label{sec:documentation}
-
-\input{user-guide/user-guide-main.tex}
 
 %\pagebreak
 
@@ -590,6 +602,9 @@ We will add larger and more complex examples on the BigStitcher website \url{htt
 % description of current version location is in currentcode.tex 
 \input currentcode.tex
 
+\section{BigStitcher user guide}
+\label{sec:documentation}
+\input{user-guide/user-guide-main.tex}
 
 %\section{OTHER RELATED LITERATURE}
 %The field of multi-view deconvolution is large and diverse; many areas of science contribute including medical science, astronomy, microscopy and the classical computer science. Within the focus of this publications it is not possible to discuss all aspects (e.g. multi-channel deconvolution). We therefore list other publications that contributed to various aspects of multi-image deconvolution\cite{Rajagopalan1998, Giannakis2000, Flusser2003, Vieilleville2011, heintzmann2002, ShawAl89,agard1984,agard1989,verveer1998,heintzmann2000,holmes1991,blume2007}.
