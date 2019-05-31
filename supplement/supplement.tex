@@ -96,13 +96,13 @@
 \author{David H{\"o}rl\textsuperscript{1,2,\textbf{\#}}, Fabio Rojas Rusak\textsuperscript{3,\textbf{\#}}, Friedrich Preusser\textsuperscript{2}, Paul Tillberg\textsuperscript{4}, Nadine Randel\textsuperscript{4}, Raghav~K.~Chhetri\textsuperscript{4}, Albert Cardona\textsuperscript{4,5}, Philipp J. Keller\textsuperscript{4}, Hartmann Harz\textsuperscript{1}, Heinrich Leonhardt\textsuperscript{1}, Mathias Treier\textsuperscript{3,6}, Stephan Preibisch\textsuperscript{2,}\textbf{*}
 \skiplinehalf
 \small{
-\textsuperscript{1}Department of Biology II, Ludwig-Maximilians-Universität München, 81377 München, Germany \\
-\textsuperscript{2}Berlin Institute for Medical Systems Biology (BIMSB), Max Delbrück Center for Molecular Medicine \\in the Helmholtz Association (MDC), 10115 Berlin, Germany \\
-\textsuperscript{3}Cardiovascular and Metabolic Sciences, Max Delbrück Center for Molecular Medicine\\ in the Helmholtz Association (MDC), 13125 Berlin, Germany \\
-\textsuperscript{4}Janelia Research Campus, Howard Hughes Medical Institute, Ashburn, VA 20147, USA \\
+\textsuperscript{1}Department of Biology II, Ludwig-Maximilians-Universität München, München, Germany \\
+\textsuperscript{2}Berlin Institute for Medical Systems Biology (BIMSB), Max Delbrück Center for Molecular Medicine \\in the Helmholtz Association (MDC), Berlin, Germany \\
+\textsuperscript{3}Cardiovascular and Metabolic Sciences, Max Delbrück Center for Molecular Medicine\\ in the Helmholtz Association (MDC), Berlin, Germany \\
+\textsuperscript{4}Janelia Research Campus, Howard Hughes Medical Institute, Ashburn, VA, USA \\
 \textsuperscript{5}Department of Physiology, Development and Neuroscience, University of Cambridge, Cambridge, UK \\
-\textsuperscript{6}Charité-Universitätsmedizin Berlin, 10117 Berlin, Germany\\
-\textsuperscript{\textbf{\#}}Equal contribution
+\textsuperscript{6}Charité-Universitätsmedizin Berlin, Berlin, Germany\\
+\textsuperscript{\textbf{\#}}D.H. and F.R.R. contributed equally
 }
 \normalsize
 {
@@ -265,7 +265,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-chr_aberrations.jpg}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Chromatic aberration correction.} If sufficient autofluorescent signal is in common between channels the ICP refinement on an affine model can be used to approximately correct chromatic aberrations are within the range of a few pixels. Here, the 488 and 561 channels are shown in magenta and green, respectively. Zoom-ins (i) -- (iv) illustrate the correction on one example image tile 1920$\times$1920 pixels in size. In the bottom right the interest points (all points of the entire stack are shown for one slice) used for alignment are shown. Please note that for example the point in zoom-in (ii) was not used for alignment. If aberrations are significantly bigger than illustrated in this example or if not enough common autofluorescence between channels exist, images can be preprocessed with dedicated chromatic aberration software before import into BigStitcher (see Limitations section in \textbf{Online Methods}). Chromatic aberration correction was applied to all 26 image tiles of this dataset (\textbf{Suppl. Video 1}) as well as to all cleared samples that were acquired with 2 channels (\textbf{Suppl. Table 1}).
+\caption{\hspace{-0.5mm} \red{\emph{Chromatic aberration correction.} If sufficient autofluorescent signal is in common between channels the ICP refinement on an affine model can be used to approximately correct chromatic aberrations are within the range of a few pixels. Here, the 488 and 561 channels are shown in magenta and green, respectively. Zoom-ins (i) -- (iv) illustrate the correction on one example image tile 1920$\times$1920 pixels in size. In the bottom right the interest points (all points of the entire stack are shown for one slice) used for alignment are shown. Please note that for example the point in zoom-in (ii) was not used for alignment. If aberrations are significantly bigger than illustrated in this example or if not enough common autofluorescence between channels exist, images can be preprocessed with dedicated chromatic aberration software before import into BigStitcher (see Limitations section in \textbf{Online Methods}). Chromatic aberration correction was applied to all 26 image tiles of this dataset (\textbf{Supplementary Video 3}) as well as to all cleared samples that were acquired with 2 channels (\textbf{Supplementary Table 1}).
 }}
 \label{fig:sup-chromatic}
 \end{figure*}
@@ -314,7 +314,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{rFRC.jpg}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Automatic Quantification of Image Quality.} \textbf{(a-d)} Four different z-planes from a volume that overlays the results of the relative Fourier Ring Correlation (rFRC, see \textbf{Online Methods}) computed in 128$\times$128 blocks using a spacing of 10 pixels (magenta) and cleared image data (same as \textbf{Suppl. Fig. \ref{fig:sup-fig-rf}}). The rFRC robustly detects areas with high image quality. Note that (a) is deepest inside the tissue and (d) is at the surface of the sample. See \textbf{Suppl. Video 8} for an animation of the entire stack. The rFRC was successfully applied to all cleared datasets in this publication (\textbf{Suppl. Table 1}), results are also shown in \textbf{Suppl. Fig. \ref{fig:sup-fig-rf}, \ref{fig:sup-rfrc-brain}} and \textbf{Suppl. Video 8,9}.
+\caption{\hspace{-0.5mm} \red{\emph{Automatic Quantification of Image Quality.} \textbf{(a-d)} Four different z-planes from a volume that overlays the results of the relative Fourier Ring Correlation (rFRC, see \textbf{Online Methods}) computed in 128$\times$128 blocks using a spacing of 10 pixels (magenta) and cleared image data (same as \textbf{Supplementary Fig. \ref{fig:sup-fig-rf}}). The rFRC robustly detects areas with high image quality. Note that (a) is deepest inside the tissue and (d) is at the surface of the sample. See \textbf{Supplementary Video 8} for an animation of the entire stack. The rFRC was successfully applied to all cleared datasets in this publication (\textbf{Supplementary Table 1}), results are also shown in \textbf{Supplementary Fig. \ref{fig:sup-fig-rf}, \ref{fig:sup-rfrc-brain}} and \textbf{Supplementary Video 8,9}.
 }}
 \label{fig:sup-rFRC}
 \end{figure*}
@@ -326,7 +326,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{rFRC_brain.png}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \red{\emph{Quality Estimation in Whole-Brain Mouse Acquisition.} Application of our relative Fourier Ring Correlation (rFRC, see \textbf{Online Methods}) to the reconstruction of an entire adult mouse brain. The rFRC was computed in 512$\times$512 blocks using a spacing of 256 pixels and transformed and rendered as the reconstructed volume (see Fig. 3d). \textbf{(a,b,c)} single slice through rFRC volume based on image data acquired with left illumination (a), right illumination (b), and both overlaid (c), dotted lines outline the orthogonal shown views in (d-h). \textbf{(d-h)} orthogonal views to (a-c) highlighting the contribution in image quality from different illumination directions and acquisition angles. \textbf{(i)} illustration of the color scheme used in (h) and the type of data displayed in (d-g). See \textbf{Suppl. Video 9} for an animation of the entire stack. The rFRC was successfully applied to all cleared datasets in this publication (\textbf{Suppl. Table 1}), results are also shown in \textbf{Suppl. Fig. \ref{fig:sup-fig-rf}, \ref{fig:sup-rFRC}} and \textbf{Suppl. Video 8,9}.
+\caption{\hspace{-0.5mm} \red{\emph{Quality Estimation in Whole-Brain Mouse Acquisition.} Application of our relative Fourier Ring Correlation (rFRC, see \textbf{Online Methods}) to the reconstruction of an entire adult mouse brain. The rFRC was computed in 512$\times$512 blocks using a spacing of 256 pixels and transformed and rendered as the reconstructed volume (see Fig. 3d). \textbf{(a,b,c)} single slice through rFRC volume based on image data acquired with left illumination (a), right illumination (b), and both overlaid (c), dotted lines outline the orthogonal shown views in (d-h). \textbf{(d-h)} orthogonal views to (a-c) highlighting the contribution in image quality from different illumination directions and acquisition angles. \textbf{(i)} illustration of the color scheme used in (h) and the type of data displayed in (d-g). See \textbf{Supplementary Video 9} for an animation of the entire stack. The rFRC was successfully applied to all cleared datasets in this publication (\textbf{Supplementary Table 1}), results are also shown in \textbf{Supplementary Fig. \ref{fig:sup-fig-rf}, \ref{fig:sup-rFRC}} and \textbf{Supplementary Video 8,9}.
 }}
 \label{fig:sup-rfrc-brain}
 \end{figure*}
@@ -363,7 +363,7 @@
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{fig-stitching.jpg}
 \vspace{-2.0mm}
-\caption{\hspace{-0.5mm} \emph{Pairwise registration by phase correlation}. \textbf{(A,B)} Central slices of image stacks from a tiled acquisition (non-regular tiling) of a cleared adult mouse hypothalamus. \textbf{(C)} Phase correlation matrix (PCM) calculated from the two images shows a single, distinct peak above nearly constant background. The peak location corresponds to the relative translation $t$ of both tiles. \textbf{(D)} Central slice through the images aligned according to $t$, as displayed in interactively during the reconstruction process. \textbf{(A-D)} The pairwise registration using phase correlation was used as a first step in the alignment of all cleared and expanded samples used in this publication (\textbf{Suppl. Table 1}).
+\caption{\hspace{-0.5mm} \emph{Pairwise registration by phase correlation}. \textbf{(A,B)} Central slices of image stacks from a tiled acquisition (non-regular tiling) of a cleared adult mouse hypothalamus. \textbf{(C)} Phase correlation matrix (PCM) calculated from the two images shows a single, distinct peak above nearly constant background. The peak location corresponds to the relative translation $t$ of both tiles. \textbf{(D)} Central slice through the images aligned according to $t$, as displayed in interactively during the reconstruction process. \textbf{(A-D)} The pairwise registration using phase correlation was used as a first step in the alignment of all cleared and expanded samples used in this publication (\textbf{Supplementary Table 1}).
 }
 \label{fig:sup-fig-stitching}
 \end{figure*}
